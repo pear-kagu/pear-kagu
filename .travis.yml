@@ -14,14 +14,13 @@ notifications:
 install:
   - npm ci # faster, goes only from package-lock
 before_script:
-  - psql -c 'create database "boilermaker-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+  - psql -c 'create database "pear-kagu-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 
-# before_deploy:
-#   - npm run build-client # make the bundle
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+before_deploy:
+  - npm run build-client # make the bundle
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+deploy:
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: pear-kagu # see README
+  api_key: BbfIlUvdsb/cfMB9yXNaiJzxPePqqBpJVIpQdTeEhFCBZpNZiFrqTjRBMqvSG75dBBVmCHJM+VHSqkqnLEXwi5ikL19TCVDHnrbeBQ9og73OGwhFn2BKdFB9SbRspBrLxbXmlA8siFETUl2934dHCc7GvoOoxTbUjRKkCWFB5cKEq8ewd/tm8d/Lc3tbU4tzKz2eSC689VhfHVeVW3fCdmBOM08ef1S+mLToaEWYlsVQ3Q4wmyDLwe9kVmlAgL0Zhsa+ViY9HTtfdlqIxlPxcQQmQBrVu9lyu8e8+CctY/6l+AqC7MM13ZtDfxz1Fyv0pAniqYdMTfMYLihHlHueSes/hFXQH6rH2LrbFGANg6G0AgZunO2wDUQTibIwvxQ+DmtWuGE63mrDAukf9HL6fAN4QRC5cnHlQTp0EtqVlsNdVlaKWcsZcTmxSGFT2/vuwUVbdEnaOrAdlPssJ+nDzFI0Uz2HjmCyOHz9HIsh1zBPRtGAIrbJBrKX8wfUfwQoLdiX6FcrV4kvbq7HJ5zsgg2Mm1JiLpFtr4Y9v4O+1xW5n14SZvV20i4Ou70N1CaUsnma3R1NhLQn9kkFBmb1PZAd8rxqdFOtHPT6n/fLkiqFnGRzAwGBIEpOXR/RSaV+li4MctRzQctpKVwTkRjq8YMB7xSlnPqLHjaQxDXp65s=
