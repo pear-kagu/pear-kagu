@@ -6,8 +6,8 @@ const Content = require('./content')
 Content.belongsToMany(User, {through: 'User-Content'})
 User.belongsToMany(Content, {through: 'User-Content'})
 
-Content.hasOne(Type)
-Type.belongsToMany(Content)
+Content.belongsTo(Type)
+Type.hasMany(Content)
 
 module.exports = {
   User,
