@@ -1,5 +1,7 @@
 const NewsAPI = require('newsapi')
-const {newsapikey} = require('../../secrets')
+//const {newsapikey} = require('../../secrets')
+const newsapikey = process.env.NEWSAPI_KEY
+
 const newsapi = new NewsAPI(newsapikey)
 const router = require('express').Router()
 module.exports = router
@@ -32,10 +34,13 @@ router.get('/all/:interest', async (req, res, next) => {
     console.log('get all')
     const all = await newsapi.v2.everything({
       q: interest,
-      sources: 'wired, techcrunch, hacker-news',
+      /*sources: 'wired, techcrunch, hacker-news',
       domains: 'wired.com, techcrunch.com, news.ycombinator.com',
-      from: '2018-12-25',
-      to: '2019-01-12',
+      domains: 'news.ycombinator.com',
+      */
+      sources: 'hacker-news',
+      from: '2019-01-01',
+      to: '2019-01-28',
       language: 'en',
       sortBy: 'relevancy'
       // page: 1
