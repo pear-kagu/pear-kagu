@@ -1,5 +1,5 @@
 /**
- * model name: type
+ * model name: types
  * usage: specifies type (media source: youtube, meetup etc) for the content. The type would be used to club and render content carousel on contents page for an interest
  */
 
