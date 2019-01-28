@@ -20,9 +20,7 @@ const Location = db.define('location', {
     type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
-      isInt: true,
-      max: 5,
-      min: 5
+      isInt: true
     }
   }
 })
