@@ -14,8 +14,8 @@ const Content = require('./content')
  * instead of: const User = require('../db/models/user')
  */
 
-// Content.belongsToMany(Interest)
-// Interest.belongsToMany(Content)
+// Content.belongsToMany(User)
+// User.belongsToMany(Content)
 
 // Content.hasOne(Type)
 // Type.belongsToMany(Content)

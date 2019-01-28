@@ -4,34 +4,34 @@ const db = require('../db')
 const Content = db.define('content', {
   title: {
     type: Sequelize.STRING,
+    allowNull: false,
     validate: {
-      notEmpty: true,
-      allowNull: false
+      notEmpty: true
     }
   },
   imageUrl: {
     type: Sequelize.STRING,
     defaultValue:
       'https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
+    allowNull: false,
     validate: {
-      isUrl: true,
-      allowNull: false
+      isUrl: true
     }
   },
   description: {
     type: Sequelize.TEXT,
+    allowNull: false,
     validate: {
-      notEmpty: true,
-      allowNull: false
+      notEmpty: true
     }
   },
   sourceUrl: {
     type: Sequelize.STRING,
     unique: true,
+    allowNull: false,
     validate: {
       isUrl: true,
-      notEmpty: true,
-      allowNull: false
+      notEmpty: true
     }
   },
   publishedAt: {
