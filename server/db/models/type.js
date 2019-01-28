@@ -1,5 +1,5 @@
 /**
- * model name: content-type
+ * model name: type
  * usage: specifies type (media source: youtube, meetup etc) for the content. The type would be used to club and render content carousel on contents page for an interest
  */
 
@@ -8,7 +8,7 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 // define model
-const ContentType = db.define('contentTypes', {
+const Type = db.define('types', {
   type: {
     type: Sequelize.STRING,
     unique: true,
@@ -19,4 +19,4 @@ const ContentType = db.define('contentTypes', {
   }
 })
 
-module.exports = ContentType
+module.exports = Type
