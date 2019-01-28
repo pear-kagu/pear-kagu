@@ -3,8 +3,8 @@ const Type = require('./type')
 const User = require('./user')
 const Content = require('./content')
 
-Content.belongsToMany(User)
-User.belongsToMany(Content)
+Content.belongsToMany(User, {through: 'User-Content'})
+User.belongsToMany(Content, {through: 'User-Content'})
 
 Content.hasOne(Type)
 Type.belongsToMany(Content)
