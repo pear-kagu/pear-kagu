@@ -3,7 +3,7 @@ const Content = require('./content')
 const Interest = require('./interest')
 const Type = require('./type')
 const Location = require('./location')
-const Apisource = require('./apiSource')
+const ApiSource = require('./apiSource')
 
 Content.belongsToMany(User, {through: 'User-Content'})
 User.belongsToMany(Content, {through: 'User-Content'})
@@ -11,7 +11,7 @@ User.belongsToMany(Content, {through: 'User-Content'})
 Content.belongsTo(Type)
 Type.hasMany(Content)
 
-Content.belongsTo(Apisource)
+Content.belongsTo(ApiSource)
 
 module.exports = {
   User,
@@ -19,5 +19,5 @@ module.exports = {
   Interest,
   Type,
   Location,
-  Apisource
+  ApiSource
 }

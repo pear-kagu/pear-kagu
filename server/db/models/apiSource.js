@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const Apisource = db.define('apiSource', {
+const ApiSource = db.define('apiSource', {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -11,4 +11,4 @@ const Apisource = db.define('apiSource', {
   }
 })
 
-module.exports = Apisource
+module.exports = ApiSource
