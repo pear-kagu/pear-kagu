@@ -12,8 +12,8 @@ class Navbar extends Component {
   render() {
     return (
       <div>
-        <nav>
-          <Link to="/">
+        <nav className="navbar">
+          <Link to="/" id="homeIcon">
             <h1>Pear-Kagu</h1>
           </Link>
           <div>
