@@ -34,7 +34,9 @@ router.get('/:interest', async (req, res, next) => {
           imageUrl,
           description,
           sourceUrl,
-          publishedAt
+          publishedAt,
+          typeId: 1,
+          apiSourceId: 3
         })
       })
     )
