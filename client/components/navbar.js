@@ -22,11 +22,11 @@ class Navbar extends Component {
               <label htmlFor="search">Search</label>
             </button>
           </div>
-          {this.isLoggedIn ? (
+          {this.props.isLoggedIn ? (
             <div>
               {/* The navbar will show these links after you log in */}
               <Link to="/home">Home</Link>
-              <a href="#" onClick={this.handleClick}>
+              <a href="#" onClick={this.props.handleClick}>
                 Logout
               </a>
             </div>
