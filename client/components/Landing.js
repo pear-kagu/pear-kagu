@@ -15,7 +15,7 @@ class Landing extends Component {
         <h2>Welcome! Select an interest to get started</h2>
         <div>Javascript</div>
         <div>Learn how to code</div>
-        <dif>Women in code</dif>
+        <div>Women in code</div>
       </div>
     )
   }
