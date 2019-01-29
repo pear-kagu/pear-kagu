@@ -19,9 +19,8 @@ router.get('/:interest', async (req, res, next) => {
       language: 'en',
       sortBy: 'relevancy'
     })
-    const articlesInDB = await Promise.all(
+    await Promise.all(
       all.articles.map(article => {
-        console.log('eeee', article.urlToImage)
         const title = article.title
         const imageUrl = article.urlToImage
         const description = article.description
