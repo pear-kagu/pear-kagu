@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import {Login} from '../components'
 
 class Navbar extends Component {
   constructor(props) {
@@ -33,7 +34,8 @@ class Navbar extends Component {
           ) : (
             <div>
               {/* The navbar will show these links before you log in */}
-              <Link to="/login">Login</Link>
+              <Login name="login" />
+              {/* <Link to="/login">Login</Link> */}
               <Link to="/signup">Sign Up</Link>
             </div>
           )}
