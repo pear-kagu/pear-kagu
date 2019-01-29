@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Type} = require('../server/db/models')
+const {User, Type, ApiSource} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -32,11 +32,20 @@ async function seed() {
 
   // contentType model
   const types = await Promise.all([
-    Type.create({type: 'youtube'}),
-    Type.create({type: 'meetup'}),
-    Type.create({type: 'news'})
+    Type.create({type: 'read'}),
+    Type.create({type: 'watch'}),
+    Type.create({type: 'do'})
   ])
   console.log(`seeded ${types.length} content types`)
+  console.log(`seeded successfully`)
+
+  //apiSource model
+  const sources = await Promise.all([
+    ApiSource.create({name: 'youtubeApi'}),
+    ApiSource.create({name: 'meetupApi'}),
+    ApiSource.create({name: 'newsApi'})
+  ])
+  console.log(`seeded ${sources.length} content sources`)
   console.log(`seeded successfully`)
 }
 
