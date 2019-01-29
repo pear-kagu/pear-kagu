@@ -11,7 +11,10 @@ class Carousel extends Component {
   render() {
     return (
       <div>
-        <a href="http://techcrunch.com/2019/01/14/web-hosting-account-hacks/">
+        <a
+          target="_blank"
+          href="http://techcrunch.com/2019/01/14/web-hosting-account-hacks/"
+        >
           <p>
             Some of the biggest web hosting sites were vulnerable to simple
             account takeover hacks
