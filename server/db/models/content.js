@@ -13,7 +13,6 @@ const Content = db.define('content', {
     type: Sequelize.STRING,
     defaultValue:
       'https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-    allowNull: false,
     validate: {
       isUrl: true
     }
