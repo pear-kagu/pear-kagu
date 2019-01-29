@@ -25,7 +25,7 @@ class Navbar extends Component {
           {this.props.isLoggedIn ? (
             <div>
               {/* The navbar will show these links after you log in */}
-              <Link to="/home">Home</Link>
+              <h4>My Favorites</h4>
               <a href="#" onClick={this.props.handleClick}>
                 Logout
               </a>
