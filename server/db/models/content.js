@@ -42,13 +42,4 @@ const Content = db.define('content', {
   }
 })
 
-Content.beforeSave(instance => {
-  if (typeof instance.imageUrl === 'object') {
-    delete instance.imageUrl
-    return instance
-  } else {
-    return instance
-  }
-})
-
 module.exports = Content

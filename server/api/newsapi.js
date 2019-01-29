@@ -22,7 +22,9 @@ router.get('/:interest', async (req, res, next) => {
     await Promise.all(
       all.articles.map(article => {
         const title = article.title
-        const imageUrl = article.urlToImage
+        const imageUrl =
+          article.urlToImage ||
+          'https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
         const description = article.description
         const sourceUrl = article.url
         const publishedAt = article.publishedAt
