@@ -2,6 +2,7 @@ const NewsAPI = require('newsapi')
 const newsapikey = process.env.NEWSAPI_KEY
 const newsapi = new NewsAPI(newsapikey)
 const router = require('express').Router()
+const {Content} = require('../db/models')
 module.exports = router
 
 //GET route /api/newsapi
@@ -18,6 +19,25 @@ router.get('/:interest', async (req, res, next) => {
       language: 'en',
       sortBy: 'relevancy'
     })
+    await Promise.all(
+      all.articles.map(article => {
+        const title = article.title
+        const imageUrl =
+          article.urlToImage ||
+          'https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
+        const description = article.description
+        const sourceUrl = article.url
+        const publishedAt = article.publishedAt
+
+        Content.create({
+          title,
+          imageUrl,
+          description,
+          sourceUrl,
+          publishedAt
+        })
+      })
+    )
     res.status(200).send(all)
   } catch (err) {
     next(err)
