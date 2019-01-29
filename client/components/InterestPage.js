@@ -12,6 +12,7 @@ class InterestPage extends Component {
   render() {
     return (
       <div>
+        <h2>Interest Name</h2>
         <Carousel />
       </div>
     )
