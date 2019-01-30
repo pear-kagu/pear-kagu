@@ -12,6 +12,13 @@ Content.belongsTo(Type)
 Type.hasMany(Content)
 
 Content.belongsTo(ApiSource)
+ApiSource.hasMany(Content)
+
+User.belongsTo(Location)
+Location.hasMany(User)
+
+Content.belongsTo(Interest)
+Interest.hasMany(Content)
 
 module.exports = {
   User,
