@@ -3,7 +3,7 @@
 const {expect} = require('chai')
 const request = require('supertest')
 const db = require('../db')
-const app = require('../index')
+const App = require('../index')
 const User = db.model('user')
 
 describe('User routes', () => {
@@ -25,7 +25,7 @@ describe('User routes', () => {
     })
 
     it('GET /api/users', async () => {
-      const res = await request(app)
+      const res = await request(App)
         .get('/api/users')
         .expect(200)
 
