@@ -19,11 +19,7 @@ const Content = db.define('content', {
     }
   },
   description: {
-    type: Sequelize.TEXT,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    type: Sequelize.TEXT
   },
   sourceUrl: {
     type: Sequelize.STRING,
