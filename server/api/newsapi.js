@@ -5,6 +5,10 @@ const router = require('express').Router()
 const {Content} = require('../db/models')
 module.exports = router
 
+// set type and api source id
+const TYPE_ID = 1
+const API_SOURCE_ID = 3
+
 //GET route /api/newsapi
 // You must include at least one q, source, or domain
 router.get('/:interest', async (req, res, next) => {
@@ -29,14 +33,16 @@ router.get('/:interest', async (req, res, next) => {
         const sourceUrl = article.url
         const publishedAt = article.publishedAt
 
-        Content.create({
-          title,
-          imageUrl,
-          description,
-          sourceUrl,
-          publishedAt,
-          typeId: 1,
-          apiSourceId: 3
+        Content.findOrCreate({
+          where: {
+            title,
+            imageUrl,
+            description,
+            sourceUrl,
+            publishedAt,
+            typeId: TYPE_ID,
+            apiSourceId: API_SOURCE_ID
+          }
         })
       })
     )
