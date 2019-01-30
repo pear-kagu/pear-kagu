@@ -5,8 +5,8 @@ const {Content} = require('../db/models')
 module.exports = router
 
 // set paramaters
-const API_SOURCE_ID = 1
 const TYPE_ID = 2
+const API_SOURCE_ID = 1
 const youtubeApiKey = process.env.YOUTUBEAPI_KEY
 
 const youtube = google.youtube({
