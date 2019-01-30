@@ -41,9 +41,9 @@ async function seed() {
 
   //apiSource model
   const sources = await Promise.all([
-    ApiSource.create({name: 'youtubeApi'}),
-    ApiSource.create({name: 'meetupApi'}),
-    ApiSource.create({name: 'newsApi'})
+    ApiSource.create({name: 'youtubeApi', route: '/api/youtube/'}),
+    ApiSource.create({name: 'meetupApi', route: '/api/meetups/'}),
+    ApiSource.create({name: 'newsApi', route: '/api/newsapi/'})
   ])
   console.log(`seeded ${sources.length} content sources`)
   console.log(`seeded successfully`)
