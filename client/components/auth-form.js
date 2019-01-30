@@ -2,8 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
-import {Link} from 'react-router-dom'
-
 import {withStyles} from '@material-ui/core/styles'
 import Input from '@material-ui/core/Input'
 import Button from '@material-ui/core/Button'
@@ -68,7 +66,6 @@ const AuthForm = props => {
         ) : (
           <div />
         )}
-
         <Input
           name="email"
           placeholder="Email"
@@ -92,8 +89,6 @@ const AuthForm = props => {
         <Button className={classes.button}>
           <a href="/auth/google">{displayName} with Google</a>
         </Button>
-        {/* <Link to="/signup">Sign Up</Link> */}
-
         {error && error.response && <div> {error.response.data} </div>}
       </form>
     </div>
