@@ -22,6 +22,7 @@ import MailIcon from '@material-ui/icons/Mail'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import TextField from '@material-ui/core/TextField'
+import Grid from '@material-ui/core/Grid'
 
 const styles = theme => ({
   root: {
@@ -34,15 +35,12 @@ const styles = theme => ({
     marginLeft: -12,
     marginRight: 20
   },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
-  },
   title: {
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block'
-    }
+    },
+    position: 'relative'
   },
   search: {
     position: 'relative',
@@ -108,47 +106,63 @@ class Navbar extends Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static">
-          <Toolbar>
-            <Typography
-              className={classes.title}
-              variant="h6"
-              color="inherit"
-              noWrap
-            >
-              Pear Kagu
-            </Typography>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput
-                }}
-              />
-            </div>
-            {this.props.isLoggedIn ? (
-              <div>
-                {/* The navbar will show these links after you log in */}
-                <h4>My Favorites</h4>
-                <a href="#" onClick={this.props.handleClick}>
-                  Logout
-                </a>
-                <Link to="/savedcontent">Saved Content</Link>
-              </div>
-            ) : (
-              <div>
-                {/* The navbar will show these links before you log in */}
-                <Login name="login" />
-                <Link to="/signup">Sign Up</Link>
-              </div>
-            )}
-            <div className={classes.grow} />
-          </Toolbar>
-        </AppBar>
+        <Grid container spacing={24}>
+          <AppBar position="static">
+            <Toolbar>
+              <Grid item xs>
+                <Typography
+                  className={classes.title}
+                  variant="h6"
+                  color="inherit"
+                  noWrap
+                >
+                  Pear Kagu
+                </Typography>
+              </Grid>
+              <Grid item xs>
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <SearchIcon />
+                  </div>
+                  <InputBase
+                    placeholder="Search…"
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput
+                    }}
+                  />
+                </div>
+              </Grid>
+
+              {this.props.isLoggedIn ? (
+                <div>
+                  {/* The navbar will show these links after you log in */}
+                  <Grid item xs>
+                    <Link to="/savedcontent">Saved Content</Link>
+                  </Grid>
+                  <Grid item xs>
+                    <a href="#" onClick={this.props.handleClick}>
+                      Logout
+                    </a>
+                  </Grid>
+                </div>
+              ) : (
+                <div>
+                  {/* The navbar will show these links before you log in */}
+                  <Grid item xs>
+                    <Login name="login" />
+                  </Grid>
+                  <div>
+                    <Grid item xs>
+                      <Link to="/signup">Sign Up</Link>
+                    </Grid>
+                  </div>
+                </div>
+              )}
+              <div className={classes.grow} />
+            </Toolbar>
+          </AppBar>
+        </Grid>
       </div>
     )
   }

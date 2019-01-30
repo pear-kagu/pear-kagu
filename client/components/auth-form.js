@@ -2,16 +2,13 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {Link} from 'react-router-dom'
 
 import {withStyles} from '@material-ui/core/styles'
 import Input from '@material-ui/core/Input'
 import Button from '@material-ui/core/Button'
 
 const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap'
-  },
   input: {
     margin: theme.spacing.unit
   },
@@ -71,32 +68,34 @@ const AuthForm = props => {
         ) : (
           <div />
         )}
-        <div className={classes.container}>
-          <Input
-            name="email"
-            placeholder="Email"
-            className={classes.input}
-            inputProps={{
-              'aria-label': 'Description'
-            }}
-          />
-          <Input
-            name="password"
-            type="password"
-            placeholder="Password"
-            className={classes.input}
-            inputProps={{
-              'aria-label': 'Description'
-            }}
-          />
-          <Button type="submit" className={classes.button}>
-            {displayName}
-          </Button>
-        </div>
+
+        <Input
+          name="email"
+          placeholder="Email"
+          className={classes.input}
+          inputProps={{
+            'aria-label': 'Description'
+          }}
+        />
+        <Input
+          name="password"
+          type="password"
+          placeholder="Password"
+          className={classes.input}
+          inputProps={{
+            'aria-label': 'Description'
+          }}
+        />
+        <Button type="submit" className={classes.button}>
+          {displayName}
+        </Button>
+        <Button className={classes.button}>
+          <a href="/auth/google">{displayName} with Google</a>
+        </Button>
+        {/* <Link to="/signup">Sign Up</Link> */}
 
         {error && error.response && <div> {error.response.data} </div>}
       </form>
-      <a href="/auth/google">{displayName} with Google</a>
     </div>
   )
 }
