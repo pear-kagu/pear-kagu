@@ -32,7 +32,6 @@ router.get('/:topic', async (req, res, next) => {
       items.map(item => {
         const title = item.snippet.title
         const sourceUrl = `https://www.youtube.com/watch?v=${item.id.videoId}`
-        console.log(sourceUrl)
         const imageUrl =
           item.snippet.thumbnails.medium.url ||
           'https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
