@@ -1,11 +1,24 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Type, ApiSource} = require('../server/db/models')
+const {User, Type, ApiSource, Location} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
+
+  const locations = await Promise.all([
+    Location.create({
+      city: 'New York',
+      state: 'NY'
+    }),
+    Location.create({
+      city: 'San Francisco',
+      state: 'CA'
+    })
+  ])
+
+  console.log(`seeded ${locations.length} locations`)
 
   // user model
   const users = await Promise.all([

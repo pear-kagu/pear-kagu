@@ -20,7 +20,6 @@ describe('User routes', () => {
         lastName: 'Puppy',
         username: 'cody123',
         email: codysEmail,
-        locationId: '1',
         password: 'bones'
       })
     })

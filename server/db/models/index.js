@@ -15,7 +15,7 @@ Content.belongsTo(ApiSource)
 ApiSource.hasMany(Content)
 
 User.belongsTo(Location)
-Location.hasMany(User)
+// Location.hasMany(User)
 
 Content.belongsTo(Interest)
 Interest.hasMany(Content)
