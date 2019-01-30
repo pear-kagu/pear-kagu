@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {Component} from 'react'
 
 const interests = ['Javascript', 'Python', 'CSS', 'HTML']
 
-class SavedContentPage extends React.Component {
+class SavedContentPage extends Component {
   render() {
     return (
       <div>
