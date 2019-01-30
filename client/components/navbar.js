@@ -85,12 +85,11 @@ const styles = theme => ({
 })
 
 class Navbar extends Component {
-  // constructor(props) {
-  //   super(props)
-  // }
+  constructor(props) {
+    super(props)
+  }
 
   render() {
-    console.log(this.props)
     const {classes} = this.props
 
     return (
