@@ -5,7 +5,11 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const interests = await Interest.findAll()
+    const interests = await Interest.findAll({
+      where: {
+        primary: true
+      }
+    })
     res.status(200).send(interests)
   } catch (err) {
     next(err)
