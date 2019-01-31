@@ -22,6 +22,6 @@ before_deploy:
 deploy:
   skip_cleanup: true # prevents travis from deleting the build
   provider: heroku
-  app: http://pear-kagu.herokuapp.com/ # see README
+  app: pear-kagu # see README
   api_key:
     secure: iffeNr+WFpxYbBq7WKnXggN8iRJ5BBxbpVwM1OBQKmjBDtNhOFkFaPGA/qrMt4el4X0G+6p5dsW7hwvCrHAm76XKgb6IIyywwb9HBr5P00djy2fPVCWlI1U0TX6dmYuRo/KUWumpC31mDBvXwl0Nb4DkFwZZDFYIfnfGmKQpVuMNYjnQ1nLHLCx+yapEPimRrlOK2Q1cocTh6g1UOJ/8OdcHaQ+b1RwE3Iacp9B5/defqP9LwbfN6TmEKRk1Skcb+icOly6WCe4wP+TWdaldnP8u/rkrzO1yDBfDCqEAlOHDzbM/4qWJ28mBmNpMOXeHtH6QVDz0l923f5yb/zpx8qulsB0neH3b/4BabgC9TqvxkKh4tjd9MP/Xiha19ECnO2de5D8RxvWFGoWcLgMx1WQ1R8wPjohtjdPhFL/kJh9uCZxoxMisxXiMoaI6wIS6aayDb3kx/RdLAUDysHXZ0dHkLuocqgxNtBaezwjilOi4J+rIf1HqvVVaSUMnthy3NAnH8ppi+/t9cLix17jOSfEXSKAZO/2Jz7Is2MK4cYwtO9FWr25x/S86dhzWfg6PFvZ3X5E5eWy07Z0sRmKegt7ia/fAhXWNPGNPPLimt9nJTpb45s4a+F+xhON9jSzfbiSgEPRG+JbO6H/ZXR3SjGopoby82w94apIdgnhOcp4=
