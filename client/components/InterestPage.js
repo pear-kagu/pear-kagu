@@ -13,7 +13,9 @@ class InterestPage extends Component {
     return (
       <div>
         <h2>Javascript</h2>
-        <Carousel />
+        <Carousel typeId="1" title="Read" />
+        <Carousel typeId="2" title="Watch" />
+        <Carousel typeId="3" title="Do" />
       </div>
     )
   }
