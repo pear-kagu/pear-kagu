@@ -14,6 +14,10 @@ import Typography from '@material-ui/core/Typography'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import IconButton from '@material-ui/core/IconButton'
 
+const cardStyle = {
+  height: 20
+}
+
 const styles = theme => ({
   card: {
     maxWidth: 400
@@ -43,33 +47,88 @@ class Carousel extends Component {
   }
 
   render() {
-    const {classes} = this.props
+    const {classes, type} = this.props
     return (
-      <Grid container spacing={32}>
-        <Grid item xs={4}>
-          <Card>
-            <IconButton aria-label="Add to favorites">
-              <FavoriteIcon />
-            </IconButton>
-            <Link to="/">
-              <CardHeader
-                title="Shrimp and Chorizo Paella"
-                subheader="September 14, 2016"
-              />
-              <CardMedia
-                className={classes.media}
-                image="https://cdn-image.myrecipes.com/sites/default/files/styles/medium_2x/public/image/recipes/ck/00/05/spanish-paella-mr-x.jpg?itok=yw_H-lXE"
-                title="Paella dish"
-              />
-              <CardContent>
-                <Typography component="p">
-                  This impressive paella is a perfect party dish and a fun meal
-                  to cook together with your guests. Add 1 cup of frozen peas
-                  along with the mussels, if you like.
-                </Typography>
-              </CardContent>
-            </Link>
-          </Card>
+      <Grid>
+        <Typography>
+          <h2>{type}</h2>
+        </Typography>
+        <Grid container spacing={32}>
+          <Grid style={cardStyle} item xs={3}>
+            <Card>
+              <IconButton aria-label="Add to favorites">
+                <FavoriteIcon />
+              </IconButton>
+              <Link to="/">
+                <CardHeader
+                  title="Shrimp and Chorizo Paella"
+                  subheader="September 14, 2016"
+                />
+                <CardMedia
+                  className={classes.media}
+                  image="https://cdn-image.myrecipes.com/sites/default/files/styles/medium_2x/public/image/recipes/ck/00/05/spanish-paella-mr-x.jpg?itok=yw_H-lXE"
+                  title="Paella dish"
+                />
+                <CardContent>
+                  <Typography component="p">
+                    This impressive paella is a perfect party dish and a fun
+                    meal to cook together with your guests. Add 1 cup of frozen
+                    peas along with the mussels, if you like.
+                  </Typography>
+                </CardContent>
+              </Link>
+            </Card>
+          </Grid>
+          <Grid item xs={3}>
+            <Card>
+              <IconButton aria-label="Add to favorites">
+                <FavoriteIcon />
+              </IconButton>
+              <Link to="/">
+                <CardHeader
+                  title="Shrimp and Chorizo Paella"
+                  subheader="September 14, 2016"
+                />
+                <CardMedia
+                  className={classes.media}
+                  image="https://cdn-image.myrecipes.com/sites/default/files/styles/medium_2x/public/image/recipes/ck/00/05/spanish-paella-mr-x.jpg?itok=yw_H-lXE"
+                  title="Paella dish"
+                />
+                <CardContent>
+                  <Typography component="p">
+                    This impressive paella is a perfect party dish and a fun
+                    meal to cook together with your guests. Add 1 cup of frozen
+                    peas along with the mussels, if you like.
+                  </Typography>
+                </CardContent>
+              </Link>
+            </Card>
+          </Grid>
+          <Grid item xs={3}>
+            <Card>
+              <IconButton aria-label="Add to favorites">
+                <FavoriteIcon />
+              </IconButton>
+              <Link to="/">
+                <CardHeader
+                  title="Shrimp and Chorizo Paella"
+                  subheader="September 14, 2016"
+                />
+                <CardMedia
+                  className={classes.media}
+                  image="https://cdn-image.myrecipes.com/sites/default/files/styles/medium_2x/public/image/recipes/ck/00/05/spanish-paella-mr-x.jpg?itok=yw_H-lXE"
+                  title="Paella dish"
+                />
+                <CardContent>
+                  <Typography component="p">
+                    This impressive paella is a perfect party dish and a fun
+                    meal to cook together with your guests. Add 1 cup of frozen
+                    peas along with the mussels, if you like.
+                  </Typography>
+                </CardContent>
+              </Link>
+            </Card>
+          </Grid>
         </Grid>
       </Grid>
     )
