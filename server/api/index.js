@@ -5,7 +5,7 @@ router.use('/users', require('./users'))
 router.use('/newsapi', require('./newsapi'))
 router.use('/meetups', require('./meetups'))
 router.use('/youtube', require('./youtube'))
-router.use('/interest', require('./interest'))
+router.use('/interests', require('./interests'))
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')
