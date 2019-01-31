@@ -1,7 +1,13 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Type, ApiSource, Location} = require('../server/db/models')
+const {
+  User,
+  Type,
+  ApiSource,
+  Location,
+  Interest
+} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -19,6 +25,37 @@ async function seed() {
   ])
 
   console.log(`seeded ${locations.length} locations`)
+
+  // interests model
+
+  const interests = await Promise.all([
+    Interest.create({
+      name: 'Javascript',
+      primary: true
+    }),
+    Interest.create({
+      name: 'Python',
+      primary: true
+    }),
+    Interest.create({
+      name: 'Virtual Reality',
+      primary: true
+    }),
+    Interest.create({
+      name: ' Machine Learning',
+      primary: true
+    }),
+    Interest.create({
+      name: 'Data Science',
+      primary: true
+    }),
+    Interest.create({
+      name: 'Women in Tech',
+      primary: true
+    })
+  ])
+  console.log(`seeded ${interests.length} interests`)
+  console.log(`seeded successfully`)
 
   // user model
   const users = await Promise.all([
