@@ -13,6 +13,9 @@ import CardActions from '@material-ui/core/CardActions'
 import Typography from '@material-ui/core/Typography'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import IconButton from '@material-ui/core/IconButton'
+import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos'
+import ArrowBackIos from '@material-ui/icons/ArrowBackIos'
+import {endianness} from 'os'
 
 const cardStyle = {
   height: 20
@@ -50,10 +53,11 @@ class Carousel extends Component {
     const {classes, type} = this.props
     return (
       <Grid>
-        <Typography>
-          <h2>{type}</h2>
-        </Typography>
+        <Typography>{type}</Typography>
         <Grid container spacing={32}>
+          <Grid>
+            <ArrowBackIos />
+          </Grid>
           <Grid style={cardStyle} item xs={3}>
             <Card>
               <IconButton aria-label="Add to favorites">
@@ -128,6 +132,9 @@ class Carousel extends Component {
                 </CardContent>
               </Link>
             </Card>
+          </Grid>
+          <Grid>
+            <ArrowForwardIos />
           </Grid>
         </Grid>
       </Grid>
