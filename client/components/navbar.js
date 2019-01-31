@@ -93,9 +93,9 @@ class Navbar extends Component {
     const {classes} = this.props
 
     return (
-      <div className={classes.root}>
+      <div className={classes.root} style={{color: 'white'}}>
         <Grid container spacing={24}>
-          <AppBar position="static">
+          <AppBar position="static" style={{backgroundColor: 'turquoise'}}>
             <Toolbar>
               <Grid item xs>
                 <Typography
@@ -104,7 +104,7 @@ class Navbar extends Component {
                   color="inherit"
                   noWrap
                 >
-                  Pear Kagu
+                  <Link to="/">Pear Kagu</Link>
                 </Typography>
               </Grid>
               <Grid item xs>

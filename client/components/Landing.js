@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import {LayoutBody, Typography} from '../components'
-import createTypography from '@material-ui/core/styles/createTypography'
+import {Link} from 'react-router-dom'
 
 const styles = theme => ({
   root: {
@@ -138,23 +138,25 @@ class Landing extends Component {
                 width: category.width
               }}
             >
-              <div
-                className={classes.imageBackdrop}
-                style={{
-                  backgroundColor: category.color
-                }}
-              />
-              <div className={classes.imageButton}>
-                <Typography
-                  component="h3"
-                  variant="h6"
-                  color="inherit"
-                  className={classes.imageTitle}
-                >
-                  {category.title}
-                  <div className={classes.imageMarked} />
-                </Typography>
-              </div>
+              <Link to="/interest">
+                <div
+                  className={classes.imageBackdrop}
+                  style={{
+                    backgroundColor: category.color
+                  }}
+                />
+                <div className={classes.imageButton}>
+                  <Typography
+                    component="h3"
+                    variant="h6"
+                    color="inherit"
+                    className={classes.imageTitle}
+                  >
+                    {category.title}
+                    <div className={classes.imageMarked} />
+                  </Typography>
+                </div>
+              </Link>
             </ButtonBase>
           ))}
         </div>
