@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import {LayoutBody, Typography} from '../components'
-import createTypography from '@material-ui/core/styles/createTypography'
 import {Link} from 'react-router-dom'
 
 const styles = theme => ({
