@@ -13,6 +13,7 @@ import CardActions from '@material-ui/core/CardActions'
 import Typography from '@material-ui/core/Typography'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import IconButton from '@material-ui/core/IconButton'
+import fetchContent from '../store'
 
 const styles = theme => ({
   card: {
@@ -40,6 +41,10 @@ const styles = theme => ({
 class Carousel extends Component {
   constructor() {
     super()
+  }
+
+  componentDidMount() {
+    this.props.fetchContent()
   }
 
   render() {
@@ -79,5 +84,11 @@ class Carousel extends Component {
 /**
  * CONTAINER
  */
+
+const mapDispatch = dispatch => {
+  return {
+    fetchContent: () => dispatch(fetchContent())
+  }
+}
 
 export default withStyles(styles)(Carousel)

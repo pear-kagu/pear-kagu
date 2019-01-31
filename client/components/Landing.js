@@ -5,6 +5,7 @@ import {withStyles} from '@material-ui/core/styles'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import {LayoutBody, Typography} from '../components'
 import {Link} from 'react-router-dom'
+import {fetchInterests} from '../store'
 
 const styles = theme => ({
   root: {
@@ -90,8 +91,14 @@ class Landing extends Component {
     super()
   }
 
+  componentDidMount() {
+    this.props.fetchInterests()
+  }
+
   render() {
     const {classes} = this.props
+    const {allInterests} = this.props
+
     const categories = [
       {
         title: 'Javascript',
@@ -130,7 +137,7 @@ class Landing extends Component {
           Select a category to get started
         </Typography>
         <div className={classes.images}>
-          {categories.map(category => (
+          {allInterests.map(category => (
             <ButtonBase
               key={category.title}
               className={classes.imageWrapper}
@@ -138,7 +145,7 @@ class Landing extends Component {
                 width: category.width
               }}
             >
-              <Link to="/interest">
+              <Link to={`/interest/${allInterests.title}`}>
                 <div
                   className={classes.imageBackdrop}
                   style={{
@@ -168,13 +175,18 @@ class Landing extends Component {
 /**
  * CONTAINER
  */
-// const mapState = state => {
+const mapState = state => {
+  return {
+    allInterests: state.interest.allInterests
+  }
+}
 
-//   }
+const mapDispatch = dispatch => {
+  return {
+    fetchInterests: () => dispatch(fetchInterests())
+  }
+}
 
-// const mapDispatch = dispatch => {
-
-//   }
 export default withStyles(styles)(Landing)
 
 /**
