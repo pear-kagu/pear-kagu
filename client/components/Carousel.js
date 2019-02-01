@@ -50,14 +50,14 @@ class Carousel extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchContent()
+    this.props.fetchContent(this.props.typeId, this.props.selectedInterest.name)
   }
 
   render() {
-    const {classes, read, watch, meet, interestName} = this.props
+    const {classes, read, watch, meet, selectedInterest} = this.props
     return (
       <Grid>
-        <Typography>{interestName}</Typography>
+        <Typography>{selectedInterest.name}</Typography>
         <Grid container spacing={32}>
           <Grid>
             <ArrowBackIos />
@@ -168,7 +168,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    fetchContent: () => dispatch(fetchContent())
+    fetchContent: (typeId, interestName) =>
+      dispatch(fetchContent(typeId, interestName))
   }
 }
 
