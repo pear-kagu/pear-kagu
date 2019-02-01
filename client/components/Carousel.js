@@ -50,7 +50,7 @@ class Carousel extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchContent(this.props.typeId, this.props.selectedInterest.name)
+    this.props.fetchContent(this.props.typeId, this.props.selectedInterest.id)
   }
 
   render() {
@@ -61,7 +61,7 @@ class Carousel extends Component {
           <Grid>
             <ArrowBackIos />
           </Grid>
-          {this.props.typeId === 1 ? (
+          {this.props.typeId === '1' ? (
             read.map(singleArticle => {
               return (
                 <Grid key={singleArticle.id} style={cardStyle} item xs={3}>
@@ -69,7 +69,7 @@ class Carousel extends Component {
                     <IconButton aria-label="Add to favorites">
                       <FavoriteIcon />
                     </IconButton>
-                    <Link to={singleArticle.sourceUrl}>
+                    <a href={singleArticle.sourceUrl} target="blank">
                       <CardHeader
                         title={singleArticle.title}
                         subheader="blank for now"
@@ -84,7 +84,7 @@ class Carousel extends Component {
                           {singleArticle.description}
                         </Typography>
                       </CardContent>
-                    </Link>
+                    </a>
                   </Card>
                 </Grid>
               )
@@ -97,7 +97,7 @@ class Carousel extends Component {
                     <IconButton aria-label="Add to favorites">
                       <FavoriteIcon />
                     </IconButton>
-                    <Link to={video.sourceUrl}>
+                    <a href={video.sourceUrl} target="blank">
                       <CardHeader
                         title={video.title}
                         subheader="blank for now"
@@ -112,7 +112,7 @@ class Carousel extends Component {
                           {video.description}
                         </Typography>
                       </CardContent>
-                    </Link>
+                    </a>
                   </Card>
                 </Grid>
               )
@@ -125,7 +125,7 @@ class Carousel extends Component {
                     <IconButton aria-label="Add to favorites">
                       <FavoriteIcon />
                     </IconButton>
-                    <Link to={meetup.sourceUrl}>
+                    <a href={meetup.sourceUrl} target="blank">
                       <CardHeader
                         title={meetup.Title}
                         subheader="blank for now"
@@ -140,7 +140,7 @@ class Carousel extends Component {
                           {meetup.description}
                         </Typography>
                       </CardContent>
-                    </Link>
+                    </a>
                   </Card>
                 </Grid>
               )
@@ -165,14 +165,15 @@ const mapState = state => {
   return {
     read: state.content.read,
     watch: state.content.watch,
-    meet: state.content.do
+    meet: state.content.do,
+    selectedInterest: state.selectedInterest
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    fetchContent: (typeId, interestName) =>
-      dispatch(fetchContent(typeId, interestName))
+    fetchContent: (typeId, interestId) =>
+      dispatch(fetchContent(typeId, interestId))
   }
 }
 

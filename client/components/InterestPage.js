@@ -12,7 +12,7 @@ class InterestPage extends Component {
   render() {
     return (
       <div>
-        <h2>{this.props.state.interest.name}</h2>
+        <h2>{this.props.interest.name}</h2>
         <Carousel typeId="1" title="Read" />
         <Carousel typeId="2" title="Watch" />
         <Carousel typeId="3" title="Do" />
@@ -26,7 +26,7 @@ class InterestPage extends Component {
  */
 const mapState = state => {
   return {
-    interest: this.state.selectedInterest
+    interest: state.selectedInterest
   }
 }
 
