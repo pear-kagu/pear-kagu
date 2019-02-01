@@ -7,6 +7,33 @@ import {LayoutBody, Typography} from '../components'
 import {Link} from 'react-router-dom'
 import {fetchInterests} from '../store'
 
+const columAttributes = [
+  {
+    width: '40%',
+    color: 'turquoise'
+  },
+  {
+    width: '35%',
+    color: 'purple'
+  },
+  {
+    width: '25%',
+    color: 'blue'
+  },
+  {
+    width: '35%',
+    color: 'gray'
+  },
+  {
+    width: '25%',
+    color: 'green'
+  },
+  {
+    width: '40%',
+    color: 'orange'
+  }
+]
+
 const styles = theme => ({
   root: {
     marginTop: theme.spacing.unit * 8,
@@ -96,77 +123,45 @@ class Landing extends Component {
   }
 
   render() {
-    const {classes} = this.props
-    const {allInterests} = this.props
-
-    const categories = [
-      {
-        title: 'Javascript',
-        width: '40%',
-        color: 'purple'
-      },
-      {
-        title: 'Python',
-        width: '20%',
-        color: 'green'
-      },
-      {
-        title: 'Women Who Code',
-        width: '40%',
-        color: 'blue'
-      },
-      {
-        title: 'Learn to Code',
-        width: '30%',
-        color: 'turquoise'
-      },
-      {
-        title: 'C++',
-        width: '40%',
-        color: 'gray'
-      },
-      {
-        title: 'Machine Learning',
-        width: '30%',
-        color: 'orange'
-      }
-    ]
+    const {classes, allInterests} = this.props
     return (
       <LayoutBody className={classes.root} component="section" width="large">
         <Typography variant="h4" marked="center" align="center" component="h2">
-          Select a category to get started
+          Select an interest to get started
         </Typography>
         <div className={classes.images}>
-          {categories.map(category => (
-            <ButtonBase
-              key={category.title}
-              className={classes.imageWrapper}
-              style={{
-                width: category.width
-              }}
-            >
-              {/* <Link to={`/interest/${allInterests.title}`}> */}
-              <Link to={`/interest/${categories.title}`}>
-                <div
-                  className={classes.imageBackdrop}
-                  style={{
-                    backgroundColor: category.color
-                  }}
-                />
-                <div className={classes.imageButton}>
-                  <Typography
-                    component="h3"
-                    variant="h6"
-                    color="inherit"
-                    className={classes.imageTitle}
-                  >
-                    {category.title}
-                    <div className={classes.imageMarked} />
-                  </Typography>
-                </div>
-              </Link>
-            </ButtonBase>
-          ))}
+          {allInterests.map((interest, idx) => {
+            const {width, color} = columAttributes[idx]
+            return (
+              <ButtonBase
+                key={interest.name}
+                className={classes.imageWrapper}
+                style={{
+                  width: width
+                }}
+              >
+                <Link to={`/interest/${interest.name}`}>
+                  <div
+                    className={classes.imageBackdrop}
+                    style={{
+                      backgroundColor: color
+                    }}
+                  />
+                  <div className={classes.imageButton}>
+                    <Typography
+                      component="h3"
+                      variant="h6"
+                      color="inherit"
+                      className={classes.imageTitle}
+                    >
+                      {interest.name}
+                      <div className={classes.imageMarked} />
+                    </Typography>
+                  </div>
+                </Link>
+              </ButtonBase>
+            )
+          })}
         </div>
       </LayoutBody>
     )
