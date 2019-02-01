@@ -13,9 +13,8 @@ const API_SOURCE_ID = 3
 // You must include at least one q, source, or domain
 router.get('/:interestId/:interestName', async (req, res, next) => {
   const {interestId, interestName} = req.params
-  console.log('interestId', interestId)
-  console.log('interestName', interestName)
   const today = new Date()
+
   try {
     const articlesReturned = await newsapi.v2.everything({
       q: interestName,
@@ -34,8 +33,7 @@ router.get('/:interestId/:interestName', async (req, res, next) => {
         const description = article.description
         const sourceUrl = article.url
         const publishedAt = article.publishedAt
-        console.log('title', title)
-        console.log('interestId2', interestId)
+
         Content.findOrCreate({
           where: {
             title,
