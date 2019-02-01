@@ -11,12 +11,13 @@ const API_SOURCE_ID = 3
 
 //GET route /api/newsapi
 // You must include at least one q, source, or domain
-router.get('/:interest', async (req, res, next) => {
-  const interest = req.params.interest
+router.get('/:interestId/:interestName', async (req, res, next) => {
+  const {interestId, interestName} = req.params
   const today = new Date()
+
   try {
-    const all = await newsapi.v2.everything({
-      q: interest,
+    const articlesReturned = await newsapi.v2.everything({
+      q: interestName,
       sources: 'wired, techcrunch, hacker-news',
       from: today - 30,
       to: today,
@@ -24,7 +25,7 @@ router.get('/:interest', async (req, res, next) => {
       sortBy: 'relevancy'
     })
     await Promise.all(
-      all.articles.map(article => {
+      articlesReturned.articles.map(article => {
         const title = article.title
         const imageUrl =
           article.urlToImage ||
@@ -41,12 +42,13 @@ router.get('/:interest', async (req, res, next) => {
             sourceUrl,
             publishedAt,
             typeId: TYPE_ID,
-            apiSourceId: API_SOURCE_ID
+            apiSourceId: API_SOURCE_ID,
+            interestId
           }
         })
       })
     )
-    res.status(200).send(all)
+    res.status(200).send(articlesReturned)
   } catch (err) {
     next(err)
   }
