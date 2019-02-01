@@ -11,7 +11,7 @@ import InputBase from '@material-ui/core/InputBase'
 import {fade} from '@material-ui/core/styles/colorManipulator'
 import {withStyles} from '@material-ui/core/styles'
 import SearchIcon from '@material-ui/icons/Search'
-import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
 
 const styles = theme => ({
   root: {
@@ -85,72 +85,58 @@ const styles = theme => ({
 })
 
 class Navbar extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const {classes} = this.props
 
     return (
       <div className={classes.root} style={{color: 'white'}}>
-        <Grid container spacing={24}>
-          <AppBar position="static" style={{backgroundColor: 'turquoise'}}>
-            <Toolbar>
-              <Grid item xs>
-                <Typography
-                  className={classes.title}
-                  variant="h6"
-                  color="inherit"
-                  noWrap
-                >
-                  <Link to="/">Pear Kagu</Link>
-                </Typography>
-              </Grid>
-              <Grid item xs>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <SearchIcon />
-                  </div>
-                  <InputBase
-                    placeholder="Search…"
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput
-                    }}
-                  />
-                </div>
-              </Grid>
-
-              {this.props.isLoggedIn ? (
-                <div>
-                  {/* The navbar will show these links after you log in */}
-                  <Grid item xs>
-                    <Link to="/savedcontent">Saved Content</Link>
-                  </Grid>
-                  <Grid item xs>
-                    <a href="#" onClick={this.props.handleClick}>
-                      Logout
-                    </a>
-                  </Grid>
-                </div>
-              ) : (
-                <div>
-                  {/* The navbar will show these links before you log in */}
-                  <Grid item xs>
-                    <Login name="login" />
-                  </Grid>
-                  <div>
-                    <Grid item xs>
-                      <Link to="/signup">Sign Up</Link>
-                    </Grid>
-                  </div>
-                </div>
-              )}
-              <div className={classes.grow} />
-            </Toolbar>
-          </AppBar>
-        </Grid>
+        <AppBar position="static" style={{backgroundColor: 'turquoise'}}>
+          <Toolbar>
+            <Typography
+              className={classes.title}
+              variant="h6"
+              color="inherit"
+              noWrap
+            >
+              <Link to="/">Kagu</Link>
+            </Typography>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput
+                }}
+              />
+            </div>
+            {this.props.isLoggedIn ? (
+              <div>
+                {/* The navbar will show these links after you log in */}
+                <Button className={classes.button}>
+                  <Link to="/savedcontent">Saved Content</Link>
+                </Button>
+                <Button className={classes.button}>
+                  <a href="#" onClick={this.props.handleClick}>
+                    Logout
+                  </a>
+                </Button>
+              </div>
+            ) : (
+              <div>
+                {/* The navbar will show these links before you log in */}
+                <Button className={classes.button}>
+                  <Login name="login" />
+                </Button>
+                <Button className={classes.button}>
+                  <Link to="/signup">Sign Up</Link>
+                </Button>
+              </div>
+            )}
+          </Toolbar>
+        </AppBar>
       </div>
     )
   }
