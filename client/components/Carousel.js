@@ -54,97 +54,100 @@ class Carousel extends Component {
   }
 
   render() {
-    const {classes, read, watch, meet, selectedInterest} = this.props
+    const {classes, read, watch, meet} = this.props
     return (
       <Grid>
-        <Typography>{selectedInterest.name}</Typography>
         <Grid container spacing={32}>
           <Grid>
             <ArrowBackIos />
           </Grid>
-          {this.props.read.typeId === 1
-            ? read.map(singleArticle => {
-                return (
-                  <Grid key={singleArticle.id} style={cardStyle} item xs={3}>
-                    <Card>
-                      <IconButton aria-label="Add to favorites">
-                        <FavoriteIcon />
-                      </IconButton>
-                      <Link to={singleArticle.sourceUrl}>
-                        <CardHeader
-                          title={singleArticle.title}
-                          subheader="blank for now"
-                        />
-                        <CardMedia
-                          className={classes.media}
-                          image={singleArticle.imageUrl}
-                          title={singleArticle.title}
-                        />
-                        <CardContent>
-                          <Typography component="p">
-                            {singleArticle.description}
-                          </Typography>
-                        </CardContent>
-                      </Link>
-                    </Card>
-                  </Grid>
-                )
-              })
-            : this.props.watch.typeId === 2
-              ? watch.map(video => {
-                  return (
-                    <Grid key={video.id} style={cardStyle} item xs={3}>
-                      <Card>
-                        <IconButton aria-label="Add to favorites">
-                          <FavoriteIcon />
-                        </IconButton>
-                        <Link to={video.sourceUrl}>
-                          <CardHeader
-                            title={video.title}
-                            subheader="blank for now"
-                          />
-                          <CardMedia
-                            className={classes.media}
-                            image={video.imageUrl}
-                            title={video.title}
-                          />
-                          <CardContent>
-                            <Typography component="p">
-                              {video.description}
-                            </Typography>
-                          </CardContent>
-                        </Link>
-                      </Card>
-                    </Grid>
-                  )
-                })
-              : meet.map(meetup => {
-                  return (
-                    <Grid key={meetup.id} style={cardStyle} item xs={3}>
-                      <Card>
-                        <IconButton aria-label="Add to favorites">
-                          <FavoriteIcon />
-                        </IconButton>
-                        <Link to={meetup.sourceUrl}>
-                          <CardHeader
-                            title={meetup.Title}
-                            subheader="blank for now"
-                          />
-                          <CardMedia
-                            className={classes.media}
-                            image={meetup.imageUrl}
-                            title={meetup.Title}
-                          />
-                          <CardContent>
-                            <Typography component="p">
-                              {meetup.description}
-                            </Typography>
-                          </CardContent>
-                        </Link>
-                      </Card>
-                    </Grid>
-                  )
-                })}
+          {this.props.typeId === 1 ? (
+            read.map(singleArticle => {
+              return (
+                <Grid key={singleArticle.id} style={cardStyle} item xs={3}>
+                  <Card>
+                    <IconButton aria-label="Add to favorites">
+                      <FavoriteIcon />
+                    </IconButton>
+                    <Link to={singleArticle.sourceUrl}>
+                      <CardHeader
+                        title={singleArticle.title}
+                        subheader="blank for now"
+                      />
+                      <CardMedia
+                        className={classes.media}
+                        image={singleArticle.imageUrl}
+                        title={singleArticle.title}
+                      />
+                      <CardContent>
+                        <Typography component="p">
+                          {singleArticle.description}
+                        </Typography>
+                      </CardContent>
+                    </Link>
+                  </Card>
+                </Grid>
+              )
+            })
+          ) : this.props.typeId === 2 ? (
+            watch.map(video => {
+              return (
+                <Grid key={video.id} style={cardStyle} item xs={3}>
+                  <Card>
+                    <IconButton aria-label="Add to favorites">
+                      <FavoriteIcon />
+                    </IconButton>
+                    <Link to={video.sourceUrl}>
+                      <CardHeader
+                        title={video.title}
+                        subheader="blank for now"
+                      />
+                      <CardMedia
+                        className={classes.media}
+                        image={video.imageUrl}
+                        title={video.title}
+                      />
+                      <CardContent>
+                        <Typography component="p">
+                          {video.description}
+                        </Typography>
+                      </CardContent>
+                    </Link>
+                  </Card>
+                </Grid>
+              )
+            })
+          ) : this.props.typeId === 3 ? (
+            meet.map(meetup => {
+              return (
+                <Grid key={meetup.id} style={cardStyle} item xs={3}>
+                  <Card>
+                    <IconButton aria-label="Add to favorites">
+                      <FavoriteIcon />
+                    </IconButton>
+                    <Link to={meetup.sourceUrl}>
+                      <CardHeader
+                        title={meetup.Title}
+                        subheader="blank for now"
+                      />
+                      <CardMedia
+                        className={classes.media}
+                        image={meetup.imageUrl}
+                        title={meetup.Title}
+                      />
+                      <CardContent>
+                        <Typography component="p">
+                          {meetup.description}
+                        </Typography>
+                      </CardContent>
+                    </Link>
+                  </Card>
+                </Grid>
+              )
+            })
+          ) : (
+            <div />
+          )}
           <Grid>
             <ArrowForwardIos />
           </Grid>
