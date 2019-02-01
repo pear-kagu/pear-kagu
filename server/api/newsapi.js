@@ -17,7 +17,7 @@ router.get('/:interestId/:interestName', async (req, res, next) => {
   console.log('interestName', interestName)
   const today = new Date()
   try {
-    const all = await newsapi.v2.everything({
+    const articlesReturned = await newsapi.v2.everything({
       q: interestName,
       sources: 'wired, techcrunch, hacker-news',
       from: today - 30,
@@ -26,7 +26,7 @@ router.get('/:interestId/:interestName', async (req, res, next) => {
       sortBy: 'relevancy'
     })
     await Promise.all(
-      all.articles.map(article => {
+      articlesReturned.articles.map(article => {
         const title = article.title
         const imageUrl =
           article.urlToImage ||
@@ -34,7 +34,8 @@ router.get('/:interestId/:interestName', async (req, res, next) => {
         const description = article.description
         const sourceUrl = article.url
         const publishedAt = article.publishedAt
-
+        console.log('title', title)
+        console.log('interestId2', interestId)
         Content.findOrCreate({
           where: {
             title,
@@ -49,7 +50,7 @@ router.get('/:interestId/:interestName', async (req, res, next) => {
         })
       })
     )
-    res.status(200).send(all)
+    res.status(200).send(articlesReturned)
   } catch (err) {
     next(err)
   }
