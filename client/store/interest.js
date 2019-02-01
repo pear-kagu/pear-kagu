@@ -2,12 +2,20 @@ import axios from 'axios'
 
 //action types
 const GET_INTERESTS = 'GET_INTERESTS'
+const SET_SELECTED_INTEREST = 'SET_SELECTED_INTEREST'
 
 //action creators
 const getInterests = interests => {
   return {
     type: GET_INTERESTS,
     interests
+  }
+}
+
+export const setSelectedInterest = interest => {
+  return {
+    type: SET_SELECTED_INTEREST,
+    interest
   }
 }
 
@@ -21,7 +29,8 @@ export const fetchInterests = () => {
 
 //initial state
 const initialState = {
-  allInterests: []
+  allInterests: [],
+  selectedInterest: {}
 }
 
 //reducer
@@ -31,6 +40,9 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case GET_INTERESTS:
       newState.allInterests = action.interests
+      return newState
+    case SET_SELECTED_INTEREST:
+      newState.selectedInterest = action.interest
       return newState
     default:
       return state

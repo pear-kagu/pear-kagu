@@ -12,10 +12,10 @@ class InterestPage extends Component {
   render() {
     return (
       <div>
-        <h2>Javascript</h2>
-        <Carousel typeId="1" title="Read" />
+        <h2>{this.props.interest.name}</h2>
         <Carousel typeId="2" title="Watch" />
         <Carousel typeId="3" title="Do" />
+        <Carousel typeId="1" title="Read" />
       </div>
     )
   }
@@ -24,5 +24,10 @@ class InterestPage extends Component {
 /**
  * CONTAINER
  */
+const mapState = state => {
+  return {
+    interest: state.interest.selectedInterest.interest
+  }
+}
 
-export default InterestPage
+export default connect(mapState)(InterestPage)

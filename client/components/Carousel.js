@@ -16,7 +16,6 @@ import IconButton from '@material-ui/core/IconButton'
 import {fetchContent} from '../store'
 import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos'
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos'
-import {endianness} from 'os'
 
 const cardStyle = {
   height: 20
@@ -51,94 +50,104 @@ class Carousel extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchContent()
+    this.props.fetchContent(this.props.typeId, this.props.selectedInterest.id)
   }
 
   render() {
-    const {classes, type} = this.props
+    const {classes, read, watch, meet} = this.props
     return (
       <Grid>
-        <Typography>{type}</Typography>
         <Grid container spacing={32}>
           <Grid>
             <ArrowBackIos />
           </Grid>
-          {/* {this.props.type === 1 ? } */}
-          <Grid style={cardStyle} item xs={3}>
-            <Card>
-              <IconButton aria-label="Add to favorites">
-                <FavoriteIcon />
-              </IconButton>
-              <Link to="/">
-                <CardHeader
-                  title="Shrimp and Chorizo Paella"
-                  subheader="September 14, 2016"
-                />
-                <CardMedia
-                  className={classes.media}
-                  image="https://cdn-image.myrecipes.com/sites/default/files/styles/medium_2x/public/image/recipes/ck/00/05/spanish-paella-mr-x.jpg?itok=yw_H-lXE"
-                  title="Paella dish"
-                />
-                <CardContent>
-                  <Typography component="p">
-                    This impressive paella is a perfect party dish and a fun
-                    meal to cook together with your guests. Add 1 cup of frozen
-                    peas along with the mussels, if you like.
-                  </Typography>
-                </CardContent>
-              </Link>
-            </Card>
-          </Grid>
-          <Grid item xs={3}>
-            <Card>
-              <IconButton aria-label="Add to favorites">
-                <FavoriteIcon />
-              </IconButton>
-              <Link to="/">
-                <CardHeader
-                  title="Shrimp and Chorizo Paella"
-                  subheader="September 14, 2016"
-                />
-                <CardMedia
-                  className={classes.media}
-                  image="https://cdn-image.myrecipes.com/sites/default/files/styles/medium_2x/public/image/recipes/ck/00/05/spanish-paella-mr-x.jpg?itok=yw_H-lXE"
-                  title="Paella dish"
-                />
-                <CardContent>
-                  <Typography component="p">
-                    This impressive paella is a perfect party dish and a fun
-                    meal to cook together with your guests. Add 1 cup of frozen
-                    peas along with the mussels, if you like.
-                  </Typography>
-                </CardContent>
-              </Link>
-            </Card>
-          </Grid>
-          <Grid item xs={3}>
-            <Card>
-              <IconButton aria-label="Add to favorites">
-                <FavoriteIcon />
-              </IconButton>
-              <Link to="/">
-                <CardHeader
-                  title="Shrimp and Chorizo Paella"
-                  subheader="September 14, 2016"
-                />
-                <CardMedia
-                  className={classes.media}
-                  image="https://cdn-image.myrecipes.com/sites/default/files/styles/medium_2x/public/image/recipes/ck/00/05/spanish-paella-mr-x.jpg?itok=yw_H-lXE"
-                  title="Paella dish"
-                />
-                <CardContent>
-                  <Typography component="p">
-                    This impressive paella is a perfect party dish and a fun
-                    meal to cook together with your guests. Add 1 cup of frozen
-                    peas along with the mussels, if you like.
-                  </Typography>
-                </CardContent>
-              </Link>
-            </Card>
-          </Grid>
+          {this.props.typeId === '1' ? (
+            read.map(singleArticle => {
+              return (
+                <Grid key={singleArticle.id} style={cardStyle} item xs={3}>
+                  <Card>
+                    <IconButton aria-label="Add to favorites">
+                      <FavoriteIcon />
+                    </IconButton>
+                    <a href={singleArticle.sourceUrl} target="blank">
+                      <CardHeader
+                        title={singleArticle.title}
+                        subheader="blank for now"
+                      />
+                      <CardMedia
+                        className={classes.media}
+                        image={singleArticle.imageUrl}
+                        title={singleArticle.title}
+                      />
+                      <CardContent>
+                        <Typography component="p">
+                          {singleArticle.description}
+                        </Typography>
+                      </CardContent>
+                    </a>
+                  </Card>
+                </Grid>
+              )
+            })
+          ) : this.props.typeId === '2' ? (
+            watch.map(video => {
+              return (
+                <Grid key={video.id} style={cardStyle} item xs={3}>
+                  <Card>
+                    <IconButton aria-label="Add to favorites">
+                      <FavoriteIcon />
+                    </IconButton>
+                    <a href={video.sourceUrl} target="blank">
+                      <CardHeader
+                        title={video.title}
+                        subheader="blank for now"
+                      />
+                      <CardMedia
+                        className={classes.media}
+                        image={video.imageUrl}
+                        title={video.title}
+                      />
+                      <CardContent>
+                        <Typography component="p">
+                          {video.description}
+                        </Typography>
+                      </CardContent>
+                    </a>
+                  </Card>
+                </Grid>
+              )
+            })
+          ) : this.props.typeId === '3' ? (
+            meet.map(meetup => {
+              return (
+                <Grid key={meetup.id} style={cardStyle} item xs={3}>
+                  <Card>
+                    <IconButton aria-label="Add to favorites">
+                      <FavoriteIcon />
+                    </IconButton>
+                    <a href={meetup.sourceUrl} target="blank">
+                      <CardHeader
+                        title={meetup.Title}
+                        subheader="blank for now"
+                      />
+                      <CardMedia
+                        className={classes.media}
+                        image={meetup.imageUrl}
+                        title={meetup.Title}
+                      />
+                      <CardContent>
+                        <Typography component="p">
+                          {meetup.description}
+                        </Typography>
+                      </CardContent>
+                    </a>
+                  </Card>
+                </Grid>
+              )
+            })
+          ) : (
+            <div />
+          )}
           <Grid>
             <ArrowForwardIos />
           </Grid>
@@ -156,13 +165,15 @@ const mapState = state => {
   return {
     read: state.content.read,
     watch: state.content.watch,
-    do: state.content.do
+    meet: state.content.do,
+    selectedInterest: state.interest.selectedInterest.interest
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    fetchContent: () => dispatch(fetchContent())
+    fetchContent: (typeId, interestId) =>
+      dispatch(fetchContent(typeId, interestId))
   }
 }
 
