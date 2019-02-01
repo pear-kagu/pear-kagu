@@ -13,9 +13,9 @@ class InterestPage extends Component {
     return (
       <div>
         <h2>{this.props.interest.name}</h2>
-        <Carousel typeId="1" title="Read" />
         <Carousel typeId="2" title="Watch" />
         <Carousel typeId="3" title="Do" />
+        <Carousel typeId="1" title="Read" />
       </div>
     )
   }
