@@ -137,7 +137,7 @@ class Landing extends Component {
           Select a category to get started
         </Typography>
         <div className={classes.images}>
-          {allInterests.map(category => (
+          {categories.map(category => (
             <ButtonBase
               key={category.title}
               className={classes.imageWrapper}
@@ -145,7 +145,8 @@ class Landing extends Component {
                 width: category.width
               }}
             >
-              <Link to={`/interest/${allInterests.title}`}>
+              {/* <Link to={`/interest/${allInterests.title}`}> */}
+              <Link to={`/interest/${categories.title}`}>
                 <div
                   className={classes.imageBackdrop}
                   style={{
@@ -187,7 +188,7 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default withStyles(styles)(Landing)
+export default connect(mapState, mapDispatch)(withStyles(styles)(Landing))
 
 /**
  * PROP TYPES
