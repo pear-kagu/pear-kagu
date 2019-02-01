@@ -28,9 +28,9 @@ const getNews = news => {
 }
 
 //thunk creators
-export const fetchContent = (typeId, interestName) => {
+export const fetchContent = (typeId, interestId) => {
   return async dispatch => {
-    const {data} = await axios.get(`/api/content/${typeId}/${interestName}`)
+    const {data} = await axios.get(`/api/content/${typeId}/${interestId}`)
     if (typeId === 1) {
       dispatch(getNews(data))
     } else if (typeId === 2) {

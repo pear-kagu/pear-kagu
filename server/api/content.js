@@ -3,18 +3,11 @@ const {Content, Interest} = require('../db/models')
 
 module.exports = router
 
-router.get('/:typeId/:interestName', async (req, res, next) => {
+router.get('/:typeId/:interestId', async (req, res, next) => {
   try {
-    let typeId = req.params.typeId
-    let interestName = req.params.interestName
-    let interestId = await Interest.findOne({
-      where: {
-        name: interestName
-      },
-      attributes: ['id']
-    })
+    let typeId = Number(req.params.typeId)
+    let interestId = Number(req.params.interestId)
 
-    console.log('interestIdd', interestId)
     let content = await Content.findAll({
       where: {
         typeId,
