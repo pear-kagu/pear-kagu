@@ -14,13 +14,13 @@ const youtube = google.youtube({
   auth: youtubeApiKey
 })
 
-router.get('/:topic', async (req, res, next) => {
+router.get('/:interestId/:interestName', async (req, res, next) => {
   try {
-    let topic = req.params.topic
+    let {interestId, interestName} = req.params
     const searchResult = await youtube.search.list({
       part: 'id,snippet',
-      q: topic,
-      maxResults: 50,
+      q: interestName,
+      maxResults: 30,
       regionCode: 'US',
       relevanceLanguage: 'en',
       type: 'video'
@@ -45,7 +45,8 @@ router.get('/:topic', async (req, res, next) => {
             sourceUrl,
             publishedAt,
             typeId: TYPE_ID,
-            apiSourceId: API_SOURCE_ID
+            apiSourceId: API_SOURCE_ID,
+            interestId
           }
         })
       })
