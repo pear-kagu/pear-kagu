@@ -63,6 +63,7 @@ class Carousel extends Component {
           <Grid>
             <ArrowBackIos />
           </Grid>
+          {/* {this.props.type === 1 ? } */}
           <Grid style={cardStyle} item xs={3}>
             <Card>
               <IconButton aria-label="Add to favorites">
@@ -151,10 +152,18 @@ class Carousel extends Component {
  * CONTAINER
  */
 
+const mapState = state => {
+  return {
+    read: state.content.read,
+    watch: state.content.watch,
+    do: state.content.do
+  }
+}
+
 const mapDispatch = dispatch => {
   return {
     fetchContent: () => dispatch(fetchContent())
   }
 }
 
-export default withStyles(styles)(Carousel)
+export default connect(mapState, mapDispatch)(withStyles(styles)(Carousel))

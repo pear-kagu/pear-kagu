@@ -6,7 +6,7 @@ import user from './user'
 import interest from './interest'
 import content from './content'
 
-const reducer = combineReducers({user, interest})
+const reducer = combineReducers({user, interest, content})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
