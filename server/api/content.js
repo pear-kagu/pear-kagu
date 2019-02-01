@@ -7,7 +7,6 @@ router.get('/:typeId/:interestName', async (req, res, next) => {
   try {
     let typeId = req.params.typeId
     let interestName = req.params.interestName
-
     let interestId = await Interest.findOne({
       where: {
         name: interestName
@@ -15,6 +14,7 @@ router.get('/:typeId/:interestName', async (req, res, next) => {
       attributes: ['id']
     })
 
+    console.log('interestIdd', interestId)
     let content = await Content.findAll({
       where: {
         typeId,
