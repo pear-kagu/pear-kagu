@@ -31,11 +31,11 @@ const getNews = news => {
 export const fetchContent = (typeId, interestId) => {
   return async dispatch => {
     const {data} = await axios.get(`/api/content/${typeId}/${interestId}`)
-    if (typeId === 1) {
+    if (typeId === '1') {
       dispatch(getNews(data))
-    } else if (typeId === 2) {
+    } else if (typeId === '2') {
       dispatch(getYoutubes(data))
-    } else if (typeId === 3) {
+    } else if (typeId === '3') {
       dispatch(getMeetups(data))
     }
   }

@@ -26,7 +26,7 @@ class InterestPage extends Component {
  */
 const mapState = state => {
   return {
-    interest: state.selectedInterest
+    interest: state.interest.selectedInterest.interest
   }
 }
 

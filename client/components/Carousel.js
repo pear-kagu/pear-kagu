@@ -89,7 +89,7 @@ class Carousel extends Component {
                 </Grid>
               )
             })
-          ) : this.props.typeId === 2 ? (
+          ) : this.props.typeId === '2' ? (
             watch.map(video => {
               return (
                 <Grid key={video.id} style={cardStyle} item xs={3}>
@@ -117,7 +117,7 @@ class Carousel extends Component {
                 </Grid>
               )
             })
-          ) : this.props.typeId === 3 ? (
+          ) : this.props.typeId === '3' ? (
             meet.map(meetup => {
               return (
                 <Grid key={meetup.id} style={cardStyle} item xs={3}>
@@ -166,7 +166,7 @@ const mapState = state => {
     read: state.content.read,
     watch: state.content.watch,
     meet: state.content.do,
-    selectedInterest: state.selectedInterest
+    selectedInterest: state.interest.selectedInterest.interest
   }
 }
 
