@@ -6,7 +6,7 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
-const SET_SAVED_CONTENT = 'SET_SAVED_CONTENT'
+const GET_USER_CONTENT = 'GET_USER_CONTENT'
 
 /**
  * INITIAL STATE
@@ -21,13 +21,7 @@ const defaultUser = {
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
-
-const setSavedContent = contentId => {
-  return {
-    type: SET_SAVED_CONTENT,
-    contentId
-  }
-}
+const getContent = content => ({type: GET_USER_CONTENT, content})
 
 /**
  * THUNK CREATORS
@@ -38,13 +32,6 @@ export const me = () => async dispatch => {
     dispatch(getUser(res.data || defaultUser))
   } catch (err) {
     console.error(err)
-  }
-}
-
-export const setSavedContentinDB = (userId, contentId) => {
-  return async dispatch => {
-    const {data} = await axios.post(`api/users/${userId}/content`, contentId)
-    dispatch(setSavedContent(data))
   }
 }
 
@@ -95,6 +82,22 @@ export const logout = () => async dispatch => {
   }
 }
 
+// thunk to fetch user content
+export const fetchUserContent = userId => {
+  return async dispatch => {
+    const {data} = await axios.get(`/api/user/${userId}/content`)
+    dispatch(getContent(data))
+  }
+}
+
+//thunk to set user content
+export const setSavedContentinDB = (userId, contentId) => {
+  return async dispatch => {
+    await axios.post(`api/users/${userId}/content`, contentId)
+    dispatch(fetchUserContent(userId))
+  }
+}
+
 /**
  * REDUCER
  */
@@ -103,6 +106,9 @@ export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
       newState.user = action.user
+      return newState
+    case GET_USER_CONTENT:
+      newState.savedContent = action.content
       return newState
     case REMOVE_USER:
       return defaultUser
