@@ -12,43 +12,14 @@ async function getInterests() {
 async function callApis() {
   try {
     const allInterests = await getInterests()
-    let idx = 0
 
-    await axios.get(
-      `http://localhost:8080/api/newsapi/${allInterests[idx].id}/${
-        allInterests[idx].name
-      }`
-    )
-    idx++
-    await axios.get(
-      `http://localhost:8080/api/newsapi/${allInterests[idx].id}/${
-        allInterests[idx].name
-      }`
-    )
-    idx++
-    await axios.get(
-      `http://localhost:8080/api/newsapi/${allInterests[idx].id}/${
-        allInterests[idx].name
-      }`
-    )
-    idx++
-    await axios.get(
-      `http://localhost:8080/api/newsapi/${allInterests[idx].id}/${
-        allInterests[idx].name
-      }`
-    )
-    idx++
-    await axios.get(
-      `http://localhost:8080/api/newsapi/${allInterests[idx].id}/${
-        allInterests[idx].name
-      }`
-    )
-    idx++
-    await axios.get(
-      `http://localhost:8080/api/newsapi/${allInterests[idx].id}/${
-        allInterests[idx].name
-      }`
-    )
+    for (let i = 0; i < allInterests.length; i++) {
+      await axios.get(
+        `http://localhost:8080/api/newsapi/${allInterests[i].id}/${
+          allInterests[i].name
+        }`
+      )
+    }
   } catch (err) {
     console.error(err)
   }
