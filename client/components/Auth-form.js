@@ -56,12 +56,6 @@ const AuthForm = props => {
               </label>
               <input name="state" type="text" />
             </div>
-            <div>
-              <label htmlFor="zipcode">
-                <small>Zip Code</small>
-              </label>
-              <input name="zipcode" type="text" />
-            </div>
           </div>
         ) : (
           <div />
@@ -133,7 +127,6 @@ const mapDispatch = dispatch => {
             email: evt.target.email.value,
             city: evt.target.city.value,
             state: evt.target.state.value,
-            zipcode: evt.target.zipcode.value,
             password: evt.target.password.value
           })
         : (formInfo = {
