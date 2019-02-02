@@ -204,6 +204,6 @@ export default connect(mapState, mapDispatch)(
 /**
  * PROP TYPES
  */
-SavedContentPage.propTypes = {
+SavedContentLanding.propTypes = {
   classes: PropTypes.object.isRequired
 }
