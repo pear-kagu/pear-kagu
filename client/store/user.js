@@ -37,7 +37,6 @@ export const me = () => async dispatch => {
 
 export const auth = formInfo => async dispatch => {
   let res
-  console.log('in thunk', formInfo)
   const {
     firstName,
     lastName,
