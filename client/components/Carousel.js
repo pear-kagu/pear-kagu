@@ -47,19 +47,10 @@ const styles = theme => ({
 class Carousel extends Component {
   constructor() {
     super()
-    this.handleFavoriteClick = this.handleFavoriteClick.bind(this)
   }
 
   componentDidMount() {
     this.props.fetchContent(this.props.typeId, this.props.selectedInterest.id)
-  }
-
-  handleFavoriteClick(event) {
-    if (this.props.user.id) {
-      // this.props.setSavedContentinDB(this.props.user.id, event.target.value)
-    } else {
-      alert('Please sign in or sign up to save to your favorites')
-    }
   }
 
   render() {
@@ -75,7 +66,22 @@ class Carousel extends Component {
             return (
               <Grid key={singleArticle.id} style={cardStyle} item xs={3}>
                 <Card>
-                  <IconButton aria-label="Add to favorites">
+                  <IconButton
+                    aria-label="Add to favorites"
+                    contentId={singleArticle.id}
+                    onClick={() => {
+                      if (this.props.user.id) {
+                        this.props.setSavedContentinDB(
+                          this.props.user.id,
+                          singleArticle
+                        )
+                      } else {
+                        alert(
+                          'Please sign in or sign up to save to your favorites'
+                        )
+                      }
+                    }}
+                  >
                     <FavoriteIcon />
                   </IconButton>
                   <a href={singleArticle.sourceUrl} target="blank">
@@ -105,7 +111,7 @@ class Carousel extends Component {
                 <Card>
                   <IconButton
                     aria-label="Add to favorites"
-                    onClick={this.handleFavoriteClick}
+                    // onClick={this.handleFavoriteClick}
                   >
                     <FavoriteIcon />
                   </IconButton>
@@ -131,7 +137,7 @@ class Carousel extends Component {
                 <Card>
                   <IconButton
                     aria-label="Add to favorites"
-                    onClick={this.handleFavoriteClick}
+                    // onClick={this.handleFavoriteClick}
                   >
                     <FavoriteIcon />
                   </IconButton>
