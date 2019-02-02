@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 import ButtonBase from '@material-ui/core/ButtonBase'
-import {LayoutBody, Typography} from '../components'
+import {LayoutBody, Typography} from '.'
 import {Link} from 'react-router-dom'
 import {fetchInterests, setSelectedInterest} from '../store'
 
@@ -113,7 +113,7 @@ const styles = theme => ({
   }
 })
 
-class Landing extends Component {
+class SavedContentLanding extends Component {
   constructor() {
     super()
   }
@@ -123,11 +123,19 @@ class Landing extends Component {
   }
 
   render() {
-    const {classes, allInterests, handleClick} = this.props
+    const {classes, handleClick} = this.props
+    const allInterests = [
+      {
+        name: 'Women in Tech'
+      },
+      {
+        name: 'JavaScript'
+      }
+    ]
     return (
       <LayoutBody className={classes.root} component="section" width="large">
         <Typography variant="h4" marked="center" align="center" component="h2">
-          Select an interest to start exploring
+          Select an interest to view your saved content:
         </Typography>
         <div className={classes.images}>
           {allInterests.map((interest, idx) => {
@@ -141,7 +149,7 @@ class Landing extends Component {
                 }}
               >
                 <Link
-                  to={`/interest/${interest.name}`}
+                  to={`/savedContent/${interest.name}`}
                   onClick={() => handleClick({interest})}
                 >
                   <div
@@ -189,11 +197,13 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(withStyles(styles)(Landing))
+export default connect(mapState, mapDispatch)(
+  withStyles(styles)(SavedContentLanding)
+)
 
 /**
  * PROP TYPES
  */
-Landing.propTypes = {
+SavedContentPage.propTypes = {
   classes: PropTypes.object.isRequired
 }
