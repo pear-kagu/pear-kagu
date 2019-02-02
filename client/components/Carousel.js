@@ -47,10 +47,15 @@ const styles = theme => ({
 class Carousel extends Component {
   constructor() {
     super()
+    this.handleFavoriteClick = this.handleFavoriteClick.bind(this)
   }
 
   componentDidMount() {
     this.props.fetchContent(this.props.typeId, this.props.selectedInterest.id)
+  }
+
+  handleFavoriteClick(e) {
+    console.log('clicked')
   }
 
   render() {
@@ -66,7 +71,10 @@ class Carousel extends Component {
               return (
                 <Grid key={singleArticle.id} style={cardStyle} item xs={3}>
                   <Card>
-                    <IconButton aria-label="Add to favorites">
+                    <IconButton
+                      aria-label="Add to favorites"
+                      onClick={this.handleFavoriteClick}
+                    >
                       <FavoriteIcon />
                     </IconButton>
                     <a href={singleArticle.sourceUrl} target="blank">
