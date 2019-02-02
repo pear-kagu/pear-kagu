@@ -12,7 +12,6 @@ async function getInterests() {
 async function callApis() {
   try {
     const allInterests = await getInterests()
-    console.log(allInterests)
 
     for (let i = 0; i < allInterests.length; i++) {
       await axios.get(
