@@ -58,114 +58,108 @@ class Carousel extends Component {
     if (this.props.user.id) {
       // this.props.setSavedContentinDB(this.props.user.id, event.target.value)
     } else {
-      this.alert('Please sign in or sign up to save to your favorites')
+      alert('Please sign in or sign up to save to your favorites')
     }
   }
 
   render() {
     const {classes, read, watch, meet} = this.props
+
     return (
-      <Grid>
-        <Grid container spacing={32}>
-          <Grid>
-            <ArrowBackIos />
-          </Grid>
-          {this.props.typeId === '1' ? (
-            read.map(singleArticle => {
-              return (
-                <Grid key={singleArticle.id} style={cardStyle} item xs={3}>
-                  <Card>
-                    <IconButton aria-label="Add to favorites">
-                      <FavoriteIcon />
-                    </IconButton>
-                    <a href={singleArticle.sourceUrl} target="blank">
-                      <CardHeader
-                        title={singleArticle.title}
-                        subheader="blank for now"
-                      />
-                      <CardMedia
-                        className={classes.media}
-                        image={singleArticle.imageUrl}
-                        title={singleArticle.title}
-                      />
-                      <CardContent>
-                        <Typography component="p">
-                          {singleArticle.description}
-                        </Typography>
-                      </CardContent>
-                    </a>
-                  </Card>
-                </Grid>
-              )
-            })
-          ) : this.props.typeId === '2' ? (
-            watch.map(video => {
-              return (
-                <Grid key={video.id} style={cardStyle} item xs={3}>
-                  <Card>
-                    <IconButton
-                      aria-label="Add to favorites"
-                      onClick={this.handleFavoriteClick}
-                    >
-                      <FavoriteIcon />
-                    </IconButton>
-                    <a href={video.sourceUrl} target="blank">
-                      <CardHeader
-                        title={video.title}
-                        subheader="blank for now"
-                      />
-                      <CardMedia
-                        className={classes.media}
-                        image={video.imageUrl}
-                        title={video.title}
-                      />
-                      <CardContent>
-                        <Typography component="p">
-                          {video.description}
-                        </Typography>
-                      </CardContent>
-                    </a>
-                  </Card>
-                </Grid>
-              )
-            })
-          ) : this.props.typeId === '3' ? (
-            meet.map(meetup => {
-              return (
-                <Grid key={meetup.id} style={cardStyle} item xs={3}>
-                  <Card>
-                    <IconButton
-                      aria-label="Add to favorites"
-                      onClick={this.handleFavoriteClick}
-                    >
-                      <FavoriteIcon />
-                    </IconButton>
-                    <a href={meetup.sourceUrl} target="blank">
-                      <CardHeader
-                        title={meetup.Title}
-                        subheader="blank for now"
-                      />
-                      <CardMedia
-                        className={classes.media}
-                        image={meetup.imageUrl}
-                        title={meetup.Title}
-                      />
-                      <CardContent>
-                        <Typography component="p">
-                          {meetup.description}
-                        </Typography>
-                      </CardContent>
-                    </a>
-                  </Card>
-                </Grid>
-              )
-            })
-          ) : (
-            <div />
-          )}
-          <Grid>
-            <ArrowForwardIos />
-          </Grid>
+      <Grid container spacing={32}>
+        <Grid>
+          <ArrowBackIos />
+        </Grid>
+        {this.props.typeId === '1' ? (
+          read.map(singleArticle => {
+            return (
+              <Grid key={singleArticle.id} style={cardStyle} item xs={3}>
+                <Card>
+                  <IconButton aria-label="Add to favorites">
+                    <FavoriteIcon />
+                  </IconButton>
+                  <a href={singleArticle.sourceUrl} target="blank">
+                    <CardHeader
+                      title={singleArticle.title}
+                      subheader="blank for now"
+                    />
+                    <CardMedia
+                      className={classes.media}
+                      image={singleArticle.imageUrl}
+                      title={singleArticle.title}
+                    />
+                    <CardContent>
+                      <Typography component="p">
+                        {singleArticle.description}
+                      </Typography>
+                    </CardContent>
+                  </a>
+                </Card>
+              </Grid>
+            )
+          })
+        ) : this.props.typeId === '2' ? (
+          watch.map(video => {
+            return (
+              <Grid key={video.id} style={cardStyle} item xs={3}>
+                <Card>
+                  <IconButton
+                    aria-label="Add to favorites"
+                    onClick={this.handleFavoriteClick}
+                  >
+                    <FavoriteIcon />
+                  </IconButton>
+                  <a href={video.sourceUrl} target="blank">
+                    <CardHeader title={video.title} subheader="blank for now" />
+                    <CardMedia
+                      className={classes.media}
+                      image={video.imageUrl}
+                      title={video.title}
+                    />
+                    <CardContent>
+                      <Typography component="p">{video.description}</Typography>
+                    </CardContent>
+                  </a>
+                </Card>
+              </Grid>
+            )
+          })
+        ) : this.props.typeId === '3' ? (
+          meet.map(meetup => {
+            return (
+              <Grid key={meetup.id} style={cardStyle} item xs={3}>
+                <Card>
+                  <IconButton
+                    aria-label="Add to favorites"
+                    onClick={this.handleFavoriteClick}
+                  >
+                    <FavoriteIcon />
+                  </IconButton>
+                  <a href={meetup.sourceUrl} target="blank">
+                    <CardHeader
+                      title={meetup.Title}
+                      subheader="blank for now"
+                    />
+                    <CardMedia
+                      className={classes.media}
+                      image={meetup.imageUrl}
+                      title={meetup.Title}
+                    />
+                    <CardContent>
+                      <Typography component="p">
+                        {meetup.description}
+                      </Typography>
+                    </CardContent>
+                  </a>
+                </Card>
+              </Grid>
+            )
+          })
+        ) : (
+          <div />
+        )}
+        <Grid>
+          <ArrowForwardIos />
         </Grid>
       </Grid>
     )

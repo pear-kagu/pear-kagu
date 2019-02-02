@@ -44,7 +44,6 @@ export const auth = formInfo => async dispatch => {
     email,
     city,
     state,
-    zipcode,
     password,
     formName
   } = formInfo
@@ -56,7 +55,6 @@ export const auth = formInfo => async dispatch => {
       email,
       city,
       state,
-      zipcode,
       password
     })
   } catch (authError) {

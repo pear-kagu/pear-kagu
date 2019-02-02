@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import Carousel from './Carousel'
+import Grid from '@material-ui/core/Grid'
 
 class InterestPage extends Component {
   constructor() {
