@@ -15,3 +15,15 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.post('/', async (req, res, next) => {
+  try {
+    const content = req.body
+    const savedContent = Content.create(content)
+    res.status(200).send('Content saved')
+  } catch (err) {
+    console.error(err)
+  }
+})
+
+//I need content object
