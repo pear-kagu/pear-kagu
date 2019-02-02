@@ -92,10 +92,7 @@ export const fetchUserContent = userId => {
 //thunk to set user content
 export const setSavedContentinDB = (userId, contentId) => {
   return async dispatch => {
-    console.log('userId', userId)
-    console.log('contentId', contentId)
     const posted = await axios.post(`api/users/${userId}/content`, contentId)
-    console.log('posted', posted)
     dispatch(fetchUserContent(userId))
   }
 }
