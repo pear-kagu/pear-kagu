@@ -29,7 +29,7 @@ router.get('/:interestId/:interestName', async (req, res, next) => {
     // deconstruct data
     const {items} = searchResult.data
     await Promise.all(
-      items.map(item => {
+      items.map(async item => {
         const title = item.snippet.title
         const sourceUrl = `https://www.youtube.com/watch?v=${item.id.videoId}`
         const imageUrl =
@@ -37,18 +37,22 @@ router.get('/:interestId/:interestName', async (req, res, next) => {
           'https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
         const description = item.snippet.description
         const publishedAt = item.snippet.publishedAt
-        Content.findOrCreate({
-          where: {
-            title,
-            imageUrl,
-            description,
-            sourceUrl,
-            publishedAt,
-            typeId: TYPE_ID,
-            apiSourceId: API_SOURCE_ID,
-            interestId
-          }
-        })
+        try {
+          await Content.findOrCreate({
+            where: {
+              title,
+              imageUrl,
+              description,
+              sourceUrl,
+              publishedAt,
+              typeId: TYPE_ID,
+              apiSourceId: API_SOURCE_ID,
+              interestId
+            }
+          })
+        } catch (err) {
+          console.log('Duplicated video not added')
+        }
       })
     )
     res.json(items)
