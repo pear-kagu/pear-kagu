@@ -13,7 +13,7 @@ import CardActions from '@material-ui/core/CardActions'
 import Typography from '@material-ui/core/Typography'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import IconButton from '@material-ui/core/IconButton'
-import {fetchContent} from '../store'
+import {fetchContent, setSavedContentinDB} from '../store'
 import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos'
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos'
 
@@ -47,10 +47,19 @@ const styles = theme => ({
 class Carousel extends Component {
   constructor() {
     super()
+    this.handleFavoriteClick = this.handleFavoriteClick.bind(this)
   }
 
   componentDidMount() {
     this.props.fetchContent(this.props.typeId, this.props.selectedInterest.id)
+  }
+
+  handleFavoriteClick(event) {
+    if (this.props.user.id) {
+      // this.props.setSavedContentinDB(this.props.user.id, event.target.value)
+    } else {
+      alert('Please sign in or sign up to save to your favorites')
+    }
   }
 
   render() {
@@ -94,7 +103,10 @@ class Carousel extends Component {
             return (
               <Grid key={video.id} style={cardStyle} item xs={3}>
                 <Card>
-                  <IconButton aria-label="Add to favorites">
+                  <IconButton
+                    aria-label="Add to favorites"
+                    onClick={this.handleFavoriteClick}
+                  >
                     <FavoriteIcon />
                   </IconButton>
                   <a href={video.sourceUrl} target="blank">
@@ -117,7 +129,10 @@ class Carousel extends Component {
             return (
               <Grid key={meetup.id} style={cardStyle} item xs={3}>
                 <Card>
-                  <IconButton aria-label="Add to favorites">
+                  <IconButton
+                    aria-label="Add to favorites"
+                    onClick={this.handleFavoriteClick}
+                  >
                     <FavoriteIcon />
                   </IconButton>
                   <a href={meetup.sourceUrl} target="blank">
@@ -160,14 +175,17 @@ const mapState = state => {
     read: state.content.read,
     watch: state.content.watch,
     meet: state.content.do,
-    selectedInterest: state.interest.selectedInterest.interest
+    selectedInterest: state.interest.selectedInterest.interest,
+    user: state.user.user
   }
 }
 
 const mapDispatch = dispatch => {
   return {
     fetchContent: (typeId, interestId) =>
-      dispatch(fetchContent(typeId, interestId))
+      dispatch(fetchContent(typeId, interestId)),
+    setSavedContentinDB: (userId, contentId) =>
+      dispatch(setSavedContentinDB(userId, contentId))
   }
 }
 
