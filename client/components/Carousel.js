@@ -55,11 +55,10 @@ class Carousel extends Component {
   }
 
   handleFavoriteClick(event) {
-    console.log('clicked')
     if (this.props.user.id) {
       // this.props.setSavedContentinDB(this.props.user.id, event.target.value)
     } else {
-      this.alert('Please sign in to save to you favorites')
+      this.alert('Please sign in or sign up to save to your favorites')
     }
   }
 
