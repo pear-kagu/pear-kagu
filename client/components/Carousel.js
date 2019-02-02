@@ -56,7 +56,11 @@ class Carousel extends Component {
 
   handleFavoriteClick(event) {
     console.log('clicked')
-    // this.props.setSavedContentinDB(this.props.user.userId, )
+    if (this.props.user.id) {
+      // this.props.setSavedContentinDB(this.props.user.id, event.target.value)
+    } else {
+      this.alert('Please sign in to save to you favorites')
+    }
   }
 
   render() {
@@ -72,10 +76,7 @@ class Carousel extends Component {
               return (
                 <Grid key={singleArticle.id} style={cardStyle} item xs={3}>
                   <Card>
-                    <IconButton
-                      aria-label="Add to favorites"
-                      onClick={this.handleFavoriteClick}
-                    >
+                    <IconButton aria-label="Add to favorites">
                       <FavoriteIcon />
                     </IconButton>
                     <a href={singleArticle.sourceUrl} target="blank">
@@ -103,7 +104,10 @@ class Carousel extends Component {
               return (
                 <Grid key={video.id} style={cardStyle} item xs={3}>
                   <Card>
-                    <IconButton aria-label="Add to favorites">
+                    <IconButton
+                      aria-label="Add to favorites"
+                      onClick={this.handleFavoriteClick}
+                    >
                       <FavoriteIcon />
                     </IconButton>
                     <a href={video.sourceUrl} target="blank">
@@ -131,7 +135,10 @@ class Carousel extends Component {
               return (
                 <Grid key={meetup.id} style={cardStyle} item xs={3}>
                   <Card>
-                    <IconButton aria-label="Add to favorites">
+                    <IconButton
+                      aria-label="Add to favorites"
+                      onClick={this.handleFavoriteClick}
+                    >
                       <FavoriteIcon />
                     </IconButton>
                     <a href={meetup.sourceUrl} target="blank">
@@ -175,7 +182,8 @@ const mapState = state => {
     read: state.content.read,
     watch: state.content.watch,
     meet: state.content.do,
-    selectedInterest: state.interest.selectedInterest.interest
+    selectedInterest: state.interest.selectedInterest.interest,
+    user: state.user.user
   }
 }
 
