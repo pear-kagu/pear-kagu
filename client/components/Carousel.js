@@ -13,7 +13,7 @@ import CardActions from '@material-ui/core/CardActions'
 import Typography from '@material-ui/core/Typography'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import IconButton from '@material-ui/core/IconButton'
-import {fetchContent} from '../store'
+import {fetchContent, setSavedContentinDB} from '../store'
 import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos'
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos'
 
@@ -54,8 +54,9 @@ class Carousel extends Component {
     this.props.fetchContent(this.props.typeId, this.props.selectedInterest.id)
   }
 
-  handleFavoriteClick(e) {
+  handleFavoriteClick(event) {
     console.log('clicked')
+    // this.props.setSavedContentinDB(this.props.user.userId, )
   }
 
   render() {
@@ -181,7 +182,9 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     fetchContent: (typeId, interestId) =>
-      dispatch(fetchContent(typeId, interestId))
+      dispatch(fetchContent(typeId, interestId)),
+    setSavedContentinDB: (userId, contentId) =>
+      dispatch(setSavedContentinDB(userId, contentId))
   }
 }
 
