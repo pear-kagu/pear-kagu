@@ -24,17 +24,17 @@ router.get('/:interestId/:interestName', async (req, res, next) => {
       language: 'en',
       sortBy: 'relevancy'
     })
-    await Promise.all(
-      articlesReturned.articles.map(article => {
-        const title = article.title
-        const imageUrl =
-          article.urlToImage ||
-          'https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
-        const description = article.description
-        const sourceUrl = article.url
-        const publishedAt = article.publishedAt
 
-        Content.findOrCreate({
+    articlesReturned.articles.map(async article => {
+      const title = article.title
+      const imageUrl =
+        article.urlToImage ||
+        'https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
+      const description = article.description
+      const sourceUrl = article.url
+      const publishedAt = article.publishedAt
+      try {
+        await Content.findOrCreate({
           where: {
             title,
             imageUrl,
@@ -46,8 +46,11 @@ router.get('/:interestId/:interestName', async (req, res, next) => {
             interestId
           }
         })
-      })
-    )
+      } catch (err) {
+        console.log('Duplicated article not added')
+      }
+    })
+
     res.status(200).send(articlesReturned)
   } catch (err) {
     next(err)
