@@ -4,9 +4,9 @@ const db = require('../server/db')
 const {
   User,
   Type,
-  ApiSource,
   Location,
-  Interest
+  Interest,
+  ApiSource
 } = require('../server/db/models')
 
 async function seed() {
