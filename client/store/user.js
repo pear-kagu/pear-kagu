@@ -6,17 +6,22 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
+const GET_USER_CONTENT = 'GET_USER_CONTENT'
 
 /**
  * INITIAL STATE
  */
-const defaultUser = {}
+const defaultUser = {
+  user: {},
+  savedContent: []
+}
 
 /**
  * ACTION CREATORS
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
+const getContent = content => ({type: GET_USER_CONTENT, content})
 
 /**
  * THUNK CREATORS
@@ -32,7 +37,6 @@ export const me = () => async dispatch => {
 
 export const auth = formInfo => async dispatch => {
   let res
-  console.log('in thunk', formInfo)
   const {
     firstName,
     lastName,
@@ -75,13 +79,34 @@ export const logout = () => async dispatch => {
   }
 }
 
+// thunk to fetch user content
+export const fetchUserContent = userId => {
+  return async dispatch => {
+    const {data} = await axios.get(`/api/users/${userId}/content`)
+    dispatch(getContent(data))
+  }
+}
+
+//thunk to set user content
+export const setSavedContentinDB = (userId, contentId) => {
+  return async dispatch => {
+    await axios.post(`api/users/${userId}/content`, contentId)
+    dispatch(fetchUserContent(userId))
+  }
+}
+
 /**
  * REDUCER
  */
 export default function(state = defaultUser, action) {
+  const newState = {...state}
   switch (action.type) {
     case GET_USER:
-      return action.user
+      newState.user = action.user
+      return newState
+    case GET_USER_CONTENT:
+      newState.savedContent = action.content
+      return newState
     case REMOVE_USER:
       return defaultUser
     default:
