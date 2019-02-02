@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import {Login} from '.'
+import {Login, Signup} from '.'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -12,6 +12,22 @@ import {fade} from '@material-ui/core/styles/colorManipulator'
 import {withStyles} from '@material-ui/core/styles'
 import SearchIcon from '@material-ui/icons/Search'
 import Button from '@material-ui/core/Button'
+import Modal from '@material-ui/core/Modal'
+
+function rand() {
+  return Math.round(Math.random() * 20) - 10
+}
+
+function getModalStyle() {
+  const top = 50 + rand()
+  const left = 50 + rand()
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`
+  }
+}
 
 const styles = theme => ({
   root: {
@@ -81,10 +97,37 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       display: 'none'
     }
+  },
+  paper: {
+    position: 'absolute',
+    width: theme.spacing.unit * 50,
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing.unit * 4,
+    outline: 'none'
   }
 })
 
 class Navbar extends Component {
+  constructor() {
+    super()
+    this.state = {
+      open: false,
+      name: ''
+    }
+  }
+  handleLoginOpen = () => {
+    this.setState({open: true, name: 'login'})
+  }
+
+  handleSignupOpen = () => {
+    this.setState({open: true, name: 'signup'})
+  }
+
+  handleClose = () => {
+    this.setState({open: false})
+  }
+
   render() {
     const {classes} = this.props
 
@@ -127,12 +170,30 @@ class Navbar extends Component {
             ) : (
               <div>
                 {/* The navbar will show these links before you log in */}
-                <Button className={classes.button}>
-                  <Login name="login" />
+                <Button
+                  className={classes.button}
+                  onClick={this.handleLoginOpen}
+                >
+                  Login
                 </Button>
-                <Button className={classes.button}>
-                  <Link to="/signup">Sign Up</Link>
+                <Button
+                  className={classes.button}
+                  onClick={this.handleSignupOpen}
+                >
+                  Sign Up
                 </Button>
+                <Modal
+                  aria-labelledby="simple-modal-title"
+                  aria-describedby="simple-modal-description"
+                  open={this.state.open}
+                  onClose={this.handleClose}
+                >
+                  {this.state.name === 'login' ? (
+                    <Login name={this.state.name} />
+                  ) : (
+                    <Signup name={this.state.name} />
+                  )}
+                </Modal>
               </div>
             )}
           </Toolbar>
