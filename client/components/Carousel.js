@@ -47,10 +47,19 @@ const styles = theme => ({
 class Carousel extends Component {
   constructor() {
     super()
+    this.handleFavoriteClick = this.handleFavoriteClick.bind(this)
   }
 
   componentDidMount() {
     this.props.fetchContent(this.props.typeId, this.props.selectedInterest.id)
+  }
+
+  handleFavoriteClick = contentId => event => {
+    if (this.props.user.id) {
+      this.props.setSavedContentinDB(this.props.user.id, contentId)
+    } else {
+      alert('Please sign in or sign up to save to your favorites')
+    }
   }
 
   render() {
@@ -68,19 +77,7 @@ class Carousel extends Component {
                 <Card>
                   <IconButton
                     aria-label="Add to favorites"
-                    contentId={singleArticle.id}
-                    onClick={() => {
-                      if (this.props.user.id) {
-                        this.props.setSavedContentinDB(
-                          this.props.user.id,
-                          singleArticle
-                        )
-                      } else {
-                        alert(
-                          'Please sign in or sign up to save to your favorites'
-                        )
-                      }
-                    }}
+                    onClick={this.handleFavoriteClick(singleArticle.id)}
                   >
                     <FavoriteIcon />
                   </IconButton>
@@ -111,7 +108,7 @@ class Carousel extends Component {
                 <Card>
                   <IconButton
                     aria-label="Add to favorites"
-                    // onClick={this.handleFavoriteClick}
+                    onClick={this.handleFavoriteClick(video.id)}
                   >
                     <FavoriteIcon />
                   </IconButton>
@@ -137,7 +134,7 @@ class Carousel extends Component {
                 <Card>
                   <IconButton
                     aria-label="Add to favorites"
-                    // onClick={this.handleFavoriteClick}
+                    onClick={this.handleFavoriteClick(meetup.id)}
                   >
                     <FavoriteIcon />
                   </IconButton>
