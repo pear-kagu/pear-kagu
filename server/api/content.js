@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Content, User} = require('../db/models')
+const {Content, Interest, User} = require('../db/models')
 
 module.exports = router
 
@@ -24,12 +24,18 @@ router.get('/:typeId/:interestId', async (req, res, next) => {
 router.get('/:userId', async (req, res, next) => {
   try {
     let userId = Number(req.params.userId)
-
     let savedContent = await User.findAll({
       where: {
         id: userId
       },
-      include: [{model: Content}]
+      attributes: ['id'],
+      include: [
+        {
+          model: Content,
+          attributes: ['title', 'sourceUrl', 'imageUrl', 'description'],
+          include: [{model: Interest, attributes: ['id', 'name']}]
+        }
+      ]
     })
 
     res.status(200).send(savedContent)
