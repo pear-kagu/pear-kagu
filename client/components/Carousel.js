@@ -55,9 +55,6 @@ class Carousel extends Component {
 
   render() {
     const {classes, read, watch, meet} = this.props
-    const dummyRead = read.slice(0, 3)
-    const dummyWatch = watch.slice(0, 3)
-    const dummyMeet = meet.slice(0, 3)
 
     return (
       <Grid container spacing={32}>
@@ -65,7 +62,7 @@ class Carousel extends Component {
           <ArrowBackIos />
         </Grid>
         {this.props.typeId === '1' ? (
-          dummyRead.map(singleArticle => {
+          read.map(singleArticle => {
             return (
               <Grid key={singleArticle.id} style={cardStyle} item xs={3}>
                 <Card>
@@ -93,7 +90,7 @@ class Carousel extends Component {
             )
           })
         ) : this.props.typeId === '2' ? (
-          dummyWatch.map(video => {
+          watch.map(video => {
             return (
               <Grid key={video.id} style={cardStyle} item xs={3}>
                 <Card>
@@ -116,7 +113,7 @@ class Carousel extends Component {
             )
           })
         ) : this.props.typeId === '3' ? (
-          dummyMeet.map(meetup => {
+          meet.map(meetup => {
             return (
               <Grid key={meetup.id} style={cardStyle} item xs={3}>
                 <Card>
