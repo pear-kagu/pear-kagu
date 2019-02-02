@@ -116,7 +116,7 @@ class Navbar extends Component {
               <div>
                 {/* The navbar will show these links after you log in */}
                 <Button className={classes.button}>
-                  <Link to="/savedcontent">Saved Content</Link>
+                  <Link to="/saved">Saved Content</Link>
                 </Button>
                 <Button className={classes.button}>
                   <a href="#" onClick={this.props.handleClick}>
