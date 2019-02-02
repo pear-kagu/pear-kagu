@@ -35,7 +35,7 @@ const styles = theme => ({
   }
 })
 
-class Carousel extends Component {
+class WatchCarousel extends Component {
   constructor() {
     super()
     this.handleFavoriteClick = this.handleFavoriteClick.bind(this)
@@ -55,7 +55,6 @@ class Carousel extends Component {
 
   render() {
     const {classes, watch} = this.props
-    console.log('read')
     return (
       <div>
         {watch.length ? (
@@ -145,8 +144,8 @@ const mapDispatch = dispatch => {
   }
 }
 
-Carousel.propTypes = {
+WatchCarousel.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default connect(mapState, mapDispatch)(withStyles(styles)(Carousel))
+export default connect(mapState, mapDispatch)(withStyles(styles)(WatchCarousel))

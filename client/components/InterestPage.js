@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import ReadCarousel from './ReadCarousel'
+import {ReadCarousel, WatchCarousel, DoCarousel} from '../components'
 
 class InterestPage extends Component {
   constructor() {
@@ -12,11 +12,11 @@ class InterestPage extends Component {
       <div>
         <h1>{this.props.interest.name}</h1>
         <h3>Select a video to add to your interest board:</h3>
-        <DoCarousel typeId="2" title="Watch" />
-        <h3>Select a meetup to add to your interest board:</h3>
-        <WatchCarousel typeId="3" title="Do" />
+        <WatchCarousel typeId="2" title="Watch" />
         <h3>Select an article to add to your interest board:</h3>
         <ReadCarousel typeId="1" title="Read" />
+        <h3>Select a meetup to add to your interest board:</h3>
+        <DoCarousel typeId="3" title="Do" />
       </div>
     )
   }

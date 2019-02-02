@@ -35,7 +35,7 @@ const styles = theme => ({
   }
 })
 
-class Carousel extends Component {
+class DoCarousel extends Component {
   constructor() {
     super()
     this.handleFavoriteClick = this.handleFavoriteClick.bind(this)
@@ -55,66 +55,74 @@ class Carousel extends Component {
 
   render() {
     const {classes, meet} = this.props
-    console.log('read')
     return (
-      <InfiniteCarousel
-        breakpoints={[
-          {
-            breakpoint: 500,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 2
-            }
-          },
-          {
-            breakpoint: 768,
-            settings: {
-              slidesToShow: 3,
-              slidesToScroll: 3
-            }
-          }
-        ]}
-        dots={false}
-        showSides={true}
-        sidesOpacity={0.5}
-        sideSize={0.1}
-        slidesToScroll={4}
-        slidesToShow={4}
-        scrollOnDevice={true}
-        lazyLoad={true}
-      >
-        {meet.map(meetup => {
-          let removedHtmlDescription = meetup.description.replace(
-            /<\/?[^>]+(>|$)/g,
-            ''
-          )
-          return (
-            <div key={meetup.id}>
-              <Card>
-                <IconButton
-                  aria-label="Add to favorites"
-                  onClick={this.handleFavoriteClick(meetup.id)}
-                >
-                  <FavoriteIcon />
-                </IconButton>
-                <a href={meetup.sourceUrl} target="blank">
-                  <CardHeader title={meetup.title} subheader="" />
-                  <CardMedia
-                    className={classes.media}
-                    image={meetup.imageUrl}
-                    title={meetup.title}
-                  />
-                  <CardContent>
-                    <Typography className={classes.pos} color="textSecondary">
-                      {removedHtmlDescription}
-                    </Typography>
-                  </CardContent>
-                </a>
-              </Card>
-            </div>
-          )
-        })}
-      </InfiniteCarousel>
+      <div>
+        {meet.length ? (
+          <InfiniteCarousel
+            breakpoints={[
+              {
+                breakpoint: 500,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 2
+                }
+              },
+              {
+                breakpoint: 768,
+                settings: {
+                  slidesToShow: 3,
+                  slidesToScroll: 3
+                }
+              }
+            ]}
+            dots={false}
+            showSides={true}
+            sidesOpacity={0.5}
+            sideSize={0.1}
+            slidesToScroll={4}
+            slidesToShow={4}
+            scrollOnDevice={true}
+            lazyLoad={true}
+          >
+            {meet.map(meetup => {
+              let removedHtmlDescription = meetup.description.replace(
+                /<\/?[^>]+(>|$)/g,
+                ''
+              )
+              return (
+                <div key={meetup.id}>
+                  <Card>
+                    <IconButton
+                      aria-label="Add to favorites"
+                      onClick={this.handleFavoriteClick(meetup.id)}
+                    >
+                      <FavoriteIcon />
+                    </IconButton>
+                    <a href={meetup.sourceUrl} target="blank">
+                      <CardHeader title={meetup.title} subheader="" />
+                      <CardMedia
+                        className={classes.media}
+                        image={meetup.imageUrl}
+                        title={meetup.title}
+                      />
+                      <CardContent>
+                        <Typography
+                          className={classes.pos}
+                          color="textSecondary"
+                        >
+                          {removedHtmlDescription}
+                        </Typography>
+                      </CardContent>
+                    </a>
+                  </Card>
+                </div>
+              )
+            })}
+          </InfiniteCarousel>
+        ) : (
+          <div>Loading...</div>
+        )}
+      </div>
     )
   }
 }
@@ -140,8 +148,8 @@ const mapDispatch = dispatch => {
   }
 }
 
-Carousel.propTypes = {
+DoCarousel.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default connect(mapState, mapDispatch)(withStyles(styles)(Carousel))
+export default connect(mapState, mapDispatch)(withStyles(styles)(DoCarousel))

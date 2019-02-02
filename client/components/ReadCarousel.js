@@ -35,7 +35,7 @@ const styles = theme => ({
   }
 })
 
-class Carousel extends Component {
+class ReadCarousel extends Component {
   constructor() {
     super()
     this.handleFavoriteClick = this.handleFavoriteClick.bind(this)
@@ -144,8 +144,8 @@ const mapDispatch = dispatch => {
   }
 }
 
-Carousel.propTypes = {
+ReadCarousel.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default connect(mapState, mapDispatch)(withStyles(styles)(Carousel))
+export default connect(mapState, mapDispatch)(withStyles(styles)(ReadCarousel))
