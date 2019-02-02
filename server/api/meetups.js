@@ -20,24 +20,28 @@ router.get('/:interestId/:interestName', async (req, res, next) => {
       async (err, resp) => {
         if (resp) {
           await Promise.all(
-            resp.results.map(group => {
+            resp.results.map(async group => {
               const title = group.name
               const description = group.description
               const sourceUrl = group.link
               const imageUrl = group.group_photo
                 ? group.group_photo.highres_link
                 : 'https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
-              Content.findOrCreate({
-                where: {
-                  title,
-                  imageUrl,
-                  description,
-                  sourceUrl,
-                  typeId: TYPE_ID,
-                  apiSourceId: API_SOURCE_ID,
-                  interestId
-                }
-              })
+              try {
+                await Content.findOrCreate({
+                  where: {
+                    title,
+                    imageUrl,
+                    description,
+                    sourceUrl,
+                    typeId: TYPE_ID,
+                    apiSourceId: API_SOURCE_ID,
+                    interestId
+                  }
+                })
+              } catch (error) {
+                console.log('Duplicated meetup not added')
+              }
             })
           )
           res.send(resp)

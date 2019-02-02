@@ -1,25 +1,16 @@
 import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import Grid from '@material-ui/core/Grid'
 import {withStyles} from '@material-ui/core/styles'
-import classnames from 'classnames'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
-import CardActions from '@material-ui/core/CardActions'
 import Typography from '@material-ui/core/Typography'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import IconButton from '@material-ui/core/IconButton'
 import {fetchContent, setSavedContentinDB} from '../store'
-import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos'
-import ArrowBackIos from '@material-ui/icons/ArrowBackIos'
-
-const cardStyle = {
-  height: 20
-}
+import InfiniteCarousel from 'react-leaf-carousel'
 
 const styles = theme => ({
   card: {
@@ -66,15 +57,37 @@ class Carousel extends Component {
     const {classes, read, watch, meet} = this.props
 
     return (
-      <Grid container spacing={32}>
-        <Grid>
-          <ArrowBackIos />
-        </Grid>
+      <InfiniteCarousel
+        breakpoints={[
+          {
+            breakpoint: 500,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 2
+            }
+          },
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 3
+            }
+          }
+        ]}
+        dots={false}
+        showSides={true}
+        sidesOpacity={0.5}
+        sideSize={0.1}
+        slidesToScroll={4}
+        slidesToShow={4}
+        scrollOnDevice={true}
+        lazyLoad={true}
+      >
         {this.props.typeId === '1' ? (
           read.map(singleArticle => {
             return (
-              <Grid key={singleArticle.id} style={cardStyle} item xs={3}>
-                <Card>
+              <div key={singleArticle.id}>
+                <Card className={classes.card}>
                   <IconButton
                     aria-label="Add to favorites"
                     onClick={this.handleFavoriteClick(singleArticle.id)}
@@ -82,29 +95,26 @@ class Carousel extends Component {
                     <FavoriteIcon />
                   </IconButton>
                   <a href={singleArticle.sourceUrl} target="blank">
-                    <CardHeader
-                      title={singleArticle.title}
-                      subheader="blank for now"
-                    />
+                    <CardHeader title={singleArticle.title} subheader="" />
                     <CardMedia
                       className={classes.media}
                       image={singleArticle.imageUrl}
                       title={singleArticle.title}
                     />
                     <CardContent>
-                      <Typography component="p">
+                      <Typography className={classes.pos} color="textSecondary">
                         {singleArticle.description}
                       </Typography>
                     </CardContent>
                   </a>
                 </Card>
-              </Grid>
+              </div>
             )
           })
         ) : this.props.typeId === '2' ? (
           watch.map(video => {
             return (
-              <Grid key={video.id} style={cardStyle} item xs={3}>
+              <div key={video.id}>
                 <Card>
                   <IconButton
                     aria-label="Add to favorites"
@@ -113,24 +123,30 @@ class Carousel extends Component {
                     <FavoriteIcon />
                   </IconButton>
                   <a href={video.sourceUrl} target="blank">
-                    <CardHeader title={video.title} subheader="blank for now" />
+                    <CardHeader title={video.title} subheader="" />
                     <CardMedia
                       className={classes.media}
                       image={video.imageUrl}
                       title={video.title}
                     />
                     <CardContent>
-                      <Typography component="p">{video.description}</Typography>
+                      <Typography className={classes.pos} color="textSecondary">
+                        {video.description}
+                      </Typography>
                     </CardContent>
                   </a>
                 </Card>
-              </Grid>
+              </div>
             )
           })
         ) : this.props.typeId === '3' ? (
           meet.map(meetup => {
+            let removedHtmlDescription = meetup.description.replace(
+              /<\/?[^>]+(>|$)/g,
+              ''
+            )
             return (
-              <Grid key={meetup.id} style={cardStyle} item xs={3}>
+              <div key={meetup.id}>
                 <Card>
                   <IconButton
                     aria-label="Add to favorites"
@@ -139,32 +155,26 @@ class Carousel extends Component {
                     <FavoriteIcon />
                   </IconButton>
                   <a href={meetup.sourceUrl} target="blank">
-                    <CardHeader
-                      title={meetup.Title}
-                      subheader="blank for now"
-                    />
+                    <CardHeader title={meetup.title} subheader="" />
                     <CardMedia
                       className={classes.media}
                       image={meetup.imageUrl}
-                      title={meetup.Title}
+                      title={meetup.title}
                     />
                     <CardContent>
-                      <Typography component="p">
-                        {meetup.description}
+                      <Typography className={classes.pos} color="textSecondary">
+                        {removedHtmlDescription}
                       </Typography>
                     </CardContent>
                   </a>
                 </Card>
-              </Grid>
+              </div>
             )
           })
         ) : (
           <div />
         )}
-        <Grid>
-          <ArrowForwardIos />
-        </Grid>
-      </Grid>
+      </InfiniteCarousel>
     )
   }
 }
@@ -190,6 +200,10 @@ const mapDispatch = dispatch => {
     setSavedContentinDB: (userId, contentId) =>
       dispatch(setSavedContentinDB(userId, contentId))
   }
+}
+
+Carousel.propTypes = {
+  classes: PropTypes.object.isRequired
 }
 
 export default connect(mapState, mapDispatch)(withStyles(styles)(Carousel))
