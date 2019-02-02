@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, Content, Interest} = require('../db/models')
+const {User, Content, Interest, UserContent} = require('../db/models')
 module.exports = router
 
 router.get('/:userId/content', async (req, res, next) => {
@@ -20,6 +20,20 @@ router.get('/:userId/content', async (req, res, next) => {
     })
 
     res.status(200).send(savedContent)
+  } catch (err) {
+    console.error(err)
+  }
+})
+
+router.post('/:userId/content', async (req, res, next) => {
+  try {
+    const contentId = Number(req.body.contentId)
+    const userId = Number(req.params.userId)
+    await UserContent.create({
+      userId: userId,
+      contentId: contentId
+    })
+    res.status(200).send('Content saved')
   } catch (err) {
     console.error(err)
   }
