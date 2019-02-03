@@ -4,6 +4,7 @@ import axios from 'axios'
 const GET_MEETUPS = 'GET_MEETUPS'
 const GET_YOUTUBES = 'GET_YOUTUBES'
 const GET_NEWS = 'GET_NEWS'
+const CLEAR_CONTENT = 'CLEAR_CONTENT'
 
 //action creators
 const getMeetups = meetups => {
@@ -24,6 +25,12 @@ const getNews = news => {
   return {
     type: GET_NEWS,
     news
+  }
+}
+
+export const clearContent = () => {
+  return {
+    type: CLEAR_CONTENT
   }
 }
 
@@ -62,6 +69,8 @@ export default (state = initialState, action) => {
     case GET_NEWS:
       newState.read = action.news
       return newState
+    case CLEAR_CONTENT:
+      return initialState
     default:
       return state
   }

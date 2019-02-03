@@ -34,9 +34,9 @@ class Carousel extends Component {
     this.props.fetchContent(this.props.typeId, this.props.selectedInterest.id)
   }
 
-  handleFavoriteClick(event) {
+  handleFavoriteClick = contentId => event => {
     if (this.props.user.id) {
-      // this.props.setSavedContentinDB(this.props.user.id, event.target.value)
+      this.props.setSavedContentinDB(this.props.user.id, contentId)
     } else {
       alert('Please sign in or sign up to save to your favorites')
     }
@@ -79,7 +79,7 @@ class Carousel extends Component {
                 <Card className={classes.card}>
                   <IconButton
                     aria-label="Add to favorites"
-                    onClick={this.handleFavoriteClick}
+                    onClick={this.handleFavoriteClick(singleArticle.id)}
                   >
                     <FavoriteIcon />
                   </IconButton>
@@ -109,7 +109,7 @@ class Carousel extends Component {
                 <Card>
                   <IconButton
                     aria-label="Add to favorites"
-                    onClick={this.handleFavoriteClick}
+                    onClick={this.handleFavoriteClick(video.id)}
                   >
                     <FavoriteIcon />
                   </IconButton>
@@ -146,7 +146,7 @@ class Carousel extends Component {
                 <Card>
                   <IconButton
                     aria-label="Add to favorites"
-                    onClick={this.handleFavoriteClick}
+                    onClick={this.handleFavoriteClick(meetup.id)}
                   >
                     <FavoriteIcon />
                   </IconButton>

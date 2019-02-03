@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import Carousel from './Carousel'
+import {ReadCarousel, WatchCarousel, DoCarousel, Carousel} from '../components'
 import Typography from '@material-ui/core/Typography'
 
 class InterestPage extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
   }
 
   render() {
