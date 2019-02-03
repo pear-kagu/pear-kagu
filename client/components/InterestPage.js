@@ -18,19 +18,19 @@ class InterestPage extends Component {
           Select a video to add to your interest board:
         </Typography>
         <div className="item-list clearfix">
-          <WatchCarousel typeId="2" title="Watch" />
+          <WatchCarousel />
         </div>
         <Typography variant="h6" marked="center" align="center" component="h2">
           Select a meetup to add to your interest board:
         </Typography>
         <div className="item-list clearfix">
-          <DoCarousel typeId="3" title="Do" />
+          <DoCarousel />
         </div>
         <Typography variant="h6" marked="center" align="center" component="h2">
           Select an article to add to your interest board:
         </Typography>
         <div className="item-list clearfix">
-          <ReadCarousel typeId="1" title="Read" />
+          <ReadCarousel />
         </div>
       </div>
     )

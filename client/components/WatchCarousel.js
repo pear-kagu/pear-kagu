@@ -41,12 +41,12 @@ class WatchCarousel extends Component {
     this.handleFavoriteClick = this.handleFavoriteClick.bind(this)
   }
 
-  componentWillUnmount() {
-    this.props.clearContent()
+  componentDidMount() {
+    this.props.fetchContent('2', this.props.selectedInterest.id)
   }
 
-  componentDidMount() {
-    this.props.fetchContent(this.props.typeId, this.props.selectedInterest.id)
+  componentWillUnmount() {
+    this.props.clearContent()
   }
 
   handleFavoriteClick = contentId => event => {
