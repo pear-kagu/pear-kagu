@@ -2,16 +2,18 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Carousel} from '../components'
 import Typography from '@material-ui/core/Typography'
+import {fetchSelectedInterest} from '../store'
 
 class InterestPage extends Component {
   constructor(props) {
     super(props)
   }
 
-  // componentDidMount() {}
+  componentDidMount() {
+    const interestName = this.props.match.params.interestName
+    this.props.fetchSelectedInterest(interestName)
+  }
   render() {
-    const selectedInterest = this.props.match.params.interestName
-    console.log('interest', this.props)
     return (
       <div>
         <Typography variant="h2" marked="center" align="center" component="h2">
@@ -48,5 +50,11 @@ const mapState = state => {
     allInterests: state.interest.allInterests
   }
 }
+const mapDispatch = dispatch => {
+  return {
+    fetchSelectedInterest: interestName =>
+      dispatch(fetchSelectedInterest(interestName))
+  }
+}
 
-export default connect(mapState)(InterestPage)
+export default connect(mapState, mapDispatch)(InterestPage)

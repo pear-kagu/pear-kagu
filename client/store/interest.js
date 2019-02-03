@@ -64,7 +64,14 @@ export default (state = initialState, action) => {
       newState.allInterests = createAllInterests(action.interests)
       return newState
     case SET_SELECTED_INTEREST:
-      newState.selectedInterest = action.interest
+      const selectedInterest = {}
+      selectedInterest[action.interest.id] = {
+        name: action.interest.name,
+        read: [],
+        watch: [],
+        do: []
+      }
+      newState.selectedInterest = selectedInterest
       return newState
     default:
       return state
