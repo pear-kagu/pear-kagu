@@ -9,7 +9,7 @@ import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import IconButton from '@material-ui/core/IconButton'
-import {fetchContent, setSavedContentinDB} from '../store'
+import {fetchContent, setSavedContentinDB, clearContent} from '../store'
 import InfiniteCarousel from 'react-leaf-carousel'
 
 const styles = theme => ({
@@ -36,9 +36,13 @@ const styles = theme => ({
 })
 
 class WatchCarousel extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.handleFavoriteClick = this.handleFavoriteClick.bind(this)
+  }
+
+  componentWillUnmount() {
+    this.props.clearContent()
   }
 
   componentDidMount() {
@@ -140,7 +144,10 @@ const mapDispatch = dispatch => {
     fetchContent: (typeId, interestId) =>
       dispatch(fetchContent(typeId, interestId)),
     setSavedContentinDB: (userId, contentId) =>
-      dispatch(setSavedContentinDB(userId, contentId))
+      dispatch(setSavedContentinDB(userId, contentId)),
+    clearContent: () => {
+      dispatch(clearContent())
+    }
   }
 }
 

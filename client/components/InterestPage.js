@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import {ReadCarousel, WatchCarousel, DoCarousel} from '../components'
 
 class InterestPage extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
   }
 
   render() {
