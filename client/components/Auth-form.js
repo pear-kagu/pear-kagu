@@ -41,8 +41,8 @@ function getModalStyle() {
  * COMPONENT
  */
 class AuthForm extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       open: true
     }
@@ -75,13 +75,12 @@ class AuthForm extends Component {
 
   render() {
     const {name, displayName, error, classes} = this.props
-    console.log('state in auth form', this.state)
     return (
       <div>
         {name === 'signup' ? (
           <Dialog
             open={this.state.open}
-            onClose={this.handleClose}
+            onClose={this.props.handleClose}
             aria-labelledby="form-dialog-title"
           >
             <form onSubmit={this.handleSubmit} name={name}>
@@ -163,37 +162,52 @@ class AuthForm extends Component {
             </form>
           </Dialog>
         ) : (
-          <form>
-            <div style={getModalStyle()} className={classes.paper}>
-              <Typography align="center" variant="h5">
-                Login
-              </Typography>
-              <Input
-                name="email"
-                placeholder="Email"
-                className={classes.input}
-                inputProps={{
-                  'aria-label': 'Description'
-                }}
-              />
-              <Input
-                name="password"
-                type="password"
-                placeholder="Password"
-                className={classes.input}
-                inputProps={{
-                  'aria-label': 'Description'
-                }}
-              />
-              <Button type="submit" className={classes.button}>
-                {displayName}
-              </Button>
-              <Button className={classes.button}>
-                <a href="/auth/google">{displayName} with Google</a>
-              </Button>
-              {error && error.response && <div> {error.response.data} </div>}
-            </div>
-          </form>
+          <div>
+            <Dialog
+              open={this.state.open}
+              onClose={this.props.handleClose}
+              aria-labelledby="form-dialog-title"
+            >
+              <DialogTitle id="form-dialog-title">Login</DialogTitle>
+              <form onSubmit={this.handleSubmit} name={name}>
+                <DialogContent>
+                  <DialogContentText>
+                    Log in to save and view saved content.
+                  </DialogContentText>
+                  <Input
+                    name="email"
+                    placeholder="Email"
+                    className={classes.input}
+                    inputProps={{
+                      'aria-label': 'Description'
+                    }}
+                  />
+                  <Input
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    className={classes.input}
+                    inputProps={{
+                      'aria-label': 'Description'
+                    }}
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button type="submit" color="primary">
+                    {displayName}
+                  </Button>
+                  <Button color="primary">
+                    <a href="/auth/google">{displayName} with Google</a>
+                  </Button>
+                  <Button onClick={this.props.handleClose} color="primary">
+                    Close
+                  </Button>
+                  {error &&
+                    error.response && <div> {error.response.data} </div>}
+                </DialogActions>
+              </form>
+            </Dialog>
+          </div>
         )}
       </div>
     )

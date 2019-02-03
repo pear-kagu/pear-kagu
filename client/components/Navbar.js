@@ -113,7 +113,6 @@ class Navbar extends Component {
 
   render() {
     const {classes} = this.props
-    console.log('state in Navbar', this.state)
 
     return (
       <div className={classes.root} style={{color: 'white'}}>
@@ -171,14 +170,16 @@ class Navbar extends Component {
                   aria-describedby="simple-modal-description"
                   open={this.state.open}
                   onClose={this.handleClose}
-                  style={{alignItems: 'center', justifyContent: 'center'}}
                 >
                   {this.state.name === 'login' ? (
-                    <Login name={this.state.name} />
+                    <Login
+                      name={this.state.name}
+                      handleClose={this.handleClose}
+                    />
                   ) : (
                     <Signup
-                      handleClose={this.handleClose}
                       name={this.state.name}
+                      handleClose={this.handleClose}
                     />
                   )}
                 </Modal>
