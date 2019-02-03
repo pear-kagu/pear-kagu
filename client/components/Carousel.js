@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withStyles} from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
@@ -12,26 +11,16 @@ import IconButton from '@material-ui/core/IconButton'
 import {fetchContent, setSavedContentinDB} from '../store'
 import InfiniteCarousel from 'react-leaf-carousel'
 
-const styles = theme => ({
+const styles = () => ({
   card: {
     maxWidth: 400
   },
   media: {
     height: 0,
-    paddingTop: '56.25%' // 16:9
+    paddingTop: '50%' // 16:9
   },
   actions: {
-    display: 'flex'
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest
-    })
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)'
+    display: 'block'
   }
 })
 
@@ -95,15 +84,14 @@ class Carousel extends Component {
                     <FavoriteIcon />
                   </IconButton>
                   <a href={singleArticle.sourceUrl} target="blank">
-                    <CardHeader title={singleArticle.title} subheader="" />
                     <CardMedia
                       className={classes.media}
                       image={singleArticle.imageUrl}
                       title={singleArticle.title}
                     />
                     <CardContent>
-                      <Typography className={classes.pos} color="textSecondary">
-                        {singleArticle.description}
+                      <Typography variant="button" paragraph>
+                        {singleArticle.title}
                       </Typography>
                     </CardContent>
                   </a>
@@ -113,6 +101,9 @@ class Carousel extends Component {
           })
         ) : this.props.typeId === '2' ? (
           watch.map(video => {
+            if (video.description) {
+              video.description = video.description.slice(0, 100) + '...'
+            }
             return (
               <div key={video.id}>
                 <Card>
@@ -123,14 +114,16 @@ class Carousel extends Component {
                     <FavoriteIcon />
                   </IconButton>
                   <a href={video.sourceUrl} target="blank">
-                    <CardHeader title={video.title} subheader="" />
                     <CardMedia
                       className={classes.media}
                       image={video.imageUrl}
                       title={video.title}
                     />
                     <CardContent>
-                      <Typography className={classes.pos} color="textSecondary">
+                      <Typography paragraph variant="button">
+                        {video.title}
+                      </Typography>
+                      <Typography variant="caption" paragraph align="justify">
                         {video.description}
                       </Typography>
                     </CardContent>
@@ -141,10 +134,13 @@ class Carousel extends Component {
           })
         ) : this.props.typeId === '3' ? (
           meet.map(meetup => {
-            let removedHtmlDescription = meetup.description.replace(
-              /<\/?[^>]+(>|$)/g,
-              ''
-            )
+            let removedHtmlDescription
+            if (meetup.description) {
+              removedHtmlDescription =
+                meetup.description
+                  .replace(/<\/?[^>]+(>|$)/g, '')
+                  .slice(0, 100) + '...'
+            }
             return (
               <div key={meetup.id}>
                 <Card>
@@ -155,14 +151,16 @@ class Carousel extends Component {
                     <FavoriteIcon />
                   </IconButton>
                   <a href={meetup.sourceUrl} target="blank">
-                    <CardHeader title={meetup.title} subheader="" />
                     <CardMedia
                       className={classes.media}
                       image={meetup.imageUrl}
                       title={meetup.title}
                     />
                     <CardContent>
-                      <Typography className={classes.pos} color="textSecondary">
+                      <Typography variant="button" paragraph>
+                        {meetup.title}
+                      </Typography>
+                      <Typography variant="caption" paragraph align="justify">
                         {removedHtmlDescription}
                       </Typography>
                     </CardContent>
