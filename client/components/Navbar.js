@@ -92,6 +92,7 @@ class Navbar extends Component {
       open: false,
       name: ''
     }
+    this.handleClose = this.handleClose.bind(this)
   }
   handleLoginOpen = () => {
     this.setState({open: true, name: 'login'})
@@ -104,9 +105,15 @@ class Navbar extends Component {
   handleClose = () => {
     this.setState({open: false})
   }
+  componentDidUpdate(prevProps) {
+    if (this.props.isLoggedIn !== prevProps.isLoggedIn) {
+      this.setState({open: false, name: ''})
+    }
+  }
 
   render() {
     const {classes} = this.props
+    console.log('state in Navbar', this.state)
 
     return (
       <div className={classes.root} style={{color: 'white'}}>
@@ -169,7 +176,10 @@ class Navbar extends Component {
                   {this.state.name === 'login' ? (
                     <Login name={this.state.name} />
                   ) : (
-                    <Signup name={this.state.name} />
+                    <Signup
+                      handleClose={this.handleClose}
+                      name={this.state.name}
+                    />
                   )}
                 </Modal>
               </div>

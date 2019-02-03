@@ -11,7 +11,6 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import RenderToLayer from 'material-ui/internal/RenderToLayer'
 
 const styles = theme => ({
   input: {
@@ -47,19 +46,45 @@ class AuthForm extends Component {
     this.state = {
       open: true
     }
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleSubmit(evt) {
+    evt.preventDefault()
+    const formName = evt.target.name
+    let formInfo
+    formName === 'signup'
+      ? (formInfo = {
+          formName: evt.target.name,
+          firstName: evt.target.firstName.value,
+          lastName: evt.target.lastName.value,
+          username: evt.target.username.value,
+          email: evt.target.email.value,
+          city: evt.target.city.value,
+          state: evt.target.state.value,
+          password: evt.target.password.value
+        })
+      : (formInfo = {
+          formName: evt.target.name,
+          email: evt.target.email.value,
+          password: evt.target.password.value
+        })
+    this.setState({open: false})
+    this.props.auth(formInfo)
   }
 
   render() {
-    const {name, displayName, handleSubmit, error, classes} = this.props
+    const {name, displayName, error, classes} = this.props
+    console.log('state in auth form', this.state)
     return (
       <div>
-        <form onSubmit={handleSubmit} name={name}>
-          {name === 'signup' ? (
-            <Dialog
-              open={this.state.open}
-              onClose={this.handleClose}
-              aria-labelledby="form-dialog-title"
-            >
+        {name === 'signup' ? (
+          <Dialog
+            open={this.state.open}
+            onClose={this.handleClose}
+            aria-labelledby="form-dialog-title"
+          >
+            <form onSubmit={this.handleSubmit} name={name}>
               <DialogTitle id="form-dialog-title">Sign Up</DialogTitle>
               <DialogContent>
                 <DialogContentText>
@@ -124,23 +149,21 @@ class AuthForm extends Component {
                 />
               </DialogContent>
               <DialogActions>
-                <Button onClick={this.props.handleClose} color="primary">
-                  Close
-                </Button>
-                <Button
-                  type="submit"
-                  onClick={this.props.handleClose}
-                  color="primary"
-                >
+                <Button type="submit" color="primary">
                   {displayName}
                 </Button>
                 <Button color="primary">
                   <a href="/auth/google">{displayName} with Google</a>
                 </Button>
+                <Button onClick={this.props.handleClose} color="primary">
+                  Close
+                </Button>
                 {error && error.response && <div> {error.response.data} </div>}
               </DialogActions>
-            </Dialog>
-          ) : (
+            </form>
+          </Dialog>
+        ) : (
+          <form>
             <div style={getModalStyle()} className={classes.paper}>
               <Typography align="center" variant="h5">
                 Login
@@ -170,8 +193,8 @@ class AuthForm extends Component {
               </Button>
               {error && error.response && <div> {error.response.data} </div>}
             </div>
-          )}
-        </form>
+          </form>
+        )}
       </div>
     )
   }
@@ -202,29 +225,7 @@ const mapSignup = state => {
 
 const mapDispatch = dispatch => {
   return {
-    handleSubmit(evt) {
-      evt.preventDefault()
-      const formName = evt.target.name
-      let formInfo
-      formName === 'signup'
-        ? (formInfo = {
-            formName: evt.target.name,
-            firstName: evt.target.firstName.value,
-            lastName: evt.target.lastName.value,
-            username: evt.target.username.value,
-            email: evt.target.email.value,
-            city: evt.target.city.value,
-            state: evt.target.state.value,
-            password: evt.target.password.value
-          })
-        : (formInfo = {
-            formName: evt.target.name,
-            email: evt.target.email.value,
-            password: evt.target.password.value
-          })
-
-      dispatch(auth(formInfo))
-    }
+    auth: formInfo => dispatch(auth(formInfo))
   }
 }
 
@@ -241,7 +242,6 @@ export const Signup = connect(mapSignup, mapDispatch)(
 AuthForm.propTypes = {
   name: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object,
   classes: PropTypes.object.isRequired
 }
