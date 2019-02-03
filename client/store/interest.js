@@ -30,8 +30,21 @@ export const fetchInterests = () => {
 //thunk creators
 export const fetchSelectedInterest = interestName => {
   return async dispatch => {
-    const {data} = await axios.get(`/api/interests/${interestName}`)
-    dispatch(setSelectedInterest(data))
+    let interestResponse = await axios.get(`/api/interests/${interestName}`)
+    const {id, name} = interestResponse.data
+    let contentResponse = await axios.get(`/api/content/${id}`)
+    const contentData = contentResponse.data
+    const read = contentData.filter(content => content.typeId === 1)
+    const watch = contentData.filter(content => content.typeId === 2)
+    const meet = contentData.filter(content => content.typeId === 3)
+    const selectedInterest = {
+      id,
+      name,
+      read,
+      watch,
+      meet
+    }
+    dispatch(setSelectedInterest(selectedInterest))
   }
 }
 
@@ -64,14 +77,7 @@ export default (state = initialState, action) => {
       newState.allInterests = createAllInterests(action.interests)
       return newState
     case SET_SELECTED_INTEREST:
-      const selectedInterest = {}
-      selectedInterest[action.interest.id] = {
-        name: action.interest.name,
-        read: [],
-        watch: [],
-        do: []
-      }
-      newState.selectedInterest = selectedInterest
+      newState.selectedInterest = action.interest
       return newState
     default:
       return state
