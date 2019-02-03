@@ -27,6 +27,14 @@ export const fetchInterests = () => {
   }
 }
 
+//thunk creators
+export const fetchSelectedInterest = interestName => {
+  return async dispatch => {
+    const {data} = await axios.get(`/api/interests/${interestName}`)
+    dispatch(setSelectedInterest(data))
+  }
+}
+
 //initial state
 const initialState = {
   allInterests: {},

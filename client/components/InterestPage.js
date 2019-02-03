@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {ReadCarousel, WatchCarousel, DoCarousel, Carousel} from '../components'
+import {Carousel} from '../components'
 import Typography from '@material-ui/core/Typography'
 
 class InterestPage extends Component {
@@ -8,7 +8,10 @@ class InterestPage extends Component {
     super(props)
   }
 
+  // componentDidMount() {}
   render() {
+    const selectedInterest = this.props.match.params.interestName
+    console.log('interest', this.props)
     return (
       <div>
         <Typography variant="h2" marked="center" align="center" component="h2">
@@ -42,7 +45,7 @@ class InterestPage extends Component {
  */
 const mapState = state => {
   return {
-    interest: state.interest.selectedInterest.interest
+    allInterests: state.interest.allInterests
   }
 }
 
