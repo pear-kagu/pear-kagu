@@ -38,7 +38,7 @@ const createAllInterests = data => {
   data.forEach(interest => {
     if (!allInterests[interest.id]) {
       allInterests[interest.id] = {
-        name,
+        name: interest.name,
         read: [],
         watch: [],
         do: []
