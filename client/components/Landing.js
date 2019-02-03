@@ -6,33 +6,7 @@ import ButtonBase from '@material-ui/core/ButtonBase'
 import {LayoutBody, Typography} from '../components'
 import {Link} from 'react-router-dom'
 import {fetchInterests} from '../store'
-
-const columAttributes = [
-  {
-    width: '33%',
-    color: 'turquoise'
-  },
-  {
-    width: '33%',
-    color: 'purple'
-  },
-  {
-    width: '33%',
-    color: 'blue'
-  },
-  {
-    width: '33%',
-    color: 'gray'
-  },
-  {
-    width: '33%',
-    color: 'green'
-  },
-  {
-    width: '33%',
-    color: 'orange'
-  }
-]
+import {colorBank} from '../utils'
 
 const styles = theme => ({
   root: {
@@ -123,9 +97,8 @@ class Landing extends Component {
   }
 
   render() {
-    const {classes, allInterests, handleClick} = this.props
+    const {classes, allInterests} = this.props
     const allInterestsKeys = Object.keys(allInterests)
-    console.log(allInterests)
     return (
       <LayoutBody className={classes.root} component="section" width="large">
         <Typography variant="h4" marked="center" align="center" component="h2">
@@ -133,14 +106,14 @@ class Landing extends Component {
         </Typography>
         <div className={classes.images}>
           {allInterestsKeys.map((interestId, idx) => {
-            const {width, color} = columAttributes[idx]
+            const color = colorBank[idx]
             const interest = allInterests[interestId]
             return (
               <ButtonBase
                 key={interest.name}
                 className={classes.imageWrapper}
                 style={{
-                  width: width
+                  width: '33%'
                 }}
               >
                 <Link to={`/interest/${interest.name}`}>
