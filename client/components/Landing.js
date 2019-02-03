@@ -5,7 +5,7 @@ import {withStyles} from '@material-ui/core/styles'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import {LayoutBody, Typography} from '../components'
 import {Link} from 'react-router-dom'
-import {fetchInterests, setSelectedInterest} from '../store'
+import {fetchInterests} from '../store'
 
 const columAttributes = [
   {
@@ -124,14 +124,17 @@ class Landing extends Component {
 
   render() {
     const {classes, allInterests, handleClick} = this.props
+    const allInterestsKeys = Object.keys(allInterests)
+    console.log(allInterests)
     return (
       <LayoutBody className={classes.root} component="section" width="large">
         <Typography variant="h4" marked="center" align="center" component="h2">
           Select an interest to start exploring
         </Typography>
         <div className={classes.images}>
-          {allInterests.map((interest, idx) => {
+          {allInterestsKeys.map((interestId, idx) => {
             const {width, color} = columAttributes[idx]
+            const interest = allInterests[interestId]
             return (
               <ButtonBase
                 key={interest.name}
@@ -140,10 +143,7 @@ class Landing extends Component {
                   width: width
                 }}
               >
-                <Link
-                  to={`/interest/${interest.name}`}
-                  onClick={() => handleClick({interest})}
-                >
+                <Link to={`/interest/${interest.name}`}>
                   <div
                     className={classes.imageBackdrop}
                     style={{
@@ -182,10 +182,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    fetchInterests: () => dispatch(fetchInterests()),
-    handleClick(interest) {
-      dispatch(setSelectedInterest(interest))
-    }
+    fetchInterests: () => dispatch(fetchInterests())
   }
 }
 

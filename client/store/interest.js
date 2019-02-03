@@ -29,17 +29,31 @@ export const fetchInterests = () => {
 
 //initial state
 const initialState = {
-  allInterests: [],
+  allInterests: {},
   selectedInterest: {}
 }
 
+const createAllInterests = data => {
+  const allInterests = {}
+  data.forEach(interest => {
+    if (!allInterests[interest.id]) {
+      allInterests[interest.id] = {
+        name,
+        read: [],
+        watch: [],
+        do: []
+      }
+    }
+  })
+  return allInterests
+}
 //reducer
 export default (state = initialState, action) => {
   const newState = {...state}
 
   switch (action.type) {
     case GET_INTERESTS:
-      newState.allInterests = action.interests
+      newState.allInterests = createAllInterests(action.interests)
       return newState
     case SET_SELECTED_INTEREST:
       newState.selectedInterest = action.interest
