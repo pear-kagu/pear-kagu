@@ -18,3 +18,10 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.item-list {
+  border: 8px solid purple;
+  border-radius: 20px;
+  width: 100%; /*added*/
+  overflow: hidden;
+}
