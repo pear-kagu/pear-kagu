@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withStyles} from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
@@ -10,6 +9,8 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import IconButton from '@material-ui/core/IconButton'
 import {fetchContent, setSavedContentinDB} from '../store'
 import InfiniteCarousel from 'react-leaf-carousel'
+import {CarouselCard} from '../components'
+import Card from '@material-ui/core/Card'
 
 const styles = () => ({
   card: {
@@ -27,6 +28,9 @@ const styles = () => ({
 class Carousel extends Component {
   constructor() {
     super()
+    this.state = {
+      heart: 'red'
+    }
     this.handleFavoriteClick = this.handleFavoriteClick.bind(this)
   }
 
@@ -37,6 +41,9 @@ class Carousel extends Component {
   handleFavoriteClick(event) {
     if (this.props.user.id) {
       // this.props.setSavedContentinDB(this.props.user.id, event.target.value)
+      this.setState({
+        heart: 'red'
+      })
     } else {
       alert('Please sign in or sign up to save to your favorites')
     }
@@ -75,28 +82,10 @@ class Carousel extends Component {
         {this.props.typeId === '1' ? (
           read.map(singleArticle => {
             return (
-              <div key={singleArticle.id}>
-                <Card className={classes.card}>
-                  <IconButton
-                    aria-label="Add to favorites"
-                    onClick={this.handleFavoriteClick}
-                  >
-                    <FavoriteIcon />
-                  </IconButton>
-                  <a href={singleArticle.sourceUrl} target="blank">
-                    <CardMedia
-                      className={classes.media}
-                      image={singleArticle.imageUrl}
-                      title={singleArticle.title}
-                    />
-                    <CardContent>
-                      <Typography variant="button" paragraph>
-                        {singleArticle.title}
-                      </Typography>
-                    </CardContent>
-                  </a>
-                </Card>
-              </div>
+              <CarouselCard
+                key={singleArticle.id}
+                singleArticle={singleArticle}
+              />
             )
           })
         ) : this.props.typeId === '2' ? (
