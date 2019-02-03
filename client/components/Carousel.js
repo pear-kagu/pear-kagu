@@ -44,6 +44,7 @@ class Carousel extends Component {
 
   render() {
     const {classes, read, watch, meet} = this.props
+
     return (
       <InfiniteCarousel
         breakpoints={[

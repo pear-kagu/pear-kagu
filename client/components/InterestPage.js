@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {ReadCarousel, WatchCarousel, DoCarousel} from '../components'
+import {ReadCarousel, WatchCarousel, DoCarousel, Carousel} from '../components'
 import Typography from '@material-ui/core/Typography'
 
 class InterestPage extends Component {
@@ -18,19 +18,19 @@ class InterestPage extends Component {
           Select a video to add to your interest board:
         </Typography>
         <div className="item-list clearfix">
-          <WatchCarousel />
+          <Carousel typeId="2" title="Watch" />
         </div>
         <Typography variant="h6" marked="center" align="center" component="h2">
           Select a meetup to add to your interest board:
         </Typography>
         <div className="item-list clearfix">
-          <DoCarousel />
+          <Carousel typeId="3" title="Do" />
         </div>
         <Typography variant="h6" marked="center" align="center" component="h2">
           Select an article to add to your interest board:
         </Typography>
         <div className="item-list clearfix">
-          <ReadCarousel />
+          <Carousel typeId="1" title="Read" />
         </div>
       </div>
     )

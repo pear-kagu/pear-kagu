@@ -29,9 +29,11 @@ router.post('/:userId/content', async (req, res, next) => {
   try {
     const contentId = Number(req.body.contentId)
     const userId = Number(req.params.userId)
-    await UserContent.create({
-      userId: userId,
-      contentId: contentId
+    await UserContent.findOrCreate({
+      where: {
+        userId: userId,
+        contentId: contentId
+      }
     })
     res.status(200).send('Content saved')
   } catch (err) {
