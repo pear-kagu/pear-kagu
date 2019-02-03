@@ -32,21 +32,25 @@ class CarouselCard extends Component {
     this.handleFavoriteClick = this.handleFavoriteClick.bind(this)
   }
 
-  handleFavoriteClick(event) {
+  handleFavoriteClick() {
     if (this.props.user.id) {
       // this.props.setSavedContentinDB(this.props.user.id, event.target.value)
-      this.setState({
-        heart: 'red'
-      })
+      if (this.state.heart === 'red') {
+        this.setState({
+          heart: ''
+        })
+      } else {
+        this.setState({
+          heart: 'red'
+        })
+      }
     } else {
       alert('Please sign in or sign up to save to your favorites')
     }
   }
 
   render() {
-    const {singleArticle, classes} = this.props
-    console.log('singleArticle', singleArticle)
-    console.log('carousel state', this.state)
+    const {content, classes, removedHtmlDescription} = this.props
 
     return (
       <Card className={classes.card}>
@@ -56,16 +60,23 @@ class CarouselCard extends Component {
         >
           <FavoriteIcon style={{color: this.state.heart}} />
         </IconButton>
-        <a href={singleArticle.sourceUrl} target="blank">
+        <a href={content.sourceUrl} target="blank">
           <CardMedia
             className={classes.media}
-            image={singleArticle.imageUrl}
-            title={singleArticle.title}
+            image={content.imageUrl}
+            title={content.title}
           />
           <CardContent>
             <Typography variant="button" paragraph>
-              {singleArticle.title}
+              {content.title}
             </Typography>
+            {removedHtmlDescription ? (
+              <Typography variant="caption" paragraph align="justify">
+                {removedHtmlDescription}
+              </Typography>
+            ) : (
+              <div />
+            )}
           </CardContent>
         </a>
       </Card>
@@ -89,7 +100,7 @@ const mapDispatch = dispatch => {
   }
 }
 
-Card.propTypes = {
+CarouselCard.propTypes = {
   classes: PropTypes.object.isRequired
 }
 

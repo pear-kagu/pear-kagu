@@ -2,55 +2,26 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withStyles} from '@material-ui/core/styles'
-import CardMedia from '@material-ui/core/CardMedia'
-import CardContent from '@material-ui/core/CardContent'
-import Typography from '@material-ui/core/Typography'
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import IconButton from '@material-ui/core/IconButton'
+// import CardMedia from '@material-ui/core/CardMedia'
+// import CardContent from '@material-ui/core/CardContent'
+// import Typography from '@material-ui/core/Typography'
+// import FavoriteIcon from '@material-ui/icons/Favorite'
+// import IconButton from '@material-ui/core/IconButton'
 import {fetchContent, setSavedContentinDB} from '../store'
 import InfiniteCarousel from 'react-leaf-carousel'
 import {CarouselCard} from '../components'
-import Card from '@material-ui/core/Card'
-
-const styles = () => ({
-  card: {
-    maxWidth: 400
-  },
-  media: {
-    height: 0,
-    paddingTop: '50%' // 16:9
-  },
-  actions: {
-    display: 'block'
-  }
-})
 
 class Carousel extends Component {
   constructor() {
     super()
-    this.state = {
-      heart: 'red'
-    }
-    this.handleFavoriteClick = this.handleFavoriteClick.bind(this)
   }
 
   componentDidMount() {
     this.props.fetchContent(this.props.typeId, this.props.selectedInterest.id)
   }
 
-  handleFavoriteClick(event) {
-    if (this.props.user.id) {
-      // this.props.setSavedContentinDB(this.props.user.id, event.target.value)
-      this.setState({
-        heart: 'red'
-      })
-    } else {
-      alert('Please sign in or sign up to save to your favorites')
-    }
-  }
-
   render() {
-    const {classes, read, watch, meet} = this.props
+    const {read, watch, meet} = this.props
 
     return (
       <InfiniteCarousel
@@ -82,10 +53,7 @@ class Carousel extends Component {
         {this.props.typeId === '1' ? (
           read.map(singleArticle => {
             return (
-              <CarouselCard
-                key={singleArticle.id}
-                singleArticle={singleArticle}
-              />
+              <CarouselCard key={singleArticle.id} content={singleArticle} />
             )
           })
         ) : this.props.typeId === '2' ? (
@@ -93,33 +61,7 @@ class Carousel extends Component {
             if (video.description) {
               video.description = video.description.slice(0, 100) + '...'
             }
-            return (
-              <div key={video.id}>
-                <Card>
-                  <IconButton
-                    aria-label="Add to favorites"
-                    onClick={this.handleFavoriteClick}
-                  >
-                    <FavoriteIcon />
-                  </IconButton>
-                  <a href={video.sourceUrl} target="blank">
-                    <CardMedia
-                      className={classes.media}
-                      image={video.imageUrl}
-                      title={video.title}
-                    />
-                    <CardContent>
-                      <Typography paragraph variant="button">
-                        {video.title}
-                      </Typography>
-                      <Typography variant="caption" paragraph align="justify">
-                        {video.description}
-                      </Typography>
-                    </CardContent>
-                  </a>
-                </Card>
-              </div>
-            )
+            return <CarouselCard key={video.id} content={video} />
           })
         ) : this.props.typeId === '3' ? (
           meet.map(meetup => {
@@ -131,31 +73,11 @@ class Carousel extends Component {
                   .slice(0, 100) + '...'
             }
             return (
-              <div key={meetup.id}>
-                <Card>
-                  <IconButton
-                    aria-label="Add to favorites"
-                    onClick={this.handleFavoriteClick}
-                  >
-                    <FavoriteIcon />
-                  </IconButton>
-                  <a href={meetup.sourceUrl} target="blank">
-                    <CardMedia
-                      className={classes.media}
-                      image={meetup.imageUrl}
-                      title={meetup.title}
-                    />
-                    <CardContent>
-                      <Typography variant="button" paragraph>
-                        {meetup.title}
-                      </Typography>
-                      <Typography variant="caption" paragraph align="justify">
-                        {removedHtmlDescription}
-                      </Typography>
-                    </CardContent>
-                  </a>
-                </Card>
-              </div>
+              <CarouselCard
+                key={meetup.id}
+                content={meetup}
+                removedHtmlDescription={removedHtmlDescription}
+              />
             )
           })
         ) : (
@@ -189,8 +111,6 @@ const mapDispatch = dispatch => {
   }
 }
 
-Carousel.propTypes = {
-  classes: PropTypes.object.isRequired
-}
+Carousel.propTypes = {}
 
-export default connect(mapState, mapDispatch)(withStyles(styles)(Carousel))
+export default connect(mapState, mapDispatch)(Carousel)
