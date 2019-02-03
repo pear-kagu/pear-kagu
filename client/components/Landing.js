@@ -9,27 +9,27 @@ import {fetchInterests, setSelectedInterest} from '../store'
 
 const columAttributes = [
   {
-    width: '40%',
+    width: '33%',
     color: 'turquoise'
   },
   {
-    width: '35%',
+    width: '33%',
     color: 'purple'
   },
   {
-    width: '25%',
+    width: '33%',
     color: 'blue'
   },
   {
-    width: '35%',
+    width: '33%',
     color: 'gray'
   },
   {
-    width: '25%',
+    width: '33%',
     color: 'green'
   },
   {
-    width: '40%',
+    width: '33%',
     color: 'orange'
   }
 ]

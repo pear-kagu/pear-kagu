@@ -90,7 +90,7 @@ class Navbar extends Component {
 
     return (
       <div className={classes.root} style={{color: 'white'}}>
-        <AppBar position="static" style={{backgroundColor: 'turquoise'}}>
+        <AppBar position="static" style={{backgroundColor: 'inherit'}}>
           <Toolbar>
             <Typography
               className={classes.title}
