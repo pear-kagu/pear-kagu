@@ -1,10 +1,16 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
 import {withStyles} from '@material-ui/core/styles'
 import Input from '@material-ui/core/Input'
 import Button from '@material-ui/core/Button'
+// import { Typography } from '.';
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
 
 const styles = theme => ({
   input: {
@@ -12,81 +18,200 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing.unit
+  },
+  paper: {
+    position: 'absolute',
+    width: theme.spacing.unit * 150,
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing.unit * 4,
+    outline: 'none'
   }
 })
+function getModalStyle() {
+  const top = 25
+
+  return {
+    top: `${top}%`,
+    margin: 'auto'
+  }
+}
 
 /**
  * COMPONENT
  */
-const AuthForm = props => {
-  const {name, displayName, handleSubmit, error, classes} = props
+class AuthForm extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      open: true
+    }
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
+  handleSubmit(evt) {
+    evt.preventDefault()
+    const formName = evt.target.name
+    let formInfo
+    formName === 'signup'
+      ? (formInfo = {
+          formName: evt.target.name,
+          firstName: evt.target.firstName.value,
+          lastName: evt.target.lastName.value,
+          username: evt.target.username.value,
+          email: evt.target.email.value,
+          city: evt.target.city.value,
+          state: evt.target.state.value,
+          password: evt.target.password.value
+        })
+      : (formInfo = {
+          formName: evt.target.name,
+          email: evt.target.email.value,
+          password: evt.target.password.value
+        })
+    this.setState({open: false})
+    this.props.auth(formInfo)
+  }
+
+  render() {
+    const {name, displayName, error, classes} = this.props
+    return (
+      <div>
         {name === 'signup' ? (
-          <div>
-            <div>
-              <label htmlFor="firstName">
-                <small>First Name</small>
-              </label>
-              <input name="firstName" type="text" />
-            </div>
-            <div>
-              <label htmlFor="lastName">
-                <small>Last Name</small>
-              </label>
-              <input name="lastName" type="text" />
-            </div>
-            <div>
-              <label htmlFor="username">
-                <small>Username</small>
-              </label>
-              <input name="username" type="text" />
-            </div>
-            <div>
-              <label htmlFor="city">
-                <small>City</small>
-              </label>
-              <input name="city" type="text" />
-            </div>
-            <div>
-              <label htmlFor="state">
-                <small>State</small>
-              </label>
-              <input name="state" type="text" />
-            </div>
-          </div>
+          <Dialog
+            open={this.state.open}
+            onClose={this.props.handleClose}
+            aria-labelledby="form-dialog-title"
+          >
+            <form onSubmit={this.handleSubmit} name={name}>
+              <DialogTitle id="form-dialog-title">Sign Up</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Sign up below to begin saving your favorite content.
+                </DialogContentText>
+                <Input
+                  name="firstName"
+                  placeholder="First Name"
+                  className={classes.input}
+                  inputProps={{
+                    'aria-label': 'Description'
+                  }}
+                />
+                <Input
+                  name="lastName"
+                  placeholder="Last Name"
+                  className={classes.input}
+                  inputProps={{
+                    'aria-label': 'Description'
+                  }}
+                />
+                <Input
+                  name="username"
+                  placeholder="Username"
+                  className={classes.input}
+                  inputProps={{
+                    'aria-label': 'Description'
+                  }}
+                />
+                <Input
+                  name="city"
+                  placeholder="City"
+                  className={classes.input}
+                  inputProps={{
+                    'aria-label': 'Description'
+                  }}
+                />
+                <Input
+                  name="state"
+                  placeholder="State"
+                  className={classes.input}
+                  inputProps={{
+                    'aria-label': 'Description'
+                  }}
+                />
+                <Input
+                  name="email"
+                  placeholder="Email"
+                  className={classes.input}
+                  inputProps={{
+                    'aria-label': 'Description'
+                  }}
+                />
+                <Input
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                  className={classes.input}
+                  inputProps={{
+                    'aria-label': 'Description'
+                  }}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button type="submit" color="primary">
+                  {displayName}
+                </Button>
+                <Button color="primary">
+                  <a href="/auth/google">{displayName} with Google</a>
+                </Button>
+                <Button onClick={this.props.handleClose} color="primary">
+                  Close
+                </Button>
+                {error && error.response && <div> {error.response.data} </div>}
+              </DialogActions>
+            </form>
+          </Dialog>
         ) : (
-          <div />
+          <div>
+            <Dialog
+              open={this.state.open}
+              onClose={this.props.handleClose}
+              aria-labelledby="form-dialog-title"
+            >
+              <DialogTitle id="form-dialog-title">Login</DialogTitle>
+              <form onSubmit={this.handleSubmit} name={name}>
+                <DialogContent>
+                  <DialogContentText>
+                    Log in to save and view saved content.
+                  </DialogContentText>
+                  <Input
+                    name="email"
+                    placeholder="Email"
+                    className={classes.input}
+                    inputProps={{
+                      'aria-label': 'Description'
+                    }}
+                  />
+                  <Input
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    className={classes.input}
+                    inputProps={{
+                      'aria-label': 'Description'
+                    }}
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button type="submit" color="primary">
+                    {displayName}
+                  </Button>
+                  <Button color="primary">
+                    <a href="/auth/google">{displayName} with Google</a>
+                  </Button>
+                  <Button onClick={this.props.handleClose} color="primary">
+                    Close
+                  </Button>
+                  {error &&
+                    error.response && <div> {error.response.data} </div>}
+                </DialogActions>
+              </form>
+            </Dialog>
+          </div>
         )}
-        <Input
-          name="email"
-          placeholder="Email"
-          className={classes.input}
-          inputProps={{
-            'aria-label': 'Description'
-          }}
-        />
-        <Input
-          name="password"
-          type="password"
-          placeholder="Password"
-          className={classes.input}
-          inputProps={{
-            'aria-label': 'Description'
-          }}
-        />
-        <Button type="submit" className={classes.button}>
-          {displayName}
-        </Button>
-        <Button className={classes.button}>
-          <a href="/auth/google">{displayName} with Google</a>
-        </Button>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-    </div>
-  )
+      </div>
+    )
+  }
 }
 
 /**
@@ -114,29 +239,7 @@ const mapSignup = state => {
 
 const mapDispatch = dispatch => {
   return {
-    handleSubmit(evt) {
-      evt.preventDefault()
-      const formName = evt.target.name
-      let formInfo
-      formName === 'signup'
-        ? (formInfo = {
-            formName: evt.target.name,
-            firstName: evt.target.firstName.value,
-            lastName: evt.target.lastName.value,
-            username: evt.target.username.value,
-            email: evt.target.email.value,
-            city: evt.target.city.value,
-            state: evt.target.state.value,
-            password: evt.target.password.value
-          })
-        : (formInfo = {
-            formName: evt.target.name,
-            email: evt.target.email.value,
-            password: evt.target.password.value
-          })
-
-      dispatch(auth(formInfo))
-    }
+    auth: formInfo => dispatch(auth(formInfo))
   }
 }
 
@@ -153,7 +256,6 @@ export const Signup = connect(mapSignup, mapDispatch)(
 AuthForm.propTypes = {
   name: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object,
   classes: PropTypes.object.isRequired
 }
