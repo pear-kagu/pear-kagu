@@ -29,7 +29,7 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/interest" component={InterestPage} />
+        <Route path="/interest/:interestName" component={InterestPage} />
         <Route path="/saved" component={SavedContentLanding} />
         <Route path="/savedContent" component={SavedContentCarousel} />
         <Route path="/" component={Landing} />
