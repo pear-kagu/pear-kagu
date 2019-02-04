@@ -2,7 +2,6 @@ import axios from 'axios'
 
 //action types
 const GET_INTERESTS = 'GET_INTERESTS'
-const SET_SELECTED_INTEREST = 'SET_SELECTED_INTEREST'
 
 //action creators
 const getInterests = interests => {
@@ -12,38 +11,31 @@ const getInterests = interests => {
   }
 }
 
-export const setSelectedInterest = interest => {
-  return {
-    type: SET_SELECTED_INTEREST,
-    interest
-  }
-}
-
 //thunk creators
 export const fetchInterests = () => {
   return async dispatch => {
     const {data} = await axios.get('/api/interests')
+    const interests = data.map(curInterest => {
+      return curInterest.name
+    })
+    dispatch(getInterests(interests))
+  }
+}
+
+export const fetchUserInterests = userId => {
+  return async dispatch => {
+    const {data} = await axios.get(`/api/users/${userId}/interests`)
     dispatch(getInterests(data))
   }
 }
 
 //initial state
-const initialState = {
-  allInterests: [],
-  selectedInterest: {}
-}
-
+const initialState = []
 //reducer
 export default (state = initialState, action) => {
-  const newState = {...state}
-
   switch (action.type) {
     case GET_INTERESTS:
-      newState.allInterests = action.interests
-      return newState
-    case SET_SELECTED_INTEREST:
-      newState.selectedInterest = action.interest
-      return newState
+      return action.interests
     default:
       return state
   }

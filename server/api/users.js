@@ -2,36 +2,25 @@ const router = require('express').Router()
 const {User, Content, Interest, UserContent} = require('../db/models')
 module.exports = router
 
-router.get('/:userId/interests', async (req, res, next) => {
-  try {
-    let userId = Number(req.params.userId)
-    let savedContent = await UserContent.findAll({
-      where: {
-        userId
-      },
-      attributes: ['id'],
-      include: [
-        {
-          model: Content,
-          attributes: ['title', 'sourceUrl', 'imageUrl', 'description'],
-          include: [{model: Interest, attributes: ['id', 'name']}]
-        }
-      ]
-    })
-
-    res.status(200).send(savedContent)
-  } catch (err) {
-    console.error(err)
+function removeDuplicates(allInterests) {
+  let interests = []
+  for (let i = 0; i < allInterests.length; i++) {
+    let currElem = allInterests[i]
+    if (!interests.includes(currElem)) {
+      interests.push(currElem)
+    }
   }
-})
+  return interests
+}
 
 router.get('/:userId/content', async (req, res, next) => {
   try {
-    const userId = Number(req.params.userId)
-    const [user] = await User.findAll({
+    let userId = Number(req.params.userId)
+    let [user] = await User.findAll({
       where: {
         id: userId
       },
+      attributes: ['id'],
       include: [
         {
           model: Content,
@@ -40,14 +29,49 @@ router.get('/:userId/content', async (req, res, next) => {
             'sourceUrl',
             'imageUrl',
             'description',
-            'interestId',
             'typeId'
-          ]
+          ],
+          include: [{model: Interest, attributes: ['id', 'name']}]
         }
       ]
     })
 
     res.status(200).send(user)
+  } catch (err) {
+    console.error(err)
+  }
+})
+
+router.get('/:userId/interests', async (req, res, next) => {
+  try {
+    let userId = Number(req.params.userId)
+    let [user] = await User.findAll({
+      where: {
+        id: userId
+      },
+      attributes: ['id'],
+      include: [
+        {
+          model: Content,
+          attributes: [
+            'title',
+            'sourceUrl',
+            'imageUrl',
+            'description',
+            'typeId'
+          ],
+          include: [{model: Interest, attributes: ['id', 'name']}]
+        }
+      ]
+    })
+    const {contents} = user
+    console.log(contents)
+    const allInterests = contents.map(content => {
+      return content.interest.name
+    })
+    console.log('allInterests in api route', allInterests)
+    const interests = removeDuplicates(allInterests)
+    res.status(200).send(interests)
   } catch (err) {
     console.error(err)
   }

@@ -6,13 +6,6 @@ import {SavedCarouselCard} from '../components'
 class SavedContentCarousel extends Component {
   constructor() {
     super()
-    this.state = {
-      render: ''
-    }
-  }
-
-  componentDidMount() {
-    this.setState({render: 'render'})
   }
 
   render() {

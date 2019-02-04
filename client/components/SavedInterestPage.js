@@ -9,15 +9,6 @@ class InterestPage extends Component {
     super(props)
   }
 
-  async componentDidMount() {
-    console.log('componentdid mount in Interest Page')
-    await this.props.fetchSavedContent(
-      this.props.user.id,
-      this.props.interest.id,
-      this.props.typeId
-    )
-  }
-
   render() {
     return (
       <div>
@@ -52,16 +43,9 @@ class InterestPage extends Component {
  */
 const mapState = state => {
   return {
-    interest: state.interest.selectedInterest.interest,
+    interest: state.interests,
     user: state.user.user
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    fetchSavedContent: (userId, interestId) =>
-      dispatch(fetchSavedContent(userId, interestId))
-  }
-}
-
-export default connect(mapState, mapDispatch)(InterestPage)
+export default connect(mapState)(InterestPage)

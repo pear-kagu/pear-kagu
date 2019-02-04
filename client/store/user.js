@@ -79,14 +79,6 @@ export const logout = () => async dispatch => {
   }
 }
 
-// thunk to fetch user content
-export const fetchUserContent = userId => {
-  return async dispatch => {
-    const {data} = await axios.get(`/api/users/${userId}/content`)
-    dispatch(getContent(data))
-  }
-}
-
 //thunk to set user content
 export const setSavedContentinDB = (userId, contentId) => {
   return async dispatch => {

@@ -5,34 +5,8 @@ import {withStyles} from '@material-ui/core/styles'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import {LayoutBody, Typography} from '../components'
 import {Link} from 'react-router-dom'
-import {fetchInterests, setSelectedInterest} from '../store'
-
-const columAttributes = [
-  {
-    width: '33%',
-    color: 'turquoise'
-  },
-  {
-    width: '33%',
-    color: 'purple'
-  },
-  {
-    width: '33%',
-    color: 'blue'
-  },
-  {
-    width: '33%',
-    color: 'gray'
-  },
-  {
-    width: '33%',
-    color: 'green'
-  },
-  {
-    width: '33%',
-    color: 'orange'
-  }
-]
+import {fetchInterests} from '../store'
+import {colorBank} from '../utils'
 
 const styles = theme => ({
   root: {
@@ -114,63 +88,73 @@ const styles = theme => ({
 })
 
 class Landing extends Component {
-  constructor() {
-    super()
-  }
-
   componentDidMount() {
     this.props.fetchInterests()
   }
 
   render() {
-    const {classes, allInterests, handleClick, isLoggedIn, user} = this.props
+    const {classes, interests, isLoggedIn, user} = this.props
     return (
-      <LayoutBody className={classes.root} component="section" width="large">
-        <Typography variant="h4" marked="center" align="center" component="h2">
-          {isLoggedIn && user.firstName
-            ? `Welcome ${user.firstName}, select an interest to start exploring`
-            : isLoggedIn
-              ? `Welcome, select an interest to start exploring`
-              : 'Select an interest to start exploring'}
-        </Typography>
-        <div className={classes.images}>
-          {allInterests.map((interest, idx) => {
-            const {width, color} = columAttributes[idx]
-            return (
-              <ButtonBase
-                key={interest.name}
-                className={classes.imageWrapper}
-                style={{
-                  width: width
-                }}
-              >
-                <Link
-                  to={`/interest/${interest.name}`}
-                  onClick={() => handleClick({interest})}
-                >
-                  <div
-                    className={classes.imageBackdrop}
+      <div>
+        {interests ? (
+          <LayoutBody
+            className={classes.root}
+            component="section"
+            width="large"
+          >
+            <Typography
+              variant="h4"
+              marked="center"
+              align="center"
+              component="h2"
+            >
+              {isLoggedIn && user.firstName
+                ? `Welcome ${
+                    user.firstName
+                  }, select an interest to start exploring`
+                : isLoggedIn
+                  ? `Welcome, select an interest to start exploring`
+                  : 'Select an interest to start exploring'}
+            </Typography>
+            <div className={classes.images}>
+              {interests.map((interestName, idx) => {
+                const color = colorBank[idx]
+                return (
+                  <ButtonBase
+                    key={interestName}
+                    className={classes.imageWrapper}
                     style={{
-                      backgroundColor: color
+                      width: '33%'
                     }}
-                  />
-                  <div className={classes.imageButton}>
-                    <Typography
-                      component="h3"
-                      variant="h6"
-                      color="inherit"
-                      className={classes.imageTitle}
-                    >
-                      {interest.name}
-                      <div className={classes.imageMarked} />
-                    </Typography>
-                  </div>
-                </Link>
-              </ButtonBase>
-            )
-          })}
-        </div>
-      </LayoutBody>
+                  >
+                    <Link to={`/interest/${interestName}`}>
+                      <div
+                        className={classes.imageBackdrop}
+                        style={{
+                          backgroundColor: color
+                        }}
+                      />
+                      <div className={classes.imageButton}>
+                        <Typography
+                          component="h3"
+                          variant="h6"
+                          color="inherit"
+                          className={classes.imageTitle}
+                        >
+                          {interestName}
+                          <div className={classes.imageMarked} />
+                        </Typography>
+                      </div>
+                    </Link>
+                  </ButtonBase>
+                )
+              })}
+            </div>
+          </LayoutBody>
+        ) : (
+          <div>Loading</div>
+        )}
+      </div>
     )
   }
 }
@@ -180,7 +164,7 @@ class Landing extends Component {
  */
 const mapState = state => {
   return {
-    allInterests: state.interest.allInterests,
+    interests: state.interests,
     isLoggedIn: !!state.user.user.id,
     user: state.user.user
   }
@@ -188,10 +172,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    fetchInterests: () => dispatch(fetchInterests()),
-    handleClick(interest) {
-      dispatch(setSelectedInterest(interest))
-    }
+    fetchInterests: () => dispatch(fetchInterests())
   }
 }
 
