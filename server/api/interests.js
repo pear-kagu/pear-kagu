@@ -15,3 +15,19 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+// get selected interest details
+router.get('/:name', async (req, res, next) => {
+  try {
+    const name = req.params.name
+    const interest = await Interest.findOne({
+      where: {
+        name
+      },
+      attributes: ['id', 'name']
+    })
+    res.status(200).send(interest)
+  } catch (err) {
+    next(err)
+  }
+})
