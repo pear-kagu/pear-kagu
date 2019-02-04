@@ -1,30 +1,15 @@
 import axios from 'axios'
 
 //action types
-const GET_MEETUPS = 'GET_MEETUPS'
-const GET_YOUTUBES = 'GET_YOUTUBES'
-const GET_NEWS = 'GET_NEWS'
+const SET_CONTENT = 'SET_CONTENT'
 const CLEAR_CONTENT = 'CLEAR_CONTENT'
 
 //action creators
-const getMeetups = meetups => {
-  return {
-    type: GET_MEETUPS,
-    meetups
-  }
-}
 
-const getYoutubes = youtubes => {
+const setContent = content => {
   return {
-    type: GET_YOUTUBES,
-    youtubes
-  }
-}
-
-const getNews = news => {
-  return {
-    type: GET_NEWS,
-    news
+    type: SET_CONTENT,
+    content
   }
 }
 
@@ -35,16 +20,21 @@ export const clearContent = () => {
 }
 
 //thunk creators
-export const fetchContent = (typeId, interestId) => {
+export const fetchContent = interestName => {
   return async dispatch => {
-    const {data} = await axios.get(`/api/content/${typeId}/${interestId}`)
-    if (typeId === '1') {
-      dispatch(getNews(data))
-    } else if (typeId === '2') {
-      dispatch(getYoutubes(data))
-    } else if (typeId === '3') {
-      dispatch(getMeetups(data))
+    let interestResponse = await axios.get(`/api/interests/${interestName}`)
+    const {id} = interestResponse.data
+    let contentResponse = await axios.get(`/api/content/${id}`)
+    const contentData = contentResponse.data
+    const read = contentData.filter(content => content.typeId === 1)
+    const watch = contentData.filter(content => content.typeId === 2)
+    const meet = contentData.filter(content => content.typeId === 3)
+    const content = {
+      read,
+      watch,
+      meet
     }
+    dispatch(setContent(content))
   }
 }
 
@@ -52,23 +42,15 @@ export const fetchContent = (typeId, interestId) => {
 const initialState = {
   read: [],
   watch: [],
-  do: []
+  meet: []
 }
 
 //reducer
 
 export default (state = initialState, action) => {
-  const newState = {...state}
   switch (action.type) {
-    case GET_MEETUPS:
-      newState.do = action.meetups
-      return newState
-    case GET_YOUTUBES:
-      newState.watch = action.youtubes
-      return newState
-    case GET_NEWS:
-      newState.read = action.news
-      return newState
+    case SET_CONTENT:
+      return action.content
     case CLEAR_CONTENT:
       return initialState
     default:

@@ -2,16 +2,12 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Carousel} from '../components'
 import Typography from '@material-ui/core/Typography'
-import {fetchSelectedInterest} from '../store'
+import {fetchContent} from '../store'
 
 class InterestPage extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     const interestName = this.props.match.params.interestName
-    this.props.fetchSelectedInterest(interestName)
+    this.props.fetchContent(interestName)
   }
   render() {
     return (
@@ -47,13 +43,12 @@ class InterestPage extends Component {
  */
 const mapState = state => {
   return {
-    selectedInterest: state.interest.selectedInterest
+    content: state.content
   }
 }
 const mapDispatch = dispatch => {
   return {
-    fetchSelectedInterest: interestName =>
-      dispatch(fetchSelectedInterest(interestName))
+    fetchContent: interestName => dispatch(fetchContent(interestName))
   }
 }
 
