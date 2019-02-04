@@ -58,7 +58,6 @@ class AuthForm extends Component {
           formName: evt.target.name,
           firstName: evt.target.firstName.value,
           lastName: evt.target.lastName.value,
-          username: evt.target.username.value,
           email: evt.target.email.value,
           city: evt.target.city.value,
           state: evt.target.state.value,
@@ -100,14 +99,6 @@ class AuthForm extends Component {
                 <Input
                   name="lastName"
                   placeholder="Last Name"
-                  className={classes.input}
-                  inputProps={{
-                    'aria-label': 'Description'
-                  }}
-                />
-                <Input
-                  name="username"
-                  placeholder="Username"
                   className={classes.input}
                   inputProps={{
                     'aria-label': 'Description'
