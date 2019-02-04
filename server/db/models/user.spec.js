@@ -9,28 +9,28 @@ describe('User model', () => {
     return db.sync({force: true})
   })
   describe('Validations', () => {
-    it('requires `firstName`', async () => {
+    it('requires `email`', async () => {
       const user = User.build()
 
       try {
         await user.validate()
         throw Error(
-          'validation was successful but should have failed without `firstName or lastName`'
+          'validation was successful but should have failed without `email`'
         )
       } catch (err) {
-        expect(err.message).to.contain('firstName cannot be null')
+        expect(err.message).to.contain('email cannot be null')
       }
     })
 
-    it('requires `firstName` to not be an empty string', async () => {
+    it('requires `email` to not be an empty string', async () => {
       const user = User.build({
-        firstName: ''
+        email: ''
       })
 
       try {
         await user.validate()
         throw Error(
-          'validation was successful but should have failed if firstName is an empty string'
+          'validation was successful but should have failed if email is an empty string'
         )
       } catch (err) {
         expect(err.message).to.contain('Validation error')
@@ -46,7 +46,6 @@ describe('User model', () => {
         cody = await User.create({
           firstName: 'Cody',
           lastName: 'Puppy',
-          username: 'cody123',
           email: 'cody@puppybook.com',
           password: 'bones'
         })

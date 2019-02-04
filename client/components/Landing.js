@@ -127,9 +127,11 @@ class Landing extends Component {
     return (
       <LayoutBody className={classes.root} component="section" width="large">
         <Typography variant="h4" marked="center" align="center" component="h2">
-          {isLoggedIn
+          {isLoggedIn && user.firstName
             ? `Welcome ${user.firstName}, select an interest to start exploring`
-            : 'Select an interest to start exploring'}
+            : isLoggedIn
+              ? `Welcome, select an interest to start exploring`
+              : 'Select an interest to start exploring'}
         </Typography>
         <div className={classes.images}>
           {allInterests.map((interest, idx) => {
