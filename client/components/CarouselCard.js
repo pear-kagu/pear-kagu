@@ -32,9 +32,8 @@ class CarouselCard extends Component {
     this.handleFavoriteClick = this.handleFavoriteClick.bind(this)
   }
 
-  handleFavoriteClick() {
+  handleFavoriteClick = contentId => event => {
     if (this.props.user.id) {
-      // this.props.setSavedContentinDB(this.props.user.id, event.target.value)
       if (this.state.heart === 'red') {
         this.setState({
           heart: ''
@@ -43,6 +42,7 @@ class CarouselCard extends Component {
         this.setState({
           heart: 'red'
         })
+        this.props.setSavedContentinDB(this.props.user.id, contentId)
       }
     } else {
       alert('Please sign in or sign up to save to your favorites')
@@ -56,7 +56,7 @@ class CarouselCard extends Component {
       <Card className={classes.card}>
         <IconButton
           aria-label="Add to favorites"
-          onClick={this.handleFavoriteClick}
+          onClick={this.handleFavoriteClick(content.id)}
         >
           <FavoriteIcon style={{color: this.state.heart}} />
         </IconButton>
