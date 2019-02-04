@@ -8,7 +8,7 @@ import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import IconButton from '@material-ui/core/IconButton'
-import {setSavedContentinDB} from '../store'
+import {setSavedContentinDB, deleteSavedContentinDB} from '../store'
 
 const styles = () => ({
   card: {
@@ -38,6 +38,7 @@ class CarouselCard extends Component {
         this.setState({
           heart: ''
         })
+        this.props.deleteSavedContentinDB(this.props.user.id, contentId)
       } else {
         this.setState({
           heart: 'red'
@@ -96,7 +97,9 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     setSavedContentinDB: (userId, contentId) =>
-      dispatch(setSavedContentinDB(userId, contentId))
+      dispatch(setSavedContentinDB(userId, contentId)),
+    deleteSavedContentinDB: (userId, contentId) =>
+      dispatch(deleteSavedContentinDB(userId, contentId))
   }
 }
 
