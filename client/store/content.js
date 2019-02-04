@@ -5,6 +5,7 @@ const GET_MEETUPS = 'GET_MEETUPS'
 const GET_YOUTUBES = 'GET_YOUTUBES'
 const GET_NEWS = 'GET_NEWS'
 const CLEAR_CONTENT = 'CLEAR_CONTENT'
+const SET_CONTENT = 'SET_CONTENT'
 
 //action creators
 const getMeetups = meetups => {
@@ -34,6 +35,13 @@ export const clearContent = () => {
   }
 }
 
+const setContent = content => {
+  return {
+    type: SET_CONTENT,
+    content
+  }
+}
+
 //thunk creators
 export const fetchContent = (typeId, interestId) => {
   return async dispatch => {
@@ -48,20 +56,30 @@ export const fetchContent = (typeId, interestId) => {
   }
 }
 
-//initial state
-const initialState = {
-  read: [],
-  watch: [],
-  do: []
+export const fetchSavedContent = (userId, interestId) => {
+  return async dispatch => {
+    console.log('made it to saved content thunk')
+    console.log('userId', userId)
+    const {data} = await axios.get(`/api/users/${userId}/content`)
+    console.log('data in thunk', data)
+    const {contents} = data
+    const savedContent = contents.filter(content => {
+      return Number(content.interestId) === Number(interestId)
+    })
+    dispatch(setContent(savedContent))
+  }
 }
+
+//initial state
+const initialState = []
 
 //reducer
 
 export default (state = initialState, action) => {
-  const newState = {...state}
+  const newState = [...state]
   switch (action.type) {
     case GET_MEETUPS:
-      newState.do = action.meetups
+      newState.meet = action.meetups
       return newState
     case GET_YOUTUBES:
       newState.watch = action.youtubes
@@ -69,6 +87,8 @@ export default (state = initialState, action) => {
     case GET_NEWS:
       newState.read = action.news
       return newState
+    case SET_CONTENT:
+      return action.content
     case CLEAR_CONTENT:
       return initialState
     default:

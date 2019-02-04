@@ -8,8 +8,8 @@ import {
   UserHome,
   Landing,
   InterestPage,
-  SavedContentLanding,
-  SavedContentCarousel
+  SavedInterestPage,
+  SavedContentLanding
 } from './components'
 import {me} from './store'
 
@@ -31,7 +31,7 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route path="/interest" component={InterestPage} />
         <Route path="/saved" component={SavedContentLanding} />
-        <Route path="/savedContent" component={SavedContentCarousel} />
+        <Route path="/savedContent" component={SavedInterestPage} />
         <Route path="/" component={Landing} />
         {isLoggedIn && (
           <Switch>

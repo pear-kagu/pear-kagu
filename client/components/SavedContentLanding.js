@@ -126,10 +126,12 @@ class SavedContentLanding extends Component {
     const {classes, handleClick} = this.props
     const allInterests = [
       {
-        name: 'Women in Tech'
+        name: 'Women in Tech',
+        id: 5
       },
       {
-        name: 'JavaScript'
+        name: 'JavaScript',
+        id: 1
       }
     ]
     return (
