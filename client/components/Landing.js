@@ -97,12 +97,15 @@ class Landing extends Component {
   }
 
   render() {
-    const {classes, allInterests} = this.props
-    const allInterestsKeys = Object.keys(allInterests)
+    const {classes, allInterests, handleClick, isLoggedIn, user} = this.props
     return (
       <LayoutBody className={classes.root} component="section" width="large">
         <Typography variant="h4" marked="center" align="center" component="h2">
-          Select an interest to start exploring
+          {isLoggedIn && user.firstName
+            ? `Welcome ${user.firstName}, select an interest to start exploring`
+            : isLoggedIn
+              ? `Welcome, select an interest to start exploring`
+              : 'Select an interest to start exploring'}
         </Typography>
         <div className={classes.images}>
           {allInterestsKeys.map((interestId, idx) => {
@@ -149,7 +152,9 @@ class Landing extends Component {
  */
 const mapState = state => {
   return {
-    allInterests: state.interest.allInterests
+    allInterests: state.interest.allInterests,
+    isLoggedIn: !!state.user.user.id,
+    user: state.user.user
   }
 }
 
