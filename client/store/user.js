@@ -95,6 +95,13 @@ export const setSavedContentinDB = (userId, contentId) => {
   }
 }
 
+export const deleteSavedContentinDB = (userId, contentId) => {
+  return async dispatch => {
+    await axios.delete(`/api/users/${userId}/content/${contentId}`)
+    dispatch(fetchUserContent(userId))
+  }
+}
+
 /**
  * REDUCER
  */
