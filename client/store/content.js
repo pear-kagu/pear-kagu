@@ -55,7 +55,15 @@ export const fetchSavedContent = (userId, interestName) => {
       watch,
       meet
     }
+    dispatch(clearContent())
     dispatch(setContent(content))
+  }
+}
+
+export const deleteSavedContentinDB = (userId, contentId, interestName) => {
+  return async dispatch => {
+    await axios.delete(`/api/users/${userId}/content/${contentId}`)
+    dispatch(fetchSavedContent(userId, interestName))
   }
 }
 //initial state
