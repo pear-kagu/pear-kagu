@@ -38,17 +38,32 @@ export const fetchContent = interestName => {
   }
 }
 
-export const fetchSavedContent = userId => {
+export const fetchSavedContent = (userId, interestName) => {
   return async dispatch => {
     const {data} = await axios.get(`/api/users/${userId}/content`)
     const {contents} = data
-    console.log('data in thunk', data)
-    console.log('contents in thunk', contents)
-    dispatch(setContent(contents))
+    let interestResponse = await axios.get(`/api/interests/${interestName}`)
+    const {id} = interestResponse.data
+    const interestContent = contents.filter(
+      content => content.interestId === id
+    )
+    const read = interestContent.filter(content => content.typeId === 1)
+    const watch = interestContent.filter(content => content.typeId === 2)
+    const meet = interestContent.filter(content => content.typeId === 3)
+    const content = {
+      read,
+      watch,
+      meet
+    }
+    dispatch(setContent(content))
   }
 }
 //initial state
-const initialState = []
+const initialState = {
+  read: [],
+  watch: [],
+  meet: []
+}
 
 //reducer
 export default (state = initialState, action) => {

@@ -124,58 +124,50 @@ class SavedContentLanding extends Component {
 
   componentDidMount() {
     this.props.fetchUserInterests(this.props.user.id)
-    this.props.fetchSavedContent(this.props.user.id)
   }
 
   render() {
-    const {classes, handleClick, contents, interests} = this.props
+    const {classes, interests} = this.props
 
     return (
       <LayoutBody className={classes.root} component="section" width="large">
         <Typography variant="h4" marked="center" align="center" component="h2">
           Select an interest to view your saved content:
         </Typography>
-        {contents.length > 0 ? (
-          <div className={classes.images}>
-            {interests.map((interest, idx) => {
-              const {width, color} = columAttributes[idx]
-              return (
-                <ButtonBase
-                  key={interest}
-                  className={classes.imageWrapper}
-                  style={{
-                    width: width
-                  }}
-                >
-                  <Link
-                    to={`/savedContent/${interest}`}
-                    onClick={() => handleClick({interest})}
-                  >
-                    <div
-                      className={classes.imageBackdrop}
-                      style={{
-                        backgroundColor: color
-                      }}
-                    />
-                    <div className={classes.imageButton}>
-                      <Typography
-                        component="h3"
-                        variant="h6"
-                        color="inherit"
-                        className={classes.imageTitle}
-                      >
-                        {interest}
-                        <div className={classes.imageMarked} />
-                      </Typography>
-                    </div>
-                  </Link>
-                </ButtonBase>
-              )
-            })}
-          </div>
-        ) : (
-          <div />
-        )}
+        <div className={classes.images}>
+          {interests.map((interestName, idx) => {
+            const {width, color} = columAttributes[idx]
+            return (
+              <ButtonBase
+                key={interestName}
+                className={classes.imageWrapper}
+                style={{
+                  width: width
+                }}
+              >
+                <Link to={`/savedContent/${interestName}`}>
+                  <div
+                    className={classes.imageBackdrop}
+                    style={{
+                      backgroundColor: color
+                    }}
+                  />
+                  <div className={classes.imageButton}>
+                    <Typography
+                      component="h3"
+                      variant="h6"
+                      color="inherit"
+                      className={classes.imageTitle}
+                    >
+                      {interestName}
+                      <div className={classes.imageMarked} />
+                    </Typography>
+                  </div>
+                </Link>
+              </ButtonBase>
+            )
+          })}
+        </div>
       </LayoutBody>
     )
   }
@@ -186,7 +178,6 @@ class SavedContentLanding extends Component {
  */
 const mapState = state => {
   return {
-    contents: state.content,
     user: state.user.user,
     interests: state.interests
   }
@@ -194,11 +185,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    fetchSavedContent: userId => dispatch(fetchSavedContent(userId)),
-    fetchUserInterests: userId => dispatch(fetchUserInterests(userId)),
-    handleClick(interest) {
-      dispatch(setSelectedInterest(interest))
-    }
+    fetchUserInterests: userId => dispatch(fetchUserInterests(userId))
   }
 }
 

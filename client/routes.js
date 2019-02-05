@@ -31,7 +31,10 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route path="/interest/:interestName" component={InterestPage} />
         <Route path="/saved" component={SavedContentLanding} />
-        <Route path="/savedContent" component={SavedInterestPage} />
+        <Route
+          path="/savedContent/:interestName"
+          component={SavedInterestPage}
+        />
         <Route path="/" component={Landing} />
         {isLoggedIn && (
           <Switch>

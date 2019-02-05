@@ -5,10 +5,8 @@ import InfiniteCarousel from 'react-leaf-carousel'
 import {CarouselCard} from '../components'
 
 class Carousel extends Component {
-  componentDidMount() {}
   render() {
     const {content, typeId} = this.props
-    console.log('content in Carousel render', content)
     return (
       <div>
         {content ? (
@@ -49,11 +47,9 @@ class Carousel extends Component {
               })
             ) : typeId === '2' ? (
               content.watch.map(video => {
-                console.log('carousel video', video)
                 if (video.description) {
                   video.description = video.description.slice(0, 100) + '...'
                 }
-                // return <div key={video.id}>Card</div>
                 return <CarouselCard key={video.id} content={video} />
               })
             ) : typeId === '3' ? (

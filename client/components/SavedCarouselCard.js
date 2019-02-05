@@ -45,7 +45,6 @@ class SavedCarouselCard extends Component {
 
   render() {
     const {content, classes, removedHtmlDescription} = this.props
-    console.log('content in card', content)
 
     return (
       <Card className={classes.card}>
