@@ -7,7 +7,7 @@ import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
-import {setSavedContentinDB} from '../store'
+import {setSavedContentinDB, deleteSavedContentinDB} from '../store'
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined'
 
 const styles = theme => ({
@@ -36,10 +36,12 @@ class SavedCarouselCard extends Component {
 
   handleDelete(contentId) {
     if (this.props.user.id) {
-      this.props.removeSavedContent(this.props.user.id, contentId)
-      console.log('handle click works')
-    } else {
-      alert('Please sign in or sign up to save to your favorites')
+      const interestName = this.props.content.interest.name
+      this.props.deleteSavedContentinDB(
+        this.props.user.id,
+        contentId,
+        interestName
+      )
     }
   }
 
@@ -50,7 +52,7 @@ class SavedCarouselCard extends Component {
       <Card className={classes.card}>
         <IconButton
           aria-label="Add to favorites"
-          onClick={() => this.handleFavoriteClick(content.id)}
+          onClick={() => this.handleDelete(content.id)}
         >
           <DeleteOutlinedIcon className={classes.icon} />
         </IconButton>
@@ -86,7 +88,9 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     setSavedContentinDB: (userId, contentId) =>
-      dispatch(setSavedContentinDB(userId, contentId))
+      dispatch(setSavedContentinDB(userId, contentId)),
+    deleteSavedContentinDB: (userId, contentId, interestName) =>
+      dispatch(deleteSavedContentinDB(userId, contentId, interestName))
   }
 }
 
