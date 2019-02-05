@@ -124,7 +124,9 @@ class Navbar extends Component {
               color="inherit"
               noWrap
             >
-              <Link to="/">Kagu</Link>
+              <Link to="/">
+                <img src="/kagulogo.png" className="logo-image" />
+              </Link>
             </Typography>
             <div className={classes.search}>
               <div className={classes.searchIcon}>

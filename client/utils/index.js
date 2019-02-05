@@ -1,8 +1,8 @@
 export const colorBank = [
-  'turquoise',
   'purple',
+  'red',
   'blue',
-  'gray',
-  'green',
-  'orange'
+  'turquoise',
+  'orange',
+  'green'
 ]
