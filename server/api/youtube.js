@@ -7,7 +7,7 @@ module.exports = router
 // set paramaters
 const TYPE_ID = 2
 const API_SOURCE_ID = 1
-const SEARCH_PARAMS = 'Technology'
+const SEARCH_PARAMS = 'Programming Coding'
 
 const youtubeApiKey = process.env.YOUTUBEAPI_KEY
 
