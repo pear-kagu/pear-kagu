@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import {setSavedContentinDB} from '../store'
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined'
+import {withAlert} from 'react-alert'
 
 const styles = theme => ({
   card: {
@@ -39,7 +40,9 @@ class SavedCarouselCard extends Component {
       this.props.removeSavedContent(this.props.user.id, contentId)
       console.log('handle click works')
     } else {
-      alert('Please sign in or sign up to save to your favorites')
+      this.props.alert.show(
+        'Please sign in or sign up to save to your favorites'
+      )
     }
   }
 
@@ -94,6 +97,6 @@ SavedCarouselCard.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default connect(mapState, mapDispatch)(
-  withStyles(styles)(SavedCarouselCard)
+export default withAlert(
+  connect(mapState, mapDispatch)(withStyles(styles)(SavedCarouselCard))
 )
