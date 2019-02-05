@@ -41,7 +41,6 @@ class SavedCarouselCard extends Component {
   handleDelete(contentId) {
     if (this.props.user.id) {
       const interestName = this.props.content.interest.name
-      // this.props.clearContent()
       this.props.deleteSavedContentinDB(
         this.props.user.id,
         contentId,
