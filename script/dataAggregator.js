@@ -1,6 +1,5 @@
 const axios = require('axios')
-require('dotenv').config()
-const server = process.env.SERVER
+const server = 'http://pear-kagu.herokuapp.com'
 
 async function getInterests() {
   try {
