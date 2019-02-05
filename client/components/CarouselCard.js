@@ -48,7 +48,6 @@ class CarouselCard extends Component {
         this.props.setSavedContentinDB(this.props.user.id, contentId)
       }
     } else {
-      console.log('this.props', this.props.alert.show)
       this.props.alert.show(
         'Please sign in or sign up to save to your favorites'
       )
