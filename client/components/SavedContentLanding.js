@@ -5,7 +5,11 @@ import {withStyles} from '@material-ui/core/styles'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import {LayoutBody, Typography} from '.'
 import {Link} from 'react-router-dom'
-import {fetchInterests, setSelectedInterest} from '../store'
+import {
+  fetchUserInterests,
+  setSelectedInterest,
+  fetchSavedContent
+} from '../store'
 
 const columAttributes = [
   {
@@ -119,39 +123,29 @@ class SavedContentLanding extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchInterests()
+    this.props.fetchUserInterests(this.props.user.id)
   }
 
   render() {
-    const {classes, handleClick} = this.props
-    const allInterests = [
-      {
-        name: 'Women in Tech'
-      },
-      {
-        name: 'JavaScript'
-      }
-    ]
+    const {classes, interests} = this.props
+
     return (
       <LayoutBody className={classes.root} component="section" width="large">
         <Typography variant="h4" marked="center" align="center" component="h2">
           Select an interest to view your saved content:
         </Typography>
         <div className={classes.images}>
-          {allInterests.map((interest, idx) => {
+          {interests.map((interestName, idx) => {
             const {width, color} = columAttributes[idx]
             return (
               <ButtonBase
-                key={interest.name}
+                key={interestName}
                 className={classes.imageWrapper}
                 style={{
                   width: width
                 }}
               >
-                <Link
-                  to={`/savedContent/${interest.name}`}
-                  onClick={() => handleClick({interest})}
-                >
+                <Link to={`/savedContent/${interestName}`}>
                   <div
                     className={classes.imageBackdrop}
                     style={{
@@ -165,7 +159,7 @@ class SavedContentLanding extends Component {
                       color="inherit"
                       className={classes.imageTitle}
                     >
-                      {interest.name}
+                      {interestName}
                       <div className={classes.imageMarked} />
                     </Typography>
                   </div>
@@ -184,16 +178,14 @@ class SavedContentLanding extends Component {
  */
 const mapState = state => {
   return {
-    allInterests: state.interest.allInterests
+    user: state.user.user,
+    interests: state.interests
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    fetchInterests: () => dispatch(fetchInterests()),
-    handleClick(interest) {
-      dispatch(setSelectedInterest(interest))
-    }
+    fetchUserInterests: userId => dispatch(fetchUserInterests(userId))
   }
 }
 

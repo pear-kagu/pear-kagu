@@ -22,6 +22,13 @@ export const fetchInterests = () => {
   }
 }
 
+export const fetchUserInterests = userId => {
+  return async dispatch => {
+    const {data} = await axios.get(`/api/users/${userId}/interests`)
+    dispatch(getInterests(data))
+  }
+}
+
 //initial state
 const initialState = []
 //reducer

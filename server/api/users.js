@@ -2,11 +2,21 @@ const router = require('express').Router()
 const {User, Content, Interest, UserContent} = require('../db/models')
 module.exports = router
 
-//get saved content
+function removeDuplicates(allInterests) {
+  let interests = []
+  for (let i = 0; i < allInterests.length; i++) {
+    let currElem = allInterests[i]
+    if (!interests.includes(currElem)) {
+      interests.push(currElem)
+    }
+  }
+  return interests
+}
+
 router.get('/:userId/content', async (req, res, next) => {
   try {
     let userId = Number(req.params.userId)
-    let savedContent = await User.findAll({
+    let [user] = await User.findAll({
       where: {
         id: userId
       },
@@ -14,13 +24,52 @@ router.get('/:userId/content', async (req, res, next) => {
       include: [
         {
           model: Content,
-          attributes: ['title', 'sourceUrl', 'imageUrl', 'description'],
+          attributes: [
+            'title',
+            'sourceUrl',
+            'imageUrl',
+            'description',
+            'typeId'
+          ],
           include: [{model: Interest, attributes: ['id', 'name']}]
         }
       ]
     })
 
-    res.status(200).send(savedContent)
+    res.status(200).send(user)
+  } catch (err) {
+    console.error(err)
+  }
+})
+
+router.get('/:userId/interests', async (req, res, next) => {
+  try {
+    let userId = Number(req.params.userId)
+    let [user] = await User.findAll({
+      where: {
+        id: userId
+      },
+      attributes: ['id'],
+      include: [
+        {
+          model: Content,
+          attributes: [
+            'title',
+            'sourceUrl',
+            'imageUrl',
+            'description',
+            'typeId'
+          ],
+          include: [{model: Interest, attributes: ['id', 'name']}]
+        }
+      ]
+    })
+    const {contents} = user
+    const allInterests = contents.map(content => {
+      return content.interest.name
+    })
+    const interests = removeDuplicates(allInterests)
+    res.status(200).send(interests)
   } catch (err) {
     console.error(err)
   }
