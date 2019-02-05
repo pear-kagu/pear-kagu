@@ -7,7 +7,11 @@ import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
-import {setSavedContentinDB, deleteSavedContentinDB} from '../store'
+import {
+  setSavedContentinDB,
+  deleteSavedContentinDB,
+  clearContent
+} from '../store'
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined'
 
 const styles = theme => ({
@@ -37,6 +41,7 @@ class SavedCarouselCard extends Component {
   handleDelete(contentId) {
     if (this.props.user.id) {
       const interestName = this.props.content.interest.name
+      // this.props.clearContent()
       this.props.deleteSavedContentinDB(
         this.props.user.id,
         contentId,
@@ -90,7 +95,8 @@ const mapDispatch = dispatch => {
     setSavedContentinDB: (userId, contentId) =>
       dispatch(setSavedContentinDB(userId, contentId)),
     deleteSavedContentinDB: (userId, contentId, interestName) =>
-      dispatch(deleteSavedContentinDB(userId, contentId, interestName))
+      dispatch(deleteSavedContentinDB(userId, contentId, interestName)),
+    clearContent: () => dispatch(clearContent())
   }
 }
 

@@ -55,6 +55,7 @@ export const fetchSavedContent = (userId, interestName) => {
       watch,
       meet
     }
+    dispatch(clearContent())
     dispatch(setContent(content))
   }
 }
