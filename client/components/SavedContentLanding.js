@@ -13,28 +13,28 @@ import {
 
 const columAttributes = [
   {
-    width: '40%',
+    width: '33%',
     color: 'turquoise'
   },
   {
-    width: '35%',
+    width: '33%',
     color: 'purple'
   },
   {
-    width: '25%',
+    width: '33%',
     color: 'blue'
   },
   {
-    width: '35%',
-    color: 'gray'
+    width: '33%',
+    color: 'red'
   },
   {
-    width: '25%',
-    color: 'green'
-  },
-  {
-    width: '40%',
+    width: '33%',
     color: 'orange'
+  },
+  {
+    width: '33%',
+    color: 'green'
   }
 ]
 

@@ -38,10 +38,15 @@ class SavedContentCarousel extends Component {
           >
             {carouselId === '1' ? (
               content.read.map(singleArticle => {
+                if (singleArticle.description) {
+                  singleArticle.description =
+                    singleArticle.description.slice(0, 100) + '...'
+                }
                 return (
                   <SavedCarouselCard
                     key={singleArticle.id}
                     content={singleArticle}
+                    description={singleArticle.description}
                   />
                 )
               })
@@ -50,13 +55,18 @@ class SavedContentCarousel extends Component {
                 if (video.description) {
                   video.description = video.description.slice(0, 100) + '...'
                 }
-                return <SavedCarouselCard key={video.id} content={video} />
+                return (
+                  <SavedCarouselCard
+                    key={video.id}
+                    content={video}
+                    description={video.description}
+                  />
+                )
               })
             ) : carouselId === '3' ? (
               content.meet.map(meetup => {
-                let removedHtmlDescription
                 if (meetup.description) {
-                  removedHtmlDescription =
+                  meetup.description =
                     meetup.description
                       .replace(/<\/?[^>]+(>|$)/g, '')
                       .slice(0, 100) + '...'
@@ -65,7 +75,7 @@ class SavedContentCarousel extends Component {
                   <SavedCarouselCard
                     key={meetup.id}
                     content={meetup}
-                    removedHtmlDescription={removedHtmlDescription}
+                    description={meetup.description}
                   />
                 )
               })

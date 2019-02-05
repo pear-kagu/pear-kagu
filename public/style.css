@@ -20,8 +20,13 @@ form div {
 }
 
 .item-list {
-  border: 8px solid purple;
-  border-radius: 20px;
+  border: 1px solid purple;
+  border-radius: 10px;
   width: 100%; /*added*/
   overflow: hidden;
+}
+
+.logo-image {
+  height: 50px;
+  width: 100px;
 }
