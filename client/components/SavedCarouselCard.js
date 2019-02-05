@@ -6,12 +6,11 @@ import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
-import FavoriteIcon from '@material-ui/icons/Favorite'
 import IconButton from '@material-ui/core/IconButton'
-import {setSavedContentinDB, deleteSavedContentinDB} from '../store'
-import axios from 'axios'
+import {setSavedContentinDB} from '../store'
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined'
 
-const styles = () => ({
+const styles = theme => ({
   card: {
     maxWidth: 400
   },
@@ -21,31 +20,24 @@ const styles = () => ({
   },
   actions: {
     display: 'block'
+  },
+  icon: {
+    margin: theme.spacing.unit,
+    fontSize: 32
   }
 })
 
-class CarouselCard extends Component {
+class SavedCarouselCard extends Component {
   constructor() {
     super()
-    this.state = {
-      heart: ''
-    }
-    this.handleFavoriteClick = this.handleFavoriteClick.bind(this)
+
+    this.handleDelete = this.handleDelete.bind(this)
   }
 
-  handleFavoriteClick = contentId => event => {
+  handleDelete(contentId) {
     if (this.props.user.id) {
-      if (this.state.heart === 'red') {
-        this.setState({
-          heart: ''
-        })
-        this.props.deleteSavedContentinDB(this.props.user.id, contentId)
-      } else {
-        this.setState({
-          heart: 'red'
-        })
-        this.props.setSavedContentinDB(this.props.user.id, contentId)
-      }
+      this.props.removeSavedContent(this.props.user.id, contentId)
+      console.log('handle click works')
     } else {
       alert('Please sign in or sign up to save to your favorites')
     }
@@ -58,9 +50,9 @@ class CarouselCard extends Component {
       <Card className={classes.card}>
         <IconButton
           aria-label="Add to favorites"
-          onClick={this.handleFavoriteClick(content.id)}
+          onClick={() => this.handleFavoriteClick(content.id)}
         >
-          <FavoriteIcon style={{color: this.state.heart}} />
+          <DeleteOutlinedIcon className={classes.icon} />
         </IconButton>
         <a href={content.sourceUrl} target="blank">
           <CardMedia
@@ -94,14 +86,14 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     setSavedContentinDB: (userId, contentId) =>
-      dispatch(setSavedContentinDB(userId, contentId)),
-    deleteSavedContentinDB: (userId, contentId) =>
-      dispatch(deleteSavedContentinDB(userId, contentId))
+      dispatch(setSavedContentinDB(userId, contentId))
   }
 }
 
-CarouselCard.propTypes = {
+SavedCarouselCard.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default connect(mapState, mapDispatch)(withStyles(styles)(CarouselCard))
+export default connect(mapState, mapDispatch)(
+  withStyles(styles)(SavedCarouselCard)
+)

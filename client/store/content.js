@@ -38,6 +38,26 @@ export const fetchContent = interestName => {
   }
 }
 
+export const fetchSavedContent = (userId, interestName) => {
+  return async dispatch => {
+    const {data} = await axios.get(`/api/users/${userId}/content`)
+    const {contents} = data
+    let interestResponse = await axios.get(`/api/interests/${interestName}`)
+    const {id} = interestResponse.data
+    const interestContent = contents.filter(content => {
+      return Number(content.interest.id) === Number(id)
+    })
+    const read = interestContent.filter(content => content.typeId === 1)
+    const watch = interestContent.filter(content => content.typeId === 2)
+    const meet = interestContent.filter(content => content.typeId === 3)
+    const content = {
+      read,
+      watch,
+      meet
+    }
+    dispatch(setContent(content))
+  }
+}
 //initial state
 const initialState = {
   read: [],
@@ -46,7 +66,6 @@ const initialState = {
 }
 
 //reducer
-
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_CONTENT:
