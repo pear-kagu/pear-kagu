@@ -65,11 +65,9 @@ router.get('/:userId/interests', async (req, res, next) => {
       ]
     })
     const {contents} = user
-    console.log(contents)
     const allInterests = contents.map(content => {
       return content.interest.name
     })
-    console.log('allInterests in api route', allInterests)
     const interests = removeDuplicates(allInterests)
     res.status(200).send(interests)
   } catch (err) {
@@ -77,17 +75,35 @@ router.get('/:userId/interests', async (req, res, next) => {
   }
 })
 
+//add saved content
 router.post('/:userId/content', async (req, res, next) => {
   try {
     const contentId = Number(req.body.contentId)
     const userId = Number(req.params.userId)
     await UserContent.findOrCreate({
       where: {
-        userId: userId,
-        contentId: contentId
+        userId,
+        contentId
       }
     })
     res.status(200).send('Content saved')
+  } catch (err) {
+    console.error(err)
+  }
+})
+
+//delete saved content
+router.delete('/:userId/content/:contentId', async (req, res, next) => {
+  try {
+    const contentId = Number(req.params.contentId)
+    const userId = Number(req.params.userId)
+    await UserContent.destroy({
+      where: {
+        userId,
+        contentId
+      }
+    })
+    res.status(204).send('Content deleted')
   } catch (err) {
     console.error(err)
   }

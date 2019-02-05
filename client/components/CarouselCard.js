@@ -8,7 +8,7 @@ import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import IconButton from '@material-ui/core/IconButton'
-import {setSavedContentinDB} from '../store'
+import {setSavedContentinDB, deleteSavedContentinDB} from '../store'
 
 const styles = () => ({
   card: {
@@ -32,17 +32,18 @@ class CarouselCard extends Component {
     this.handleFavoriteClick = this.handleFavoriteClick.bind(this)
   }
 
-  handleFavoriteClick(contentId) {
+  handleFavoriteClick = contentId => event => {
     if (this.props.user.id) {
       if (this.state.heart === 'red') {
         this.setState({
           heart: ''
         })
+        this.props.deleteSavedContentinDB(this.props.user.id, contentId)
       } else {
         this.setState({
           heart: 'red'
         })
-        this.props.setSavedContent(this.props.user.id, contentId)
+        this.props.setSavedContentinDB(this.props.user.id, contentId)
       }
     } else {
       alert('Please sign in or sign up to save to your favorites')
@@ -56,7 +57,7 @@ class CarouselCard extends Component {
       <Card className={classes.card}>
         <IconButton
           aria-label="Add to favorites"
-          onClick={() => this.handleFavoriteClick(content.id)}
+          onClick={this.handleFavoriteClick(content.id)}
         >
           <FavoriteIcon style={{color: this.state.heart}} />
         </IconButton>
@@ -96,7 +97,9 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     setSavedContentinDB: (userId, contentId) =>
-      dispatch(setSavedContentinDB(userId, contentId))
+      dispatch(setSavedContentinDB(userId, contentId)),
+    deleteSavedContentinDB: (userId, contentId) =>
+      dispatch(deleteSavedContentinDB(userId, contentId))
   }
 }
 
