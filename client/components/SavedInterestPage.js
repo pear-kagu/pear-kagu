@@ -10,7 +10,7 @@ class InterestPage extends Component {
   }
 
   async componentDidMount() {
-    const interestName = this.props.match.params
+    const interestName = this.props.match.params.interestName
     await this.props.fetchSavedContent(this.props.user.id, interestName)
   }
   componentWillUnmount() {
@@ -30,7 +30,7 @@ class InterestPage extends Component {
           {content.watch.length ? (
             <SavedContentCarousel carouselId="2" title="Watch" />
           ) : (
-            <div />
+            <div>No saved videos</div>
           )}
         </div>
         <Typography variant="h6" marked="center" align="center" component="h2">
@@ -50,7 +50,7 @@ class InterestPage extends Component {
           {content.read.length ? (
             <SavedContentCarousel carouselId="1" title="Read" />
           ) : (
-            <div />
+            <div>No saved articles</div>
           )}
         </div>
       </div>

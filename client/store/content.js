@@ -44,9 +44,9 @@ export const fetchSavedContent = (userId, interestName) => {
     const {contents} = data
     let interestResponse = await axios.get(`/api/interests/${interestName}`)
     const {id} = interestResponse.data
-    const interestContent = contents.filter(
-      content => content.interestId === id
-    )
+    const interestContent = contents.filter(content => {
+      return Number(content.interest.id) === Number(id)
+    })
     const read = interestContent.filter(content => content.typeId === 1)
     const watch = interestContent.filter(content => content.typeId === 2)
     const meet = interestContent.filter(content => content.typeId === 3)
