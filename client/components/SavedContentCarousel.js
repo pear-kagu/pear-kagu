@@ -1,62 +1,83 @@
 import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
-import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import Grid from '@material-ui/core/Grid'
-import {withStyles} from '@material-ui/core/styles'
-import classnames from 'classnames'
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import CardMedia from '@material-ui/core/CardMedia'
-import CardContent from '@material-ui/core/CardContent'
-import CardActions from '@material-ui/core/CardActions'
-import Typography from '@material-ui/core/Typography'
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import IconButton from '@material-ui/core/IconButton'
-import {fetchContent} from '../store'
-import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos'
-import ArrowBackIos from '@material-ui/icons/ArrowBackIos'
-
-const cardStyle = {
-  height: 20
-}
-
-const styles = theme => ({
-  card: {
-    maxWidth: 400
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%' // 16:9
-  },
-  actions: {
-    display: 'flex'
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest
-    })
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)'
-  }
-})
+import InfiniteCarousel from 'react-leaf-carousel'
+import {SavedCarouselCard} from '../components'
 
 class SavedContentCarousel extends Component {
-  constructor() {
-    super()
-  }
-
-  componentDidMount() {
-    this.props.fetchContent(this.props.typeId, this.props.selectedInterest.id)
-  }
-
   render() {
-    const {classes, read, watch, meet} = this.props
+    const {carouselId, content} = this.props
 
-    return <Typography>Pending other Carousel</Typography>
+    return (
+      <div>
+        {content ? (
+          <InfiniteCarousel
+            breakpoints={[
+              {
+                breakpoint: 500,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 2
+                }
+              },
+              {
+                breakpoint: 768,
+                settings: {
+                  slidesToShow: 3,
+                  slidesToScroll: 3
+                }
+              }
+            ]}
+            dots={false}
+            showSides={true}
+            sidesOpacity={0.5}
+            sideSize={0.1}
+            slidesToScroll={4}
+            slidesToShow={4}
+            scrollOnDevice={true}
+            lazyLoad={false}
+          >
+            {carouselId === '1' ? (
+              content.read.map(singleArticle => {
+                return (
+                  <SavedCarouselCard
+                    key={singleArticle.id}
+                    content={singleArticle}
+                  />
+                )
+              })
+            ) : carouselId === '2' ? (
+              content.watch.map(video => {
+                if (video.description) {
+                  video.description = video.description.slice(0, 100) + '...'
+                }
+                return <SavedCarouselCard key={video.id} content={video} />
+              })
+            ) : carouselId === '3' ? (
+              content.meet.map(meetup => {
+                let removedHtmlDescription
+                if (meetup.description) {
+                  removedHtmlDescription =
+                    meetup.description
+                      .replace(/<\/?[^>]+(>|$)/g, '')
+                      .slice(0, 100) + '...'
+                }
+                return (
+                  <SavedCarouselCard
+                    key={meetup.id}
+                    content={meetup}
+                    removedHtmlDescription={removedHtmlDescription}
+                  />
+                )
+              })
+            ) : (
+              <div />
+            )}
+          </InfiniteCarousel>
+        ) : (
+          <div>Loading</div>
+        )}
+      </div>
+    )
   }
 }
 
@@ -66,20 +87,10 @@ class SavedContentCarousel extends Component {
 
 const mapState = state => {
   return {
-    read: state.content.read,
-    watch: state.content.watch,
-    meet: state.content.do,
-    selectedInterest: state.interest.selectedInterest.interest
+    content: state.content
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    fetchContent: (typeId, interestId) =>
-      dispatch(fetchContent(typeId, interestId))
-  }
-}
+SavedContentCarousel.propTypes = {}
 
-export default connect(mapState, mapDispatch)(
-  withStyles(styles)(SavedContentCarousel)
-)
+export default connect(mapState)(SavedContentCarousel)
