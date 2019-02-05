@@ -51,7 +51,7 @@ class SavedCarouselCard extends Component {
     return (
       <Card className={classes.card}>
         <IconButton
-          aria-label="Add to favorites"
+          aria-label="Delete from favorites"
           onClick={() => this.handleDelete(content.id)}
         >
           <DeleteOutlinedIcon className={classes.icon} />
