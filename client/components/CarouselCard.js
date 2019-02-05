@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import IconButton from '@material-ui/core/IconButton'
 import {setSavedContentinDB, deleteSavedContentinDB} from '../store'
+import axios from 'axios'
 
 const styles = () => ({
   card: {
@@ -32,18 +33,21 @@ class CarouselCard extends Component {
     this.handleFavoriteClick = this.handleFavoriteClick.bind(this)
   }
 
-  handleFavoriteClick = contentId => event => {
+  handleFavoriteClick = contentId => async evt => {
     if (this.props.user.id) {
       if (this.state.heart === 'red') {
         this.setState({
           heart: ''
         })
-        this.props.deleteSavedContentinDB(this.props.user.id, contentId)
+        // this.props.deleteSavedContentinDB(this.props.user.id, contentId)
       } else {
         this.setState({
           heart: 'red'
         })
-        this.props.setSavedContentinDB(this.props.user.id, contentId)
+        // this.props.setSavedContentinDB(this.props.user.id, contentId)
+        await axios.post(`/api/users/${this.props.user.id}/content`, {
+          contentId
+        })
       }
     } else {
       alert('Please sign in or sign up to save to your favorites')

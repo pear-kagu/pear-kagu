@@ -21,7 +21,6 @@ const defaultUser = {
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
-const getContent = content => ({type: GET_USER_CONTENT, content})
 
 /**
  * THUNK CREATORS
