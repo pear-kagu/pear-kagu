@@ -19,15 +19,11 @@ async function callApis() {
           allInterests[i].name
         }`
       )
-    }
-    for (let i = 0; i < allInterests.length; i++) {
       await axios.get(
         `http://localhost:8080/api/youtube/${allInterests[i].id}/${
           allInterests[i].name
         }`
       )
-    }
-    for (let i = 0; i < allInterests.length; i++) {
       if (allInterests[i].name.split(' ').length === 1) {
         await axios.get(
           `http://localhost:8080/api/meetups/${allInterests[i].id}/${
