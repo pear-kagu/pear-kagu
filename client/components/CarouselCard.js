@@ -52,7 +52,7 @@ class CarouselCard extends Component {
   }
 
   render() {
-    const {content, classes, removedHtmlDescription} = this.props
+    const {content, classes, description} = this.props
 
     return (
       <Card className={classes.card}>
@@ -72,13 +72,9 @@ class CarouselCard extends Component {
             <Typography variant="button" paragraph>
               {content.title}
             </Typography>
-            {removedHtmlDescription ? (
-              <Typography variant="caption" paragraph align="justify">
-                {removedHtmlDescription}
-              </Typography>
-            ) : (
-              <div />
-            )}
+            <Typography variant="caption" paragraph align="justify">
+              {description}
+            </Typography>
           </CardContent>
         </a>
       </Card>
