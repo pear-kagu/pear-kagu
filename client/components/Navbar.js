@@ -115,8 +115,8 @@ class Navbar extends Component {
     const {classes} = this.props
 
     return (
-      <div className={classes.root} style={{color: 'white'}}>
-        <AppBar position="static" style={{backgroundColor: 'inherit'}}>
+      <div className={classes.root} style={{color: 'grey'}}>
+        <AppBar position="static" style={{backgroundColor: 'white'}}>
           <Toolbar>
             <Typography
               className={classes.title}
