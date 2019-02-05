@@ -21,6 +21,7 @@ const defaultUser = {
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
+const getContent = content => ({type: GET_USER_CONTENT, content})
 
 /**
  * THUNK CREATORS
@@ -75,6 +76,14 @@ export const logout = () => async dispatch => {
     history.push('/')
   } catch (err) {
     console.error(err)
+  }
+}
+
+// thunk to fetch user content
+export const fetchUserContent = userId => {
+  return async dispatch => {
+    const {data} = await axios.get(`/api/users/${userId}/content`)
+    dispatch(getContent(data))
   }
 }
 

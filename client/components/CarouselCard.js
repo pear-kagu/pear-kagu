@@ -33,21 +33,18 @@ class CarouselCard extends Component {
     this.handleFavoriteClick = this.handleFavoriteClick.bind(this)
   }
 
-  handleFavoriteClick = contentId => async evt => {
+  handleFavoriteClick = contentId => event => {
     if (this.props.user.id) {
       if (this.state.heart === 'red') {
         this.setState({
           heart: ''
         })
-        // this.props.deleteSavedContentinDB(this.props.user.id, contentId)
+        this.props.deleteSavedContentinDB(this.props.user.id, contentId)
       } else {
         this.setState({
           heart: 'red'
         })
-        // this.props.setSavedContentinDB(this.props.user.id, contentId)
-        await axios.post(`/api/users/${this.props.user.id}/content`, {
-          contentId
-        })
+        this.props.setSavedContentinDB(this.props.user.id, contentId)
       }
     } else {
       alert('Please sign in or sign up to save to your favorites')
