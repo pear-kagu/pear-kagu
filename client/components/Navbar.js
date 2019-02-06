@@ -106,11 +106,6 @@ class Navbar extends Component {
   handleClose = () => {
     this.setState({open: false})
   }
-
-  handleSearch = () => {
-    console.log('made it to handle Search')
-    this.props.fetchSearchContent('Javascript')
-  }
   componentDidUpdate(prevProps) {
     if (this.props.isLoggedIn !== prevProps.isLoggedIn) {
       this.setState({open: false, name: ''})
@@ -145,7 +140,6 @@ class Navbar extends Component {
                   input: classes.inputInput
                 }}
               />
-              <Button onClick={this.handleSearch}>Search</Button>
             </div>
             {this.props.isLoggedIn ? (
               <div>
