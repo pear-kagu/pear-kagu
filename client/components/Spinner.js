@@ -4,7 +4,8 @@ import {ClipLoader} from 'react-spinners'
 
 const override = css`
   display: block;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
   border-color: red;
 `
 
@@ -19,7 +20,7 @@ class Spinner extends Component {
     return (
       <div className="sweet-loading">
         <ClipLoader
-          // css={override}
+          css={override}
           align="center"
           sizeUnit="px"
           size={50}

@@ -29,22 +29,32 @@ class InterestPage extends Component {
           ) : content.watch.length ? (
             <Carousel typeId="2" />
           ) : (
-            <div className="spinner">
-              <Spinner />
-            </div>
+            <Spinner />
           )}
         </div>
         <Typography variant="h6" marked="center" align="left" component="h2">
           Meet-up:
         </Typography>
         <div className="carousel-border">
-          {content.meet.length ? <Carousel typeId="3" /> : <div> Loading </div>}
+          {typeof content.meet === 'string' ? (
+            <div>{content.meet}</div>
+          ) : content.meet.length ? (
+            <Carousel typeId="3" />
+          ) : (
+            <Spinner />
+          )}
         </div>
         <Typography variant="h6" marked="center" align="left" component="h2">
           Read:
         </Typography>
         <div className="carousel-border">
-          {content.read.length ? <Carousel typeId="1" /> : <div> Loading </div>}
+          {typeof content.read === 'string' ? (
+            <div>{content.read}</div>
+          ) : content.read.length ? (
+            <Carousel typeId="1" />
+          ) : (
+            <Spinner />
+          )}
         </div>
       </div>
     )
