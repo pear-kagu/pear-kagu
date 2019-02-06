@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const {ApiSource} = require('../db/models')
 const axios = require('axios')
-const server = 'http://localhost:8080'
 
 module.exports = router
 
@@ -23,7 +22,7 @@ router.get('/:interestName', async (req, res, next) => {
     const interestName = req.params.interestName
     const sources = await ApiSource.findAll()
     const routes = sources.map(source => {
-      return `${server}${source.route}/search/${interestName}`
+      return `${source.route}/search/${interestName}`
     })
     const result = await callApis(routes)
     res.send(result)
