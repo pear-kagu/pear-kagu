@@ -50,7 +50,7 @@ async function seed() {
       primary: true
     }),
     Interest.create({
-      name: 'Women in Tech',
+      name: 'Web Development',
       primary: true
     })
   ])
