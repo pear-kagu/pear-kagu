@@ -15,8 +15,15 @@ const meetup = require('meetup-api')({key: meetupApiKey})
 router.get('/:interestId/:interestName', async (req, res, next) => {
   try {
     let {interestId, interestName} = req.params
+    interestName = interestName.split(' ').join('-')
     let groups = await meetup.getGroups(
-      {topic: interestName, country: COUNTRY, state: STATE, city: CITY},
+      {
+        category_id: 34,
+        topic: interestName,
+        country: COUNTRY,
+        state: STATE,
+        city: CITY
+      },
       (err, resp) => {
         if (resp) {
           resp.results.map(async group => {
