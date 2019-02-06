@@ -73,13 +73,10 @@ router.get('/primary/:interestId/:interestName', async (req, res, next) => {
       async (err, resp) => {
         if (resp) {
           let data = []
-          console.log('interestName', interestName)
           if (interestName !== 'witi') {
             data = resp.results.slice(0, 30)
-            console.log('javascript dataLength', data.length)
           } else {
             data = resp.results
-            console.log('data', data.length)
           }
           await data.map(async group => {
             const title = group.name
