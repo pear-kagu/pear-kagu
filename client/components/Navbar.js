@@ -93,6 +93,7 @@ class Navbar extends Component {
       name: ''
     }
     this.handleClose = this.handleClose.bind(this)
+    this.handleSearch = this.handleSearch.bind(this)
   }
   handleLoginOpen = () => {
     this.setState({open: true, name: 'login'})
@@ -104,6 +105,10 @@ class Navbar extends Component {
 
   handleClose = () => {
     this.setState({open: false})
+  }
+
+  handleSearch = () => {
+    console.log('made it to handle Search')
   }
   componentDidUpdate(prevProps) {
     if (this.props.isLoggedIn !== prevProps.isLoggedIn) {
