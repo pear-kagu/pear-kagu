@@ -60,6 +60,22 @@ export const fetchSavedContent = (userId, interestName) => {
   }
 }
 
+export const fetchSearchContent = interestName => {
+  return async dispatch => {
+    const {data} = await axios.get(`/api/search/${interestName}`)
+    const read = data.filter(content => content.typeId === 1)
+    const watch = data.filter(content => content.typeId === 2)
+    const meet = data.filter(content => content.typeId === 3)
+    const content = {
+      read,
+      watch,
+      meet
+    }
+    dispatch(clearContent())
+    dispatch(setContent(content))
+  }
+}
+
 export const deleteSavedContentinDB = (userId, contentId, interestName) => {
   return async dispatch => {
     await axios.delete(`/api/users/${userId}/content/${contentId}`)

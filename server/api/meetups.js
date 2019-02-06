@@ -12,7 +12,40 @@ const STATE = 'NY'
 
 const meetup = require('meetup-api')({key: meetupApiKey})
 
-router.get('/:interestId/:interestName', async (req, res, next) => {
+router.get('/search/:interestName', async (req, res, next) => {
+  try {
+    const interestName = req.params.interestName
+    let groups = await meetup.getGroups(
+      {topic: interestName, country: COUNTRY, state: STATE, city: CITY},
+      (err, resp) => {
+        if (resp) {
+          const result = resp.results.map(group => {
+            const title = group.name
+            const description = group.description
+            const sourceUrl = group.link
+            const imageUrl = group.group_photo
+              ? group.group_photo.highres_link
+              : 'https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
+            return {
+              title,
+              description,
+              sourceUrl,
+              imageUrl,
+              typeId: TYPE_ID,
+              apiSourceId: API_SOURCE_ID
+            }
+          })
+          res.send(result)
+        } else return err
+      }
+    )
+    return groups
+  } catch (err) {
+    console.error(err)
+  }
+})
+
+router.get('/primary/:interestId/:interestName', async (req, res, next) => {
   try {
     let {interestId, interestName} = req.params
     interestName = interestName.split(' ').join('-')

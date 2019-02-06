@@ -9,9 +9,48 @@ module.exports = router
 const TYPE_ID = 1
 const API_SOURCE_ID = 3
 
+//search get request
+router.get('/search/:interestName', async (req, res, next) => {
+  const interestName = req.params.interestName
+  const today = new Date()
+
+  try {
+    const articlesReturned = await newsapi.v2.everything({
+      q: interestName,
+      sources: 'wired, techcrunch, hacker-news',
+      from: today - 30,
+      to: today,
+      language: 'en',
+      sortBy: 'relevancy'
+    })
+
+    const result = articlesReturned.articles.map(article => {
+      const title = article.title
+      const imageUrl =
+        article.urlToImage ||
+        'https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
+      const description = article.description
+      const sourceUrl = article.url
+      const publishedAt = article.publishedAt
+      return {
+        title,
+        imageUrl,
+        description,
+        sourceUrl,
+        publishedAt,
+        typeId: TYPE_ID,
+        apiSourceId: API_SOURCE_ID
+      }
+    })
+    res.status(200).send(result)
+  } catch (err) {
+    next(err)
+  }
+})
+
 //GET route /api/newsapi
 // You must include at least one q, source, or domain
-router.get('/:interestId/:interestName', async (req, res, next) => {
+router.get('/primary/:interestId/:interestName', async (req, res, next) => {
   const {interestId, interestName} = req.params
   const today = new Date()
 
