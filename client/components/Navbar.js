@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout} from '../store'
+import {logout, fetchSearchContent} from '../store'
 import {Login, Signup} from '.'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -109,6 +109,7 @@ class Navbar extends Component {
 
   handleSearch = () => {
     console.log('made it to handle Search')
+    this.props.fetchSearchContent('Javascript')
   }
   componentDidUpdate(prevProps) {
     if (this.props.isLoggedIn !== prevProps.isLoggedIn) {
@@ -144,6 +145,7 @@ class Navbar extends Component {
                   input: classes.inputInput
                 }}
               />
+              <Button onClick={this.handleSearch}>Search</Button>
             </div>
             {this.props.isLoggedIn ? (
               <div>
@@ -212,7 +214,9 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout())
-    }
+    },
+    fetchSearchContent: interestName =>
+      dispatch(fetchSearchContent(interestName))
   }
 }
 

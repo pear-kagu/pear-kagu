@@ -58,6 +58,22 @@ export const fetchSavedContent = (userId, interestName) => {
     dispatch(setContent(content))
   }
 }
+
+export const fetchSearchContent = interestName => {
+  return async dispatch => {
+    const {data} = await axios.get(`/api/search/${interestName}`)
+    const read = data.filter(content => content.typeId === 1)
+    const watch = data.filter(content => content.typeId === 2)
+    const meet = data.filter(content => content.typeId === 3)
+    const content = {
+      read,
+      watch,
+      meet
+    }
+    dispatch(setContent(content))
+  }
+}
+
 //initial state
 const initialState = {
   read: [],
