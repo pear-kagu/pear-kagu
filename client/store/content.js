@@ -71,6 +71,7 @@ export const fetchSearchContent = interestName => {
       watch,
       meet
     }
+    dispatch(clearContent())
     dispatch(setContent(content))
   }
 }

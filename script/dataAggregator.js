@@ -16,23 +16,17 @@ async function callApis() {
     const allInterests = await getInterests()
 
     for (let i = 0; i < allInterests.length; i++) {
+      let interestId = allInterests[i].id
+      let interestName = allInterests[i].name
       await axios.get(
-        `${server}/api/newsapi/primary/${allInterests[i].id}/${
-          allInterests[i].name
-        }`
+        `${server}/api/newsapi/primary/${interestId}/${interestName}`
       )
       await axios.get(
-        `${server}/api/youtube/primary/${allInterests[i].id}/${
-          allInterests[i].name
-        }`
+        `${server}/api/youtube/primary/${interestId}/${interestName}`
       )
-      if (allInterests[i].name.split(' ').length === 1) {
-        await axios.get(
-          `${server}/api/meetups/primary/${allInterests[i].id}/${
-            allInterests[i].name
-          }`
-        )
-      }
+      await axios.get(
+        `${server}/api/meetups/primary/${interestId}/${interestName}`
+      )
     }
   } catch (err) {
     console.error(err)

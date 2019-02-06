@@ -42,7 +42,7 @@ async function seed() {
       primary: true
     }),
     Interest.create({
-      name: ' Machine Learning',
+      name: 'Machine Learning',
       primary: true
     }),
     Interest.create({
