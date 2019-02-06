@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Carousel} from '../components'
+import {Carousel, Spinner} from '../components'
 import Typography from '@material-ui/core/Typography'
 import {fetchContent, clearContent} from '../store'
 
@@ -29,7 +29,7 @@ class InterestPage extends Component {
           ) : content.read.length ? (
             <Carousel typeId="2" />
           ) : (
-            <div> Loading </div>
+            <Spinner marked="center" align="center" />
           )}
         </div>
         <Typography variant="h6" marked="center" align="left" component="h2">
