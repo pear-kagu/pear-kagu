@@ -132,7 +132,17 @@ class SavedContentLanding extends Component {
     return (
       <LayoutBody className={classes.root} component="section" width="large">
         <Typography variant="h4" marked="center" align="center" component="h2">
-          Select an interest to view your saved content:
+          {interests.length ? (
+            'Select an interest to view your saved content:'
+          ) : (
+            <div>
+              <div>You have no saved content yet.</div>
+              <div>
+                {' '}
+                Browse interests to start saving your favorite content!
+              </div>
+            </div>
+          )}
         </Typography>
         <div className={classes.images}>
           {interests.map((interestName, idx) => {
