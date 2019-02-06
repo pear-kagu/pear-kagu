@@ -19,7 +19,7 @@ router.get('/search/:interestName', async (req, res, next) => {
       {topic: interestName, country: COUNTRY, state: STATE, city: CITY},
       (err, resp) => {
         if (resp) {
-          const result = resp.results.map(group => {
+          const result = resp.results.map((group, idx) => {
             const title = group.name
             const description = group.description
             const sourceUrl = group.link
@@ -27,6 +27,7 @@ router.get('/search/:interestName', async (req, res, next) => {
               ? group.group_photo.highres_link
               : 'https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
             return {
+              id: idx,
               title,
               description,
               sourceUrl,
