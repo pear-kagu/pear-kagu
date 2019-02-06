@@ -23,7 +23,6 @@ const Content = db.define('content', {
   },
   sourceUrl: {
     type: Sequelize.STRING,
-    unique: true,
     allowNull: false,
     validate: {
       isUrl: true,

@@ -24,9 +24,9 @@ class InterestPage extends Component {
           Watch:
         </Typography>
         <div className="carousel-border">
-          {typeof content.read === 'string' ? (
-            <div>{content.read}</div>
-          ) : content.read.length ? (
+          {typeof content.watch === 'string' ? (
+            <div>{content.watch}</div>
+          ) : content.watch.length ? (
             <Carousel typeId="2" />
           ) : (
             <div className="spinner">
@@ -38,7 +38,7 @@ class InterestPage extends Component {
           Meet-up:
         </Typography>
         <div className="carousel-border">
-          {content.read.length ? <Carousel typeId="3" /> : <div> Loading </div>}
+          {content.meet.length ? <Carousel typeId="3" /> : <div> Loading </div>}
         </div>
         <Typography variant="h6" marked="center" align="left" component="h2">
           Read:

@@ -11,6 +11,7 @@ import InputBase from '@material-ui/core/InputBase'
 import {fade} from '@material-ui/core/styles/colorManipulator'
 import {withStyles} from '@material-ui/core/styles'
 import SearchIcon from '@material-ui/icons/Search'
+import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
 import Modal from '@material-ui/core/Modal'
 
@@ -90,7 +91,8 @@ class Navbar extends Component {
     super()
     this.state = {
       open: false,
-      name: ''
+      name: '',
+      searchValue: ''
     }
     this.handleClose = this.handleClose.bind(this)
   }
@@ -105,6 +107,16 @@ class Navbar extends Component {
   handleClose = () => {
     this.setState({open: false})
   }
+
+  handleSearchChange = evt => {
+    this.setState({searchValue: evt.target.value})
+  }
+
+  handleSearch = evt => {
+    evt.preventDefault()
+    this.props.fetchSearchContent(this.state.searchValue)
+    this.setState({searchValue: ''})
+  }
   componentDidUpdate(prevProps) {
     if (this.props.isLoggedIn !== prevProps.isLoggedIn) {
       this.setState({open: false, name: ''})
@@ -115,8 +127,11 @@ class Navbar extends Component {
     const {classes} = this.props
 
     return (
-      <div className={classes.root} style={{color: 'grey'}}>
-        <AppBar position="static" style={{backgroundColor: 'white'}}>
+      <div className={classes.root}>
+        <AppBar
+          position="static"
+          style={{backgroundColor: 'white', boxShadow: 'none', margin: 'auto'}}
+        >
           <Toolbar>
             <Typography
               className={classes.title}
@@ -138,16 +153,38 @@ class Navbar extends Component {
                   root: classes.inputRoot,
                   input: classes.inputInput
                 }}
+                onChange={this.handleSearchChange}
+                value={this.state.searchValue}
               />
+            </div>
+            <div>
+              <Button
+                className={classes.button}
+                type="submit"
+                onClick={this.handleSearch}
+              >
+                <Link
+                  to={`/interest/${this.state.searchValue}`}
+                  style={{color: 'gray'}}
+                >
+                  search
+                </Link>
+              </Button>
             </div>
             {this.props.isLoggedIn ? (
               <div>
                 {/* The navbar will show these links after you log in */}
                 <Button className={classes.button}>
-                  <Link to="/saved">Saved Content</Link>
+                  <Link to="/saved" style={{color: 'gray'}}>
+                    Saved Content
+                  </Link>
                 </Button>
                 <Button className={classes.button}>
-                  <a href="#" onClick={this.props.handleClick}>
+                  <a
+                    href="#"
+                    onClick={this.props.handleClick}
+                    style={{color: 'gray'}}
+                  >
                     Logout
                   </a>
                 </Button>
@@ -158,12 +195,14 @@ class Navbar extends Component {
                 <Button
                   className={classes.button}
                   onClick={this.handleLoginOpen}
+                  style={{color: 'gray'}}
                 >
                   Login
                 </Button>
                 <Button
                   className={classes.button}
                   onClick={this.handleSignupOpen}
+                  style={{color: 'gray'}}
                 >
                   Sign Up
                 </Button>
