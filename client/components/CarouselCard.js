@@ -10,6 +10,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import IconButton from '@material-ui/core/IconButton'
 import {setSavedContentinDB, deleteSavedContentinDB} from '../store'
 import axios from 'axios'
+import {withAlert} from 'react-alert'
 
 const styles = () => ({
   card: {
@@ -47,7 +48,9 @@ class CarouselCard extends Component {
         this.props.setSavedContentinDB(this.props.user.id, contentId)
       }
     } else {
-      alert('Please sign in or sign up to save to your favorites')
+      this.props.alert.show(
+        'Please sign in or sign up to save to your favorites'
+      )
     }
   }
 
@@ -104,4 +107,6 @@ CarouselCard.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default connect(mapState, mapDispatch)(withStyles(styles)(CarouselCard))
+export default withAlert(
+  connect(mapState, mapDispatch)(withStyles(styles)(CarouselCard))
+)
