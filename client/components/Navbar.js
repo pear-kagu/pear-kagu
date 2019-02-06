@@ -11,6 +11,7 @@ import InputBase from '@material-ui/core/InputBase'
 import {fade} from '@material-ui/core/styles/colorManipulator'
 import {withStyles} from '@material-ui/core/styles'
 import SearchIcon from '@material-ui/icons/Search'
+import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
 import Modal from '@material-ui/core/Modal'
 
@@ -105,6 +106,11 @@ class Navbar extends Component {
   handleClose = () => {
     this.setState({open: false})
   }
+
+  handleSearch = evt => {
+    evt.preventDefault()
+    console.log(evt.target)
+  }
   componentDidUpdate(prevProps) {
     if (this.props.isLoggedIn !== prevProps.isLoggedIn) {
       this.setState({open: false, name: ''})
@@ -128,18 +134,25 @@ class Navbar extends Component {
                 <img src="/kagulogo.png" className="logo-image" />
               </Link>
             </Typography>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
+            <form onSubmit={this.handleSearch} name="searchForm">
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput
+                  }}
+                />
               </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput
-                }}
-              />
-            </div>
+              <div>
+                <Button className={classes.button} type="submit">
+                  Search
+                </Button>
+              </div>
+            </form>
             {this.props.isLoggedIn ? (
               <div>
                 {/* The navbar will show these links after you log in */}
