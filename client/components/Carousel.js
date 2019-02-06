@@ -35,7 +35,6 @@ class Carousel extends Component {
             slidesToShow={4}
             scrollOnDevice={true}
             lazyLoad={false}
-            arrows={true}
           >
             {typeId === '1' ? (
               content.read.map(singleArticle => {
