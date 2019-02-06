@@ -6,17 +6,23 @@ module.exports = router
 // set type and api source id
 const TYPE_ID = 3
 const API_SOURCE_ID = 2
-const COUNTRY = 'US'
-const CITY = 'New York'
-const STATE = 'NY'
+const CATEGORY_ID = 34 //Tech specific
+const ZIPCODE = 10001 //NYC
+const MAX_RADIUS = 100
 
 const meetup = require('meetup-api')({key: meetupApiKey})
 
 router.get('/search/:interestName', async (req, res, next) => {
   try {
-    const interestName = req.params.interestName
+    let interestName = req.params.interestName
+    interestName = interestName.toLowerCase()
     let groups = await meetup.getGroups(
-      {topic: interestName, country: COUNTRY, state: STATE, city: CITY},
+      {
+        category_id: CATEGORY_ID,
+        topic: interestName,
+        zip: ZIPCODE,
+        radius: MAX_RADIUS
+      },
       (err, resp) => {
         if (resp) {
           const result = resp.results.map(group => {
@@ -48,14 +54,20 @@ router.get('/search/:interestName', async (req, res, next) => {
 router.get('/primary/:interestId/:interestName', async (req, res, next) => {
   try {
     let {interestId, interestName} = req.params
-    interestName = interestName.split(' ').join('-')
+    interestName = interestName
+      .split(' ')
+      .join('-')
+      .toLowerCase()
+    if (interestName === 'women-in-tech') {
+      interestName = 'witi'
+    }
+
     let groups = await meetup.getGroups(
       {
-        category_id: 34,
+        category_id: CATEGORY_ID,
         topic: interestName,
-        country: COUNTRY,
-        state: STATE,
-        city: CITY
+        zip: ZIPCODE,
+        radius: MAX_RADIUS
       },
       (err, resp) => {
         if (resp) {
