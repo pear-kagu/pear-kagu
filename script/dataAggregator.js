@@ -1,5 +1,6 @@
 const axios = require('axios')
-const server = 'http://pear-kagu.herokuapp.com'
+const server = 'http://localhost:8080'
+//'http://pear-kagu.herokuapp.com'
 
 async function getInterests() {
   try {
