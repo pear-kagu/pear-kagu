@@ -22,13 +22,18 @@ export const clearContent = () => {
 //thunk creators
 export const fetchContent = interestName => {
   return async dispatch => {
+    let read = []
+    let watch = []
+    let meet = []
     let interestResponse = await axios.get(`/api/interests/${interestName}`)
     const {id} = interestResponse.data
-    let contentResponse = await axios.get(`/api/content/${id}`)
-    const contentData = contentResponse.data
-    const read = contentData.filter(content => content.typeId === 1)
-    const watch = contentData.filter(content => content.typeId === 2)
-    const meet = contentData.filter(content => content.typeId === 3)
+    if (id) {
+      let contentResponse = await axios.get(`/api/content/${id}`)
+      const contentData = contentResponse.data
+      read = contentData.filter(content => content.typeId === 1)
+      watch = contentData.filter(content => content.typeId === 2)
+      meet = contentData.filter(content => content.typeId === 3)
+    }
     const content = {
       read,
       watch,

@@ -24,7 +24,7 @@ router.get('/search/:interestName', async (req, res, next) => {
       sortBy: 'relevancy'
     })
 
-    const result = articlesReturned.articles.map(article => {
+    const result = articlesReturned.articles.map((article, idx) => {
       const title = article.title
       const imageUrl =
         article.urlToImage ||
@@ -33,6 +33,7 @@ router.get('/search/:interestName', async (req, res, next) => {
       const sourceUrl = article.url
       const publishedAt = article.publishedAt
       return {
+        id: idx,
         title,
         imageUrl,
         description,
