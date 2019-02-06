@@ -19,7 +19,8 @@ class Spinner extends Component {
     return (
       <div className="sweet-loading">
         <ClipLoader
-          css={override}
+          // css={override}
+          align="center"
           sizeUnit="px"
           size={50}
           color="#123abc"

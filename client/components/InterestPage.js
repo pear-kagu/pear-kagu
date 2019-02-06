@@ -29,7 +29,9 @@ class InterestPage extends Component {
           ) : content.read.length ? (
             <Carousel typeId="2" />
           ) : (
-            <Spinner marked="center" align="center" />
+            <div className="spinner">
+              <Spinner />
+            </div>
           )}
         </div>
         <Typography variant="h6" marked="center" align="left" component="h2">

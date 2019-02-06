@@ -26,7 +26,7 @@ class InterestPage extends Component {
         <Typography variant="h6" marked="center" align="center" component="h2">
           Saved Videos:
         </Typography>
-        <div className="item-list clearfix">
+        <div className="carousel-border">
           {content.watch.length ? (
             <SavedContentCarousel carouselId="2" title="Watch" />
           ) : (
@@ -36,7 +36,7 @@ class InterestPage extends Component {
         <Typography variant="h6" marked="center" align="center" component="h2">
           Saved Meetups:
         </Typography>
-        <div className="item-list clearfix">
+        <div className="carousel-border">
           {content.meet.length ? (
             <SavedContentCarousel carouselId="3" title="Do" />
           ) : (
@@ -46,7 +46,7 @@ class InterestPage extends Component {
         <Typography variant="h6" marked="center" align="center" component="h2">
           Saved Articles:
         </Typography>
-        <div className="item-list clearfix">
+        <div className="carousel-border">
           {content.read.length ? (
             <SavedContentCarousel carouselId="1" title="Read" />
           ) : (

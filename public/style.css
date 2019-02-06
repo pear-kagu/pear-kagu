@@ -34,3 +34,7 @@ form div {
 .background-color {
   background: #d3d3d3;
 }
+
+.spinner {
+  align-items: center;
+}
