@@ -13,35 +13,7 @@ function removeDuplicates(allInterests) {
   return interests
 }
 
-router.get('/:userId/content', async (req, res, next) => {
-  try {
-    let userId = Number(req.params.userId)
-    let [user] = await User.findAll({
-      where: {
-        id: userId
-      },
-      attributes: ['id'],
-      include: [
-        {
-          model: Content,
-          attributes: [
-            'title',
-            'sourceUrl',
-            'imageUrl',
-            'description',
-            'typeId'
-          ],
-          include: [{model: Interest, attributes: ['id', 'name']}]
-        }
-      ]
-    })
-
-    res.status(200).send(user)
-  } catch (err) {
-    console.error(err)
-  }
-})
-
+//get user interests
 router.get('/:userId/interests', async (req, res, next) => {
   try {
     let userId = Number(req.params.userId)
@@ -70,6 +42,37 @@ router.get('/:userId/interests', async (req, res, next) => {
     })
     const interests = removeDuplicates(allInterests)
     res.status(200).send(interests)
+  } catch (err) {
+    console.error(err)
+  }
+})
+
+//get user saved content
+router.get('/:userId/content', async (req, res, next) => {
+  try {
+    let userId = Number(req.params.userId)
+    let [user] = await User.findAll({
+      where: {
+        id: userId
+      },
+      attributes: ['id'],
+      include: [
+        {
+          model: Content,
+          attributes: [
+            'title',
+            'sourceUrl',
+            'imageUrl',
+            'description',
+            'typeId',
+            'id'
+          ],
+          include: [{model: Interest, attributes: ['id', 'name']}]
+        }
+      ]
+    })
+
+    res.status(200).send(user)
   } catch (err) {
     console.error(err)
   }
