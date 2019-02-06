@@ -19,7 +19,7 @@ form div {
   display: inline-block;
 }
 
-.item-list {
+.carousel-border {
   border: 1px solid purple;
   border-radius: 10px;
   width: 100%; /*added*/
@@ -29,4 +29,8 @@ form div {
 .logo-image {
   height: 50px;
   width: 100px;
+}
+
+.background-color {
+  background: #d3d3d3;
 }
