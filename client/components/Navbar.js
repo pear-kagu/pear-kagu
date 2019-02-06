@@ -93,7 +93,6 @@ class Navbar extends Component {
       name: ''
     }
     this.handleClose = this.handleClose.bind(this)
-    this.handleSearch = this.handleSearch.bind(this)
   }
   handleLoginOpen = () => {
     this.setState({open: true, name: 'login'})
