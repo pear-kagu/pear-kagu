@@ -35,4 +35,8 @@ form div {
   background: #e8e8e8;
 }
 
+.spinner {
+  margin-left: auto;
+  margin-right: auto;
+}
 /* #f4f5f7; */

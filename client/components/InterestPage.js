@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Carousel} from '../components'
+import {Carousel, Spinner} from '../components'
 import Typography from '@material-ui/core/Typography'
 import {fetchContent, clearContent} from '../store'
 
@@ -24,23 +24,37 @@ class InterestPage extends Component {
           Watch:
         </Typography>
         <div className="carousel-border">
-          {content.watch.length ? (
+          {typeof content.watch === 'string' ? (
+            <div>{content.watch}</div>
+          ) : content.watch.length ? (
             <Carousel typeId="2" />
           ) : (
-            <div> Loading </div>
+            <Spinner />
           )}
         </div>
         <Typography variant="h6" marked="center" align="left" component="h2">
           Meet-up:
         </Typography>
         <div className="carousel-border">
-          {content.meet.length ? <Carousel typeId="3" /> : <div> Loading </div>}
+          {typeof content.meet === 'string' ? (
+            <div>{content.meet}</div>
+          ) : content.meet.length ? (
+            <Carousel typeId="3" />
+          ) : (
+            <Spinner />
+          )}
         </div>
         <Typography variant="h6" marked="center" align="left" component="h2">
           Read:
         </Typography>
         <div className="carousel-border">
-          {content.read.length ? <Carousel typeId="1" /> : <div> Loading </div>}
+          {typeof content.read === 'string' ? (
+            <div>{content.read}</div>
+          ) : content.read.length ? (
+            <Carousel typeId="1" />
+          ) : (
+            <Spinner />
+          )}
         </div>
       </div>
     )
