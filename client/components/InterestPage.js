@@ -24,13 +24,17 @@ class InterestPage extends Component {
           Select a video to add to your interest board:
         </Typography>
         <div className="carousel-border">
-          {content.read.length ? <Carousel typeId="2" /> : <div> Loading </div>}
+          {content.watch.length ? (
+            <Carousel typeId="2" />
+          ) : (
+            <div> Loading </div>
+          )}
         </div>
         <Typography variant="h6" marked="center" align="center" component="h2">
           Select a meetup to add to your interest board:
         </Typography>
         <div className="carousel-border">
-          {content.read.length ? <Carousel typeId="3" /> : <div> Loading </div>}
+          {content.meet.length ? <Carousel typeId="3" /> : <div> Loading </div>}
         </div>
         <Typography variant="h6" marked="center" align="center" component="h2">
           Select an article to add to your interest board:

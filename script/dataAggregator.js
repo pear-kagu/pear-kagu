@@ -1,6 +1,6 @@
 const axios = require('axios')
-const server = 'http://localhost:8080'
-//'http://pear-kagu.herokuapp.com'
+const server = 'http://pear-kagu.herokuapp.com'
+// const server = 'http://localhost:8080'
 
 async function getInterests() {
   try {
@@ -21,9 +21,17 @@ async function callApis() {
       await axios.get(
         `${server}/api/newsapi/primary/${interestId}/${interestName}`
       )
+    }
+    for (let j = 0; j < allInterests.length; j++) {
+      let interestId = allInterests[j].id
+      let interestName = allInterests[j].name
       await axios.get(
         `${server}/api/youtube/primary/${interestId}/${interestName}`
       )
+    }
+    for (let k = 0; k < allInterests.length; k++) {
+      let interestId = allInterests[k].id
+      let interestName = allInterests[k].name
       await axios.get(
         `${server}/api/meetups/primary/${interestId}/${interestName}`
       )
