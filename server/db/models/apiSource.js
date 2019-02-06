@@ -7,10 +7,10 @@ const ApiSource = db.define('apiSource', {
     allowNull: false,
     validate: {
       notEmpty: true
-    },
-    route: {
-      type: Sequelize.STRING
     }
+  },
+  route: {
+    type: Sequelize.STRING
   }
 })
 
