@@ -109,13 +109,13 @@ class Navbar extends Component {
   }
 
   handleSearchChange = evt => {
-    console.log(evt.target.value)
     this.setState({searchValue: evt.target.value})
   }
 
   handleSearch = evt => {
     evt.preventDefault()
     this.props.fetchSearchContent(this.state.searchValue)
+    this.setState({searchValue: ''})
   }
   componentDidUpdate(prevProps) {
     if (this.props.isLoggedIn !== prevProps.isLoggedIn) {

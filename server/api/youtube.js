@@ -32,7 +32,7 @@ router.get('/search/:interestName', async (req, res, next) => {
 
     // deconstruct data
     const {items} = searchResult.data
-    const result = items.map(item => {
+    const result = items.map((item, idx) => {
       const title = item.snippet.title
       const sourceUrl = `https://www.youtube.com/watch?v=${item.id.videoId}`
       const imageUrl =
@@ -42,6 +42,7 @@ router.get('/search/:interestName', async (req, res, next) => {
       const publishedAt = item.snippet.publishedAt
 
       return {
+        id: idx,
         title,
         imageUrl,
         description,
