@@ -26,7 +26,10 @@ export const fetchContent = interestName => {
     const {id} = interestResponse.data
     let contentResponse = await axios.get(`/api/content/${id}`)
     const contentData = contentResponse.data
-    const read = contentData.filter(content => content.typeId === 1)
+    let read = contentData.filter(content => content.typeId === 1)
+    if (!read.length) {
+      read = `Sorry, there's no reading content available for ${interestName}`
+    }
     const watch = contentData.filter(content => content.typeId === 2)
     const meet = contentData.filter(content => content.typeId === 3)
     const content = {
