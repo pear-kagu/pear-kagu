@@ -8,7 +8,7 @@ const TYPE_ID = 3
 const API_SOURCE_ID = 2
 const CATEGORY_ID = 34 //Tech specific
 const ZIPCODE = 10001 //NYC
-const MAX_RADIUS = 100
+const MAX_RADIUS = 25
 
 const meetup = require('meetup-api')({key: meetupApiKey})
 
@@ -70,9 +70,18 @@ router.get('/primary/:interestId/:interestName', async (req, res, next) => {
         zip: ZIPCODE,
         radius: MAX_RADIUS
       },
-      (err, resp) => {
+      async (err, resp) => {
         if (resp) {
-          resp.results.map(async group => {
+          let data = []
+          console.log('interestName', interestName)
+          if (interestName !== 'witi') {
+            data = resp.results.slice(0, 30)
+            console.log('javascript dataLength', data.length)
+          } else {
+            data = resp.results
+            console.log('data', data.length)
+          }
+          await data.map(async group => {
             const title = group.name
             const description = group.description
             const sourceUrl = group.link
@@ -92,7 +101,7 @@ router.get('/primary/:interestId/:interestName', async (req, res, next) => {
                 }
               })
             } catch (error) {
-              console.log('Duplicated meetup not added')
+              console.log(error)
             }
           })
           res.send(resp)
