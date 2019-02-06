@@ -21,7 +21,7 @@ class InterestPage extends Component {
           {interestName}
         </Typography>
         <Typography variant="h6" marked="center" align="left" component="h2">
-          Videos:
+          Watch:
         </Typography>
         <div className="carousel-border">
           {typeof content.read === 'string' ? (
@@ -33,13 +33,13 @@ class InterestPage extends Component {
           )}
         </div>
         <Typography variant="h6" marked="center" align="left" component="h2">
-          Meetups:
+          Meet-up:
         </Typography>
         <div className="carousel-border">
           {content.read.length ? <Carousel typeId="3" /> : <div> Loading </div>}
         </div>
         <Typography variant="h6" marked="center" align="left" component="h2">
-          Articles:
+          Read:
         </Typography>
         <div className="carousel-border">
           {content.read.length ? <Carousel typeId="1" /> : <div> Loading </div>}
