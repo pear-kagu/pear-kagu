@@ -91,7 +91,8 @@ class Navbar extends Component {
     super()
     this.state = {
       open: false,
-      name: ''
+      name: '',
+      searchValue: ''
     }
     this.handleClose = this.handleClose.bind(this)
   }
@@ -107,9 +108,14 @@ class Navbar extends Component {
     this.setState({open: false})
   }
 
+  handleSearchChange = evt => {
+    console.log(evt.target.value)
+    this.setState({searchValue: evt.target.value})
+  }
+
   handleSearch = evt => {
     evt.preventDefault()
-    console.log(evt.target)
+    this.props.fetchSearchContent(this.state.searchValue)
   }
   componentDidUpdate(prevProps) {
     if (this.props.isLoggedIn !== prevProps.isLoggedIn) {
@@ -134,25 +140,29 @@ class Navbar extends Component {
                 <img src="/kagulogo.png" className="logo-image" />
               </Link>
             </Typography>
-            <form onSubmit={this.handleSearch} name="searchForm">
-              <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                  <SearchIcon />
-                </div>
-                <InputBase
-                  placeholder="Search…"
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput
-                  }}
-                />
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
               </div>
-              <div>
-                <Button className={classes.button} type="submit">
-                  Search
-                </Button>
-              </div>
-            </form>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput
+                }}
+                onChange={this.handleSearchChange}
+                value={this.state.searchValue}
+              />
+            </div>
+            <div>
+              <Button
+                className={classes.button}
+                type="submit"
+                onClick={this.handleSearch}
+              >
+                <Link to={`/interest/${this.state.searchValue}`}>search</Link>
+              </Button>
+            </div>
             {this.props.isLoggedIn ? (
               <div>
                 {/* The navbar will show these links after you log in */}
