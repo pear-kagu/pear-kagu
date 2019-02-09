@@ -14,10 +14,8 @@ class InterestPage extends Component {
   }
   render() {
     const interestName = this.props.match.params.interestName
-    console.log('interestName', interestName)
     const capitalizedInterestName =
       interestName[0].toUpperCase() + interestName.slice(1)
-    console.log('capitalizedInterestName', capitalizedInterestName)
     const {content} = this.props
     return (
       <div>

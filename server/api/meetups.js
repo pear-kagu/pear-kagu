@@ -14,7 +14,6 @@ const meetup = require('meetup-api')({key: meetupApiKey})
 
 router.get('/search/:interestName', async (req, res, next) => {
   try {
-    console.log('searching meetups')
     let interestName = req.params.interestName
     interestName = interestName.toLowerCase()
     let groups = await meetup.getGroups(
@@ -44,7 +43,6 @@ router.get('/search/:interestName', async (req, res, next) => {
                 apiSourceId: API_SOURCE_ID
               }
             })
-            console.log('result1', result)
             res.send(result)
           } else {
             res.send([])
