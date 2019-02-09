@@ -36,11 +36,11 @@ export const fetchContent = interestName => {
       }
       watch = contentData.filter(content => content.typeId === 2)
       if (!watch.length) {
-        read = `Sorry, there's no video content available for ${interestName}`
+        watch = `Sorry, there's no video content available for ${interestName}`
       }
       meet = contentData.filter(content => content.typeId === 3)
       if (!meet.length) {
-        read = `Sorry, there are no meet-ups available available for ${interestName}`
+        meet = `Sorry, there are no meet-ups available available for ${interestName}`
       }
     }
     const content = {
@@ -76,10 +76,22 @@ export const fetchSavedContent = (userId, interestName) => {
 
 export const fetchSearchContent = interestName => {
   return async dispatch => {
+    let read = []
+    let watch = []
+    let meet = []
     const {data} = await axios.get(`/api/search/${interestName}`)
-    const read = data.filter(content => content.typeId === 1)
-    const watch = data.filter(content => content.typeId === 2)
-    const meet = data.filter(content => content.typeId === 3)
+    read = data.filter(content => content.typeId === 1)
+    if (!read.length) {
+      read = `Sorry, there's no reading content available for ${interestName}`
+    }
+    watch = data.filter(content => content.typeId === 2)
+    if (!watch.length) {
+      watch = `Sorry, there's no video content available for ${interestName}`
+    }
+    meet = data.filter(content => content.typeId === 3)
+    if (!meet.length) {
+      meet = `Sorry, there are no meet-ups available available for ${interestName}`
+    }
     const content = {
       read,
       watch,

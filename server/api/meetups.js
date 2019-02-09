@@ -14,6 +14,7 @@ const meetup = require('meetup-api')({key: meetupApiKey})
 
 router.get('/search/:interestName', async (req, res, next) => {
   try {
+    console.log('searching meetups')
     let interestName = req.params.interestName
     interestName = interestName.toLowerCase()
     let groups = await meetup.getGroups(
@@ -25,25 +26,33 @@ router.get('/search/:interestName', async (req, res, next) => {
       },
       (err, resp) => {
         if (resp) {
-          const result = resp.results.map((group, idx) => {
-            const title = group.name
-            const description = group.description
-            const sourceUrl = group.link
-            const imageUrl = group.group_photo
-              ? group.group_photo.highres_link
-              : 'https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
-            return {
-              id: idx,
-              title,
-              description,
-              sourceUrl,
-              imageUrl,
-              typeId: TYPE_ID,
-              apiSourceId: API_SOURCE_ID
-            }
-          })
-          res.send(result)
-        } else return err
+          if (resp.results) {
+            const result = resp.results.map((group, idx) => {
+              const title = group.name
+              const description = group.description
+              const sourceUrl = group.link
+              const imageUrl = group.group_photo
+                ? group.group_photo.highres_link
+                : 'https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
+              return {
+                id: idx,
+                title,
+                description,
+                sourceUrl,
+                imageUrl,
+                typeId: TYPE_ID,
+                apiSourceId: API_SOURCE_ID
+              }
+            })
+            console.log('result1', result)
+            res.send(result)
+          } else {
+            res.send([])
+          }
+        } else {
+          res.send([])
+          return err
+        }
       }
     )
     return groups
@@ -72,37 +81,44 @@ router.get('/primary/:interestId/:interestName', async (req, res, next) => {
       },
       async (err, resp) => {
         if (resp) {
-          let data = []
-          if (interestName !== 'witi') {
-            data = resp.results.slice(0, 30)
-          } else {
-            data = resp.results
-          }
-          await data.map(async group => {
-            const title = group.name
-            const description = group.description
-            const sourceUrl = group.link
-            const imageUrl = group.group_photo
-              ? group.group_photo.highres_link
-              : 'https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
-            try {
-              await Content.findOrCreate({
-                where: {
-                  title,
-                  imageUrl,
-                  description,
-                  sourceUrl,
-                  typeId: TYPE_ID,
-                  apiSourceId: API_SOURCE_ID,
-                  interestId
-                }
-              })
-            } catch (error) {
-              console.log(error)
+          if (resp.results) {
+            let data = []
+            if (interestName !== 'witi') {
+              data = resp.results.slice(0, 30)
+            } else {
+              data = resp.results
             }
-          })
-          res.send(resp)
-        } else return err
+            await data.map(async group => {
+              const title = group.name
+              const description = group.description
+              const sourceUrl = group.link
+              const imageUrl = group.group_photo
+                ? group.group_photo.highres_link
+                : 'https://images.pexels.com/photos/97077/pexels-photo-97077.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'
+              try {
+                await Content.findOrCreate({
+                  where: {
+                    title,
+                    imageUrl,
+                    description,
+                    sourceUrl,
+                    typeId: TYPE_ID,
+                    apiSourceId: API_SOURCE_ID,
+                    interestId
+                  }
+                })
+              } catch (error) {
+                console.log(error)
+              }
+            })
+            res.send(resp)
+          } else {
+            res.send([])
+          }
+        } else {
+          res.send([])
+          return err
+        }
       }
     )
     return groups

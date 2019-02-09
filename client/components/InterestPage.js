@@ -14,11 +14,15 @@ class InterestPage extends Component {
   }
   render() {
     const interestName = this.props.match.params.interestName
+    console.log('interestName', interestName)
+    const capitalizedInterestName =
+      interestName[0].toUpperCase() + interestName.slice(1)
+    console.log('capitalizedInterestName', capitalizedInterestName)
     const {content} = this.props
     return (
       <div>
         <Typography variant="h2" marked="center" align="center" component="h2">
-          {interestName}
+          {capitalizedInterestName}
         </Typography>
         <Typography variant="h6" marked="center" align="left" component="h2">
           Watch:
