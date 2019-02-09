@@ -14,6 +14,14 @@ import {
 } from '../store'
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined'
 
+var cardStyle = {
+  display: 'block',
+  width: '30vw',
+  transitionDuration: '0.3s',
+  height: '20vw',
+  marginBottom: '1vw'
+}
+
 const styles = theme => ({
   card: {
     maxWidth: 400
@@ -53,7 +61,7 @@ class SavedCarouselCard extends Component {
     const {content, classes, description} = this.props
 
     return (
-      <Card className={classes.card}>
+      <Card className={classes.card} style={cardStyle}>
         <IconButton
           aria-label="Delete from favorites"
           onClick={() => this.handleDelete(content.id)}
