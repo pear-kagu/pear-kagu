@@ -12,6 +12,14 @@ import {setSavedContentinDB, deleteSavedContentinDB} from '../store'
 import axios from 'axios'
 import {withAlert} from 'react-alert'
 
+var cardStyle = {
+  display: 'block',
+  width: '30vw',
+  transitionDuration: '0.3s',
+  height: '20vw',
+  marginBottom: '1vw'
+}
+
 const styles = () => ({
   card: {
     maxWidth: 400
@@ -58,7 +66,7 @@ class CarouselCard extends Component {
     const {content, classes, description} = this.props
 
     return (
-      <Card className={classes.card}>
+      <Card className={classes.card} style={cardStyle}>
         <IconButton
           aria-label="Add to favorites"
           onClick={this.handleFavoriteClick(content.id)}
